@@ -97,7 +97,7 @@ export class NavigationService {
     {
       id: "gallery",
       title: "Galeri",
-      url: "public/gallery",
+      url: "/public/gallery",
       type: "item",
       role: [],
       icon: "",
@@ -108,7 +108,7 @@ export class NavigationService {
     {
       id: "contact",
       title: "İletişim",
-      url: "public/contact",
+      url: "/public/contact",
       type: "item",
       role: [],
       icon: "",
@@ -119,7 +119,7 @@ export class NavigationService {
     {
       id: "reservation",
       title: "Reservasyon",
-      url: "public/reservation",
+      url: "/public/reservation",
       type: "item",
       role: [],
       icon: "",
