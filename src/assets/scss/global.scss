@@ -1,0 +1,47 @@
+/* Tüm uygulamada geçerli olacak kurallar buraya yazılır. */
+/* Buraya yazılacak kuralların gerçekten ilgili eleman için genel geçer olması çok önemlidir. */
+
+@import 'src/assets/scss/_variables.scss';
+@import 'src/assets/scss/_mixins.scss';
+
+html {
+    overflow-x: scroll;
+}
+
+.default-ul {
+    list-style: none;
+    padding: 0;
+}
+
+.icon {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.brand {
+    font-weight: 500;
+    line-height: 2.2rem;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.code-link {
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        color: $c-color-3;
+    }
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}

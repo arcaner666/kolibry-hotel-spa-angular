@@ -1,0 +1,28 @@
+/* Bootstrap */
+/* Buradaki renkleri değiştirmek bootstrap'ın renklerini değiştirmez. */
+/* Sadece component'lerin scss dosyalarında bu renklere erişmek için burada tekrar tanımlanmıştır. */
+/* Bootstrap renklerini bootstrap-extended içerisindeki _variables.scss kısmından değiştirebilirsin.  */
+$bs-primary:       #0d6efd;
+$bs-secondary:     #20c997;
+$bs-success:       #20c997;
+$bs-info:          #0dcaf0;
+$bs-warning:       #ffc107;
+$bs-danger:        #dc3545;
+
+/* https://stock.adobe.com/tr/270218690/ */
+$c-color-1: #faedfc;
+$c-color-2: #DB25E8;
+$c-color-3: #FDB0C0;
+$c-color-4: #E69C95;
+$c-color-5: #FEBAA5;
+
+$c-bg-color-1: #d3eaff;
+
+/* Gradient */
+$c-gradient-1: linear-gradient(90deg, $c-color-1 20%, $c-color-2 100%);
+/* /Gradient */
+
+/* Navbar */
+$c-passive-link-color: rgba(0, 0, 0, 0.7);
+$c-active-link-color: rgba(0, 0, 0, 1);
+/* /Navbar */

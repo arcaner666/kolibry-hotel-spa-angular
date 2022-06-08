@@ -1,0 +1,193 @@
+<div class="container-fluid g-0 p-3">
+    <div class="card shadow-lg">
+        <div class="card-body">
+
+            <!-- Card Başlığı -->
+            <h2 class="card-title text-center fs-4">{{cardHeader}}</h2>
+            <!-- /Card Başlığı -->
+
+            <!-- Şube Ekleme/Düzenleme Formu -->
+            <form #form="ngForm" (ngSubmit)="save(selectedBranchExtDto)">
+                <!-- Şube Adı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="branch-name">Şube Adı</label>
+                    <input
+                        id="branch-name"
+                        type="text"
+                        name="branchName"
+                        [(ngModel)]="selectedBranchExtDto.branchName"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && selectedBranchExtDtoErrors.branchName }"
+                        (change)="selectedBranchExtDtoErrors.branchName = ''"
+                        tabindex="1"
+                    />
+                    <div class="invalid-feedback" *ngIf="submitted && selectedBranchExtDtoErrors.branchName">
+                        <div>{{selectedBranchExtDtoErrors.branchName}}</div>
+                    </div>
+                </div>
+                <!-- /Şube Adı -->
+    
+                <!-- Şube Kodu -->
+                <div class="mt-3 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <label class="form-label" for="branch-code">Şube Kodu</label>
+
+                        <!-- Şube Kodu Üretme Butonu -->
+                        <a class="code-link cursor-pointer" (click)="generateBranchCode()" *ngIf="selectedBranchExtDto.branchId == 0"><small>Kod Üret</small></a>
+                        <!-- /Şube Kodu Üretme Butonu -->
+                    </div>
+                    <input
+                        id="branch-code"
+                        type="text"
+                        name="branchCode"
+                        [(ngModel)]="selectedBranchExtDto.branchCode"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && selectedBranchExtDtoErrors.branchCode }"
+                        [readOnly]="selectedBranchExtDto.branchId != 0"
+                        (change)="selectedBranchExtDtoErrors.branchCode = ''"
+                        tabindex="2"
+                    />
+                    <div class="invalid-feedback" *ngIf="submitted && selectedBranchExtDtoErrors.branchCode">
+                        <div>{{selectedBranchExtDtoErrors.branchCode}}</div>
+                    </div>
+                </div>
+                <!-- /Şube Kodu -->
+
+                <!-- Şehir -->
+                <div class="mt-3 mb-3">
+                    <label class="mb-2" for="city-id">Şehir</label>
+                    <select 
+                        id="city-id"
+                        name="cityId"
+                        class="form-select"
+                        [(ngModel)]="selectedBranchExtDto.cityId"
+                        (change)="selectCity(selectedBranchExtDto.cityId)"
+                        [ngClass]="{ 'is-invalid': submitted && selectedBranchExtDtoErrors.cityId }"
+                        (change)="selectedBranchExtDtoErrors.cityId = ''"
+                        tabindex="3"
+                    >
+                        <option 
+                            *ngFor="let cityDto of cityDtos"
+                            [value]="cityDto.cityId"
+                        >
+                            {{cityDto.cityName}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="submitted && selectedBranchExtDtoErrors.cityId">
+                        <div>{{selectedBranchExtDtoErrors.cityId}}</div>
+                    </div>
+                </div>
+                <!-- /Şehir -->
+    
+                <!-- İlçe -->
+                <div class="mt-3 mb-3">
+                    <label class="mb-2" for="district-id">İlçe</label>
+                    <select 
+                        id="district-id"
+                        name="districtId"
+                        class="form-select"
+                        [(ngModel)]="selectedBranchExtDto.districtId"
+                        [ngClass]="{ 'is-invalid': submitted && selectedBranchExtDtoErrors.districtId }"
+                        (change)="selectedBranchExtDtoErrors.districtId = ''"
+                        tabindex="4"
+                    >
+                        <option 
+                            *ngFor="let districtDto of districtDtos"
+                            [value]="districtDto.districtId"
+                        >
+                            {{districtDto.districtName}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="submitted && selectedBranchExtDtoErrors.districtId">
+                        <div>{{selectedBranchExtDtoErrors.districtId}}</div>
+                    </div>
+                </div>
+                <!-- /İlçe -->
+    
+                <!-- Adres Başlığı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="address-title">Adres Başlığı</label>
+                    <input
+                        id="address-title"
+                        type="text"
+                        name="addressTitle"
+                        [(ngModel)]="selectedBranchExtDto.addressTitle"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && selectedBranchExtDtoErrors.addressTitle }"
+                        (change)="selectedBranchExtDtoErrors.addressTitle = ''"
+                        tabindex="5"
+                    />
+                    <div class="invalid-feedback" *ngIf="submitted && selectedBranchExtDtoErrors.addressTitle">
+                        <div>{{selectedBranchExtDtoErrors.addressTitle}}</div>
+                    </div>
+                </div>
+                <!-- /Adres Başlığı -->
+
+                <!-- Posta Kodu -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="postal-code">Posta Kodu</label>
+                    <input
+                        id="postal-code"
+                        type="number"
+                        name="postalCode"
+                        [(ngModel)]="selectedBranchExtDto.postalCode"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && selectedBranchExtDtoErrors.postalCode }"
+                        (change)="selectedBranchExtDtoErrors.postalCode = ''"
+                        tabindex="6"
+                    />
+                    <div class="invalid-feedback" *ngIf="submitted && selectedBranchExtDtoErrors.postalCode">
+                        <div>{{selectedBranchExtDtoErrors.postalCode}}</div>
+                    </div>
+                </div>
+                <!-- /Posta Kodu -->
+                
+                <!-- Adres -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="address-text">Adres</label>
+                    <textarea
+                        id="address-text"
+                        type="text"
+                        name="addressText"
+                        [(ngModel)]="selectedBranchExtDto.addressText"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && selectedBranchExtDtoErrors.addressText }"
+                        (change)="selectedBranchExtDtoErrors.addressText = ''"
+                        tabindex="7"
+                    ></textarea>
+                    <div class="invalid-feedback" *ngIf="submitted && selectedBranchExtDtoErrors.addressText">
+                        <div>{{selectedBranchExtDtoErrors.addressText}}</div>
+                    </div>
+                </div>
+                <!-- /Adres -->
+                
+                <!-- Butonlar -->
+                <div class="container-fluid m-0">
+                    <div class="row">
+                        <div class="col-6">
+                            <button 
+                                type="submit" 
+                                class="btn btn-success w-100" 
+                                [disabled]="loading"
+                                tabindex="8"
+                            >
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>Kaydet
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button 
+                                type="button" 
+                                class="btn btn-secondary w-100"
+                                (click)="cancel()"
+                            >İptal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Butonlar -->
+            </form>
+            <!-- /Şube Ekleme/Düzenleme Formu -->
+        </div>
+    </div>
+</div>
+    

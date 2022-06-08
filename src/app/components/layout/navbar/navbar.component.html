@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-primary navbar-special shadow-p">
+    <div class="container-fluid">
+
+        <!-- Sidebar Butonu --> 
+        <!-- Sadece küçük ekranlarda görünür. -->
+        <i 
+            *ngIf="breakpointService.screenSize.width < 992"
+            class="fas fa-bars fa-lg hamburger-button text-black p-2"
+            (click)="toggleSidebarFloating()"
+        >
+        </i>
+        <!-- /Sidebar Butonu-->
+
+        <!-- Marka -->
+        <a class="navbar-brand" href="/">
+            <img class="img-fluid" src="assets/images/hotel/kolibry-hotel-logo-1-cropped.png" alt="logo" width="64px">
+            <span class="brand ms-2">Kolibry Hotel Spa</span>
+        </a>
+        <!-- /Marka -->
+
+        <!-- İleride yönetici paneli için giriş butonu gerekebilir diye silmedim. -->
+        <!-- Giriş-Çıkış Butonu -->
+        <!-- <ng-container *ngIf="breakpointService.screenSize.width >= 576 && breakpointService.screenSize.width < 992">
+            <button *ngIf="!(authorizationDto$ | async)?.role" class="btn btn-outline-light" routerLink="public/login">Giriş Yap</button>
+            <button *ngIf="(authorizationDto$ | async)?.role" class="btn btn-outline-light" (click)="logout()">Çıkış Yap</button>
+        </ng-container> -->
+        <!-- /Giriş-Çıkış Butonu -->
+
+        <!-- Anasayfa Linkleri -->
+        <!-- Sadece büyük ekranlarda görünür. -->
+        <ng-container *ngIf="breakpointService.screenSize.width >= 992 && !(authorizationDto$ | async)?.role">
+            <ul class="navbar-nav">
+                <li class="nav-item" *ngFor="let sidebarLink of sidebarLinks$ | async">
+                    <a class="nav-link" [routerLink]="sidebarLink.url" routerLinkActive="active">{{sidebarLink.title}}</a>
+                </li>
+            </ul>
+        </ng-container>
+        <!-- /Anasayfa Linkleri -->
+
+        <button *ngIf="!(authorizationDto$ | async)?.role" class="btn btn-outline-light" routerLink="public/reservation">Rezervasyon</button>
+
+        <!-- İleride yönetici paneli için giriş butonu gerekebilir diye silmedim. -->
+        <!-- <ng-container *ngIf="breakpointService.screenSize.width >= 992">
+            <button *ngIf="!(authorizationDto$ | async)?.role" class="btn btn-outline-light" routerLink="public/login">Giriş Yap</button>
+            <button *ngIf="(authorizationDto$ | async)?.role" class="btn btn-outline-light" (click)="logout()">Çıkış Yap</button>
+        </ng-container> -->
+    </div>
+</nav>
+
+
+

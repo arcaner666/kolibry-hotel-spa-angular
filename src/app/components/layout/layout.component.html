@@ -1,0 +1,78 @@
+<!------ Main Template ------------------------------------------------------------------------------------------------>
+
+<div class="container-fluid p-0 g-0">
+    <!-- Navbar -->
+    <div class="row p-0 m-0 fixed-top">
+        <div class="col-12 p-0 m-0">
+            <app-navbar></app-navbar>
+        </div>
+    </div>
+    <!-- /Navbar -->
+    <!-- Navbar For Fixing Fixed Top Problems -->
+    <div class="row p-0 m-0">
+        <div class="col-12 p-0 m-0">
+            <app-navbar></app-navbar>
+        </div>
+    </div>
+    <!-- /Navbar For Fixing Fixed Top Problems -->
+
+    <div class="row p-0 m-0 g-0">
+
+        <!-- Content With Sidebar Static -->
+        <ng-container *ngIf="layoutService.layoutConfig.layoutType == 'sidebar-static'">
+            <ng-container *ngTemplateOutlet="contentWithSidebarStatic"></ng-container>
+        </ng-container>
+        <!-- /Content With Sidebar Static -->
+
+        <!-- Content With Sidebar Floating -->
+        <ng-container *ngIf="layoutService.layoutConfig.layoutType == 'sidebar-floating'">
+            <ng-container *ngTemplateOutlet="contentWithSidebarFloating"></ng-container>
+        </ng-container>
+        <!-- /Content With Sidebar Floating -->
+
+        <!-- Only Content -->
+        <ng-container *ngIf="layoutService.layoutConfig.layoutType == 'only-content'">
+            <!-- Burası boş çünkü only-content'te sadece app-content bulunmalı. -->
+        </ng-container>
+        <!-- /Only Content -->
+
+        <div
+            class="p-0 m-0 min-vh-100"
+            [ngClass]="layoutService.layoutConfig.layoutType == 'sidebar-static' ? 'col-lg-10 col-xl-10': 'col-12'"
+        >
+            <app-content></app-content>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="row p-0 m-0">
+        <div class="col-12 p-0 m-0">
+            <app-footer></app-footer>
+        </div>
+    </div>
+    <!-- /Footer -->
+
+    <!-- Toast Messages -->
+    <app-toast aria-live="polite" aria-atomic="true"></app-toast>
+    <!-- /Toast Messages -->
+</div>
+
+<!------ Templates ---------------------------------------------------------------------------------------------------->
+
+<!-- Content With Sidebar Static -->
+<ng-template #contentWithSidebarStatic>
+    <div class="col-lg-2 col-xl-2 p-0 m-0">
+        <app-sidebar-static></app-sidebar-static>
+    </div>
+</ng-template>
+<!-- /Content With Sidebar Static -->
+
+<!-- Content With Sidebar Floating -->
+<ng-template #contentWithSidebarFloating>
+    <ng-container *ngIf="(layoutConfig$ | async)?.showSidebarFloating">
+        <div class="col-3 p-0 m-0">
+            <app-sidebar-floating></app-sidebar-floating>
+        </div>
+    </ng-container>
+</ng-template>
+<!-- /Content With Sidebar Floating -->

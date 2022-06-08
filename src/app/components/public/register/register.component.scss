@@ -1,0 +1,52 @@
+@import 'src/assets/scss/_variables.scss';
+@import 'src/assets/scss/_mixins.scss';
+
+.register-special {
+    min-height: 100vh;
+    
+    .card-body {
+        a {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+            
+            span {
+                font-weight: 500;
+                line-height: 2.2rem;
+            }
+    
+            &:hover,
+            &:focus {
+                color: $c-color-3;
+            }
+        }
+    
+        .form-control {
+            &:focus {
+                border-color: $c-color-3;
+                box-shadow: 0 0 0 3px rgba($c-color-3, 0.3);
+            }
+        }
+    
+        .btn-success {
+            color: white;
+            background-color: $c-color-2;
+            border-color: $c-color-2;
+    
+            &:hover {
+                border-color: $c-color-3;
+                background-color: $c-color-3;
+            }
+        }
+    
+        .btn-outline-success {
+            color: $c-color-2;
+            border-color: $c-color-2;
+    
+            &:hover {
+                color: white;
+                border-color: $c-color-3;
+            }
+        }
+    }
+}

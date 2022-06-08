@@ -1,0 +1,55 @@
+@import 'src/assets/scss/_variables.scss';
+
+.navbar-special {
+    .hamburger-button {
+        display: block;
+        cursor: pointer;
+    }
+
+    .btn-outline-light {
+        color: $c-passive-link-color;
+        border-color: $c-passive-link-color;
+
+        &:hover {
+            color: $c-color-1;
+            border-color: $c-color-2;
+            background-color: $c-color-2;
+        }
+    }
+
+    .nav-link {
+        background-image: linear-gradient(
+            to right,
+            $c-color-2,
+            $c-color-2 50%,
+            #000 50%
+        );
+        background-size: 200% 100%;
+        background-position: -100%;
+        display: inline-block;
+        position: relative;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: all 0.3s ease-in-out;
+
+        &:before {
+            content: '';
+            background: $c-color-2;
+            display: block;
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        &:hover {
+            background-position: 0;
+            
+            &::before {
+                width: 100%;
+            }
+        }
+    }
+}
