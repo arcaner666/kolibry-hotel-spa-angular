@@ -29,15 +29,20 @@
         <!-- Anasayfa Linkleri -->
         <!-- Sadece büyük ekranlarda görünür. -->
         <ng-container *ngIf="breakpointService.screenSize.width >= 992 && !(authorizationDto$ | async)?.role">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item" *ngFor="let sidebarLink of sidebarLinks$ | async">
-                    <a class="nav-link" [routerLink]="sidebarLink.url" routerLinkActive="active">{{sidebarLink.title}}</a>
+                    <a 
+                        class="nav-link" 
+                        [routerLink]="sidebarLink.url" 
+                        routerLinkActive="active"
+                        [ngClass]="{'nav-link-active': sidebarLink.url == router.url }"
+                    >
+                        {{sidebarLink.title}}
+                    </a>
                 </li>
             </ul>
         </ng-container>
         <!-- /Anasayfa Linkleri -->
-
-        <button *ngIf="!(authorizationDto$ | async)?.role" class="btn btn-outline-light" routerLink="public/reservation">Rezervasyon</button>
 
         <!-- İleride yönetici paneli için giriş butonu gerekebilir diye silmedim. -->
         <!-- <ng-container *ngIf="breakpointService.screenSize.width >= 992">

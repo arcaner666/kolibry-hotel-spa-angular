@@ -9,7 +9,11 @@
     top: 0;
     left: 0;
     overflow-x: hidden;
-    background-color: lighten($c-color-1, 5%);
+    background-color: $c-color-1;
+
+    &::backdrop{
+        background-color: black;
+    }
 
     &.sidebar-show {
         width: fit-content;
@@ -19,10 +23,10 @@
         width: 20px;
         height: 20px;
         cursor: pointer;
-        color: rgba(#fff, .7);
+        color: rgba(#000, .7);
 
         &:hover {
-            color: #fff;
+            color: #000;
         }
     }
 
@@ -33,16 +37,16 @@
     
     .item-link {
         transition: 0.3s;
-        color: rgba(#fff, .7);
+        color: rgba(#000, .7);
         &:hover {
-            color: #fff;
+            color: #000;
         }
     }
     
     .collapsible-link {
-        color: rgba(#fff, .7);
+        color: rgba(#000, .7);
         &:hover {
-            color: #fff;
+            color: #000;
         }
     }
 }

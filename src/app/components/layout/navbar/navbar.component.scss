@@ -6,18 +6,8 @@
         cursor: pointer;
     }
 
-    .btn-outline-light {
-        color: $c-passive-link-color;
-        border-color: $c-passive-link-color;
-
-        &:hover {
-            color: $c-color-1;
-            border-color: $c-color-2;
-            background-color: $c-color-2;
-        }
-    }
-
     .nav-link {
+        margin-right: 0.5rem;
         background-image: linear-gradient(
             to right,
             $c-color-2,
@@ -45,6 +35,14 @@
         }
 
         &:hover {
+            background-position: 0;
+            
+            &::before {
+                width: 100%;
+            }
+        }
+
+        &.nav-link-active {
             background-position: 0;
             
             &::before {

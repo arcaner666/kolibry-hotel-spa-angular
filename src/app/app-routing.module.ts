@@ -63,22 +63,30 @@ import { SectionGroupDetailComponent } from 'src/app/components/manager/section-
 import { SectionGroupListComponent } from 'src/app/components/manager/section-management/section-group/section-group-list/section-group-list.component';
 
 // Public Components
+import { AboutComponent } from 'src/app/components/public/about/about.component';
+import { ContactComponent } from 'src/app/components/public/contact/contact.component';
 import { ErrorComponent } from 'src/app/components/public/error/error.component';
+import { GalleryComponent } from 'src/app/components/public/gallery/gallery.component';
 import { HomeComponent } from 'src/app/components/public/home/home.component';
 import { LoginComponent } from 'src/app/components/public/login/login.component';
 import { NotAuthorizedComponent } from 'src/app/components/public/not-authorized/not-authorized.component';
 import { RegisterComponent } from 'src/app/components/public/register/register.component';
+import { ReservationComponent } from 'src/app/components/public/reservation/reservation.component';
 
 // Guards
 import { AuthorizationGuard } from 'src/app/guards/authorization.guard';
 
 const routes: Routes = [
   // Public
+  { path: 'public/about', component: AboutComponent },
+  { path: 'public/contact', component: ContactComponent },
   { path: 'public/error', component: ErrorComponent },
+  { path: 'public/gallery', component: GalleryComponent },
   { path: 'public/home', component: HomeComponent },
   { path: 'public/login', component: LoginComponent },
   { path: 'public/not-authorized', component: NotAuthorizedComponent },
   { path: 'public/register', component: RegisterComponent },
+  { path: 'public/reservation', component: ReservationComponent },
 
   // Manager - Dashboard
   {

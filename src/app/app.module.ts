@@ -91,11 +91,15 @@ import { SectionGroupListComponent } from 'src/app/components/manager/section-ma
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 
 // Public Components
+import { AboutComponent } from 'src/app/components/public/about/about.component';
+import { ContactComponent } from 'src/app/components/public/contact/contact.component';
 import { ErrorComponent } from 'src/app/components/public/error/error.component';
+import { GalleryComponent } from 'src/app/components/public/gallery/gallery.component';
 import { HomeComponent } from 'src/app/components/public/home/home.component';
 import { LoginComponent } from 'src/app/components/public/login/login.component';
 import { NotAuthorizedComponent } from 'src/app/components/public/not-authorized/not-authorized.component';
 import { RegisterComponent } from 'src/app/components/public/register/register.component';
+import { ReservationComponent } from 'src/app/components/public/reservation/reservation.component';
 
 // Toast Components
 import { ToastComponent } from 'src/app/components/toast/toast.component';
@@ -179,11 +183,15 @@ import { CustomDateParserFormatter } from 'src/app/services/custom-date-parser-f
     ModalComponent,
 
     // Public Components
+    AboutComponent,
+    ContactComponent,
     ErrorComponent,
+    GalleryComponent,
     HomeComponent,
     LoginComponent,
     NotAuthorizedComponent,
     RegisterComponent,
+    ReservationComponent,
 
     // Toast Components
     ToastComponent,
