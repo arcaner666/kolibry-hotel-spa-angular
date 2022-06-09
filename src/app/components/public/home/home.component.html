@@ -1,10 +1,26 @@
-<div class="container-xl special">
-    <div class="row g-0">
-        <div class="col-lg-12">
-            <!-- Buraya slider gelecek. -->
-        </div>
+<!-- Slider -->
+<div class="container-fluid">
+    <div class="slider">
+        <swiper
+            [config]="config"
+            (swiper)="onSwiper($event)"
+            (slideChange)="onSlideChange()"
+        >
+            <ng-template swiperSlide>
+                <img class="img-slider" src="assets/images/hotel/kolibry-hotel-building-1.jpg" alt="kolibry hotel binası">
+            </ng-template>
+            <ng-template swiperSlide>
+                <img class="img-slider" src="assets/images/hotel/kolibry-hotel-restaurant-1.jpg" alt="kolibry hotel restoranı">
+            </ng-template>
+            <ng-template swiperSlide>
+                <img class="img-slider" src="assets/images/hotel/kolibry-hotel-hammam-and-spa-1.jpg" alt="kolibry hotel hamam ve spa">
+            </ng-template>
+        </swiper>
     </div>
+</div>
+<!-- /Slider -->
 
+<div class="container-xl special">
     <div class="row g-0">
         <div class="col-lg-6 d-flex flex-column justify-content-center mt-5 mb-3 p-4">
             <h2 class="fs-4">İşletme, Otel ve Site Yönetim Yazılımı</h2>

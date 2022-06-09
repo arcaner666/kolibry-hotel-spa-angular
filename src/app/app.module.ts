@@ -16,6 +16,9 @@ import { NgbDateAdapter, NgbDateParserFormatter, NgbModule } from '@ng-bootstrap
 // ng-select Module
 import { NgSelectModule } from '@ng-select/ng-select';
 
+// swiper Module
+import { SwiperModule } from 'swiper/angular';
+
 // Components
 import { AppComponent } from 'src/app/app.component';
 
@@ -222,7 +225,10 @@ import { CustomDateParserFormatter } from 'src/app/services/custom-date-parser-f
     NgbModule,
 
     // ng-select Module
-    NgSelectModule
+    NgSelectModule,
+
+    // swiper Module
+    SwiperModule,
   ],
   providers: [
     // BACKENDDEKİ ERROR HANDLINGI AYARLAMAK İÇİN BURAYI GEÇİCİ OLARAK KAPATTIM İŞİM BİTİNCE AÇMALIYIM. !!!!!!!!!!!!!!!!!!!!!!!!!!!!
