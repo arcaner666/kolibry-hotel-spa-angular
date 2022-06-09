@@ -1,0 +1,12 @@
+@import '../../_variables.scss';
+@import '../../_mixins.scss';
+
+/* Swiper değişkenlerinin üzerine yazdığım kısım */
+$themeColor: $swiper-theme-color !default;
+
+/* Swiper'ın orjinal dosyaları. Üzerine yazılabilmesi için bunlar sayfanın en altında olmalıdır. */
+@import 'swiper/scss';
+@import 'swiper/scss/autoplay';
+@import 'swiper/scss/effect-fade';
+@import 'swiper/scss/navigation';
+@import 'swiper/scss/pagination';

@@ -6,14 +6,7 @@
 /* Bootstrap */
 @import './bootstrap/bootstrap';
 
-/* Swiper */
-@import 'swiper/scss';
-@import 'swiper/scss/autoplay';
-@import 'swiper/scss/effect-fade';
-@import 'swiper/scss/navigation';
-@import 'swiper/scss/pagination';
-@import 'swiper/scss/zoom';
-
 /* Angular İçin Yazılmış Dış Kütüphaneler */
 @import './libs/angular/ng-select';
 
+@import './libs/angular/swiper';

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import SwiperCore, { SwiperOptions, Autoplay, EffectFade, Navigation, Pagination, Scrollbar, Zoom } from 'swiper';
+import SwiperCore, { SwiperOptions, Autoplay, EffectFade, Navigation, Pagination } from 'swiper';
 
-SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination, Scrollbar, Zoom]);
+SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 
 @Component({
   selector: 'app-home',
@@ -14,10 +14,10 @@ export class HomeComponent implements OnInit {
 
   config: SwiperOptions = {
     autoplay: {
-      delay: 2500,
+      delay: 3000,
       disableOnInteraction: false
     },
-    effect:'fade',
+    effect: 'fade',
     navigation: true,
     pagination: { clickable: true },
     slidesPerView: 1,
@@ -29,12 +29,5 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  onSwiper([swiper]: any) {
-    console.log(swiper);
-  }
-  onSlideChange() {
-    console.log('slide change');
   }
 }
