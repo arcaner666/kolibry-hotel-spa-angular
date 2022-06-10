@@ -10,6 +10,8 @@ import { BranchExtDto } from 'src/app/models/dtos/branch-ext-dto';
 import { BranchExtDtoErrors } from 'src/app/models/validation-errors/branch-ext-dto-errors';
 import { CashExtDto } from 'src/app/models/dtos/cash-ext-dto';
 import { CashExtDtoErrors } from 'src/app/models/validation-errors/cash-ext-dto-errors';
+import { ContactDto } from 'src/app/models/dtos/contact-dto';
+import { ContactDtoErrors } from 'src/app/models/validation-errors/contact-dto-errors';
 import { EmployeeExtDto } from 'src/app/models/dtos/employee-ext-dto';
 import { EmployeeExtDtoErrors } from 'src/app/models/validation-errors/employee-ext-dto-errors';
 import { FlatExtDto } from 'src/app/models/dtos/flat-ext-dto';
@@ -28,6 +30,7 @@ import { ApartmentService } from 'src/app/services/apartment.service';
 import { BankService } from 'src/app/services/bank.service';
 import { BranchService } from 'src/app/services/branch.service';
 import { CashService } from 'src/app/services/cash.service';
+import { ContactService } from 'src/app/services/contact.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { FlatService } from 'src/app/services/flat.service';
 import { HouseOwnerService } from 'src/app/services/house-owner.service';
@@ -46,6 +49,7 @@ export class ValidationService {
     private bankService: BankService,
     private branchService: BranchService,
     private cashService: CashService,
+    private contactService: ContactService,
     private employeeService: EmployeeService,
     private flatService: FlatService,
     private houseOwnerService: HouseOwnerService,
@@ -364,6 +368,34 @@ export class ValidationService {
     }
 
     return [isValid, cashExtDtoErrors];
+  }
+
+  validateContactDto(contactDto: ContactDto, validationType: string): [boolean, ContactDtoErrors] {
+    let contactDtoErrors = this.contactService.emptyContactDtoErrors;  
+    let isValid: boolean = true;
+
+    const branchId: boolean = this.string(contactDto.nameSurname);
+    if (!branchId && validationType == "add")
+      contactDtoErrors.nameSurname = "Lütfen adınızı ve soyadınızı giriniz.";
+
+    const accountName: boolean = this.string(contactDto.email);
+    if (!accountName && validationType == "add")
+      contactDtoErrors.email = "Lütfen e-posta adresinizi giriniz.";
+
+    const accountCode: boolean = this.string(contactDto.phone);
+    if (!accountCode && validationType == "add")
+      contactDtoErrors.phone = "Lütfen telefon numaranızı giriniz.";
+
+    const limit: boolean = this.string(contactDto.message);
+    if (!limit && validationType == "add")
+      contactDtoErrors.message = "Lütfen iletmek istediğiniz mesajınızı yazınız.";
+      
+    for (const key in contactDtoErrors) {
+      if (contactDtoErrors[key as keyof ContactDtoErrors] != "")
+        isValid = false;
+    }
+
+    return [isValid, contactDtoErrors];
   }
 
   validateEmployeeExtDto(employeeExtDto: EmployeeExtDto, validationType: string): [boolean, EmployeeExtDtoErrors] {

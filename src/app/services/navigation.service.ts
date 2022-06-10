@@ -84,17 +84,6 @@ export class NavigationService {
       navLinks: [],
     },
     {
-      id: "about",
-      title: "Hakkımızda",
-      url: "/public/about",
-      type: "item",
-      role: [],
-      icon: "",
-      disabled: false,
-      hidden: false,
-      navLinks: [],
-    },
-    {
       id: "gallery",
       title: "Galeri",
       url: "/public/gallery",
@@ -118,7 +107,7 @@ export class NavigationService {
     },
     {
       id: "reservation",
-      title: "Reservasyon",
+      title: "Rezervasyon",
       url: "/public/reservation",
       type: "item",
       role: [],

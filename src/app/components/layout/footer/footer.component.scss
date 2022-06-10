@@ -1,5 +1,9 @@
 @import 'src/assets/scss/_variables.scss';
 
 .footer-special {
-    background: $c-gradient-1;
+    background: black;
+
+    .description {
+        color: rgba(255, 255, 255, 0.7);
+    }
 }

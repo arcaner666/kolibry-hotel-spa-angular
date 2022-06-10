@@ -11,10 +11,6 @@
     overflow-x: hidden;
     background-color: $c-color-1;
 
-    &::backdrop{
-        background-color: black;
-    }
-
     &.sidebar-show {
         width: fit-content;
     }

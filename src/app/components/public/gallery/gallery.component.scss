@@ -1,0 +1,14 @@
+@import 'src/assets/scss/_variables.scss';
+@import 'src/assets/scss/_mixins.scss';
+
+.img-card {
+    width: 100%;
+}
+
+.zoom {
+    transition: transform .2s;
+
+    &:hover {
+        transform: scale(1.2);
+    }
+}

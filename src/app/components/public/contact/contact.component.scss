@@ -1,0 +1,29 @@
+@import 'src/assets/scss/_variables.scss';
+@import 'src/assets/scss/_mixins.scss';
+
+.mapouter{
+    position:relative;
+    text-align:right;
+    height:400px;
+    width:100%;
+}
+
+.gmap_canvas {
+    overflow:hidden;
+    background:none!important;
+    height:400px;
+    width:100%;
+}
+
+.contact-title {
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+a {
+    color: rgba(0, 0, 0, 0.7);
+
+    &:hover {
+        color: $c-color-2;
+    }
+}
