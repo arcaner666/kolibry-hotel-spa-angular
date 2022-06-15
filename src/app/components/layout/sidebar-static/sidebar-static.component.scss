@@ -3,7 +3,7 @@
 
 .sidebar-static {
     height: 100%;
-    background-color: lighten($c-color-1, 5%);
+    background-color: lighten($c-color-1, 2%);
 
     .item {
         padding: 0.75rem 1.25rem;
@@ -11,16 +11,16 @@
     }
     
     .item-link {
-        color: rgba(#fff, .7);
+        color: rgba(#000000, .7);
         &:hover {
-            color: #fff;
+            color: #000000;
         }
     }
     
     .collapsible-link {
-        color: rgba(#fff, .7);
+        color: rgba(#000000, .7);
         &:hover {
-            color: #fff;
+            color: #000000;
         }
     }
 }

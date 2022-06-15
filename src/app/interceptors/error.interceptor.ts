@@ -5,13 +5,13 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { AuthorizationService } from 'src/app/services/authorization.service';
+import { PersonService } from 'src/app/services/person.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(
-    private authorizationService: AuthorizationService,
+    private personService: PersonService,
     private router: Router,
   ) {}
 
@@ -22,7 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError(error => {
         //console.log(error);
         if (error.error?.message == "TokenInvalid" || error.error?.message == "CanNotGetPrincipal") {
-          this.authorizationService.clearAuthorizationDto();
+          this.personService.clearPersonExtDto();
           this.router.navigate(['public/not-authorized', 'public/login']);
         }
         // catchError backend'den dönen hatayı ekstra bir hata katmanıyla sarmalıyor.

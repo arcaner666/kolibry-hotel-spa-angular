@@ -22,7 +22,7 @@
 
     <!-- Giriş Yap Butonu -->
     <!-- Küçük ekranlarda bu buton navbara sığmadığı için sidebar floating içerisinde olmalı. -->
-    <div class="item d-flex align-items-center" *ngIf="breakpointService.screenSize.width < 576 && !(authorizationDto$ | async)?.role">
+    <div class="item d-flex align-items-center" *ngIf="breakpointService.screenSize.width < 576 && !(personExtDto$ | async)?.role">
         <a class="item-link" routerLink="public/login" routerLinkActive="active" (click)="toggleSidebarFloating()">Giriş Yap</a>
     </div>
     <!-- /Giriş Yap Butonu -->
@@ -59,7 +59,7 @@
 
     <!-- Çıkış Yap Butonu -->
     <!-- Küçük ekranlarda bu buton navbara sığmadığı için sidebar floating içerisinde olmalı. -->
-    <div class="item d-flex align-items-center" *ngIf="breakpointService.screenSize.width < 576 && (authorizationDto$ | async)?.role">
+    <div class="item d-flex align-items-center" *ngIf="breakpointService.screenSize.width < 576 && (personExtDto$ | async)?.role">
         <a class="item-link" (click)="logout()">Çıkış Yap</a>
     </div>
     <!-- /Çıkış Yap Butonu -->

@@ -2,12 +2,12 @@ import { Component, HostListener, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { AuthorizationDto } from 'src/app/models/dtos/authorization-dto';
 import { LayoutConfig } from 'src/app/models/various/layout-config';
+import { PersonExtDto } from 'src/app/models/dtos/person-ext-dto';
 
-import { AuthorizationService } from 'src/app/services/authorization.service';
 import { BreakpointService } from 'src/app/services/breakpoint.service';
 import { LayoutService } from 'src/app/services/layout.service';
+import { PersonService } from 'src/app/services/person.service';
 
 @Component({
   selector: 'app-layout',
@@ -16,23 +16,23 @@ import { LayoutService } from 'src/app/services/layout.service';
 })
 export class LayoutComponent implements OnInit {
 
-  public authorizationDto$: Observable<AuthorizationDto>;
   public layoutConfig$: Observable<LayoutConfig>;
+  public personExtDto$: Observable<PersonExtDto>;
 
   constructor(
-    private authorizationService: AuthorizationService,
+    private personService: PersonService,
 
     public layoutService: LayoutService,
     public breakpointService: BreakpointService,
   ) {
-    this.authorizationDto$ = this.authorizationService.authorizationDto$;
     this.layoutConfig$ = this.layoutService.layoutConfigObservable;
+    this.personExtDto$ = this.personService.personExtDto$;
     
     this.setScreenSize();
     this.selectLayout();
     
     // Oturum durumu değiştiğinde selectLayout() metodunun tekrar tetiklenmesi gerekiyor.
-    this.subscribeAuthorizationChanges();
+    this.subscribePersonExtDtoChanges();
   }
 
   setScreenSize(): void {
@@ -41,18 +41,18 @@ export class LayoutComponent implements OnInit {
   }
 
   selectLayout(): void {
-    if (this.breakpointService.screenSize.width >= 992 && this.authorizationService.authorizationDto?.role) {
+    if (this.breakpointService.screenSize.width >= 992 && this.personService.personExtDto?.role) {
       this.layoutService.layoutConfig.layoutType = "sidebar-static";
     } else if (this.breakpointService.screenSize.width < 992) {
       this.layoutService.layoutConfig.layoutType = "sidebar-floating";
-    } else if (this.breakpointService.screenSize.width >= 992 && !this.authorizationService.authorizationDto?.role) {
+    } else if (this.breakpointService.screenSize.width >= 992 && !this.personService.personExtDto?.role) {
       this.layoutService.layoutConfig.layoutType = "only-content";
     } else {
       this.layoutService.layoutConfig.layoutType = "only-content";
     }
   }
-  subscribeAuthorizationChanges(): void {
-    this.authorizationService.authorizationDto$.subscribe({
+  subscribePersonExtDtoChanges(): void {
+    this.personService.personExtDto$.subscribe({
       next: () => {
         this.selectLayout();
       }

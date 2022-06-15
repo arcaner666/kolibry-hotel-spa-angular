@@ -2,14 +2,14 @@ import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthorizationDto } from 'src/app/models/dtos/authorization-dto';
 import { LayoutConfig } from 'src/app/models/various/layout-config';
 import { NavGroup } from 'src/app/models/various/nav-group';
+import { PersonExtDto } from 'src/app/models/dtos/person-ext-dto';
 
-import { AuthorizationService } from 'src/app/services/authorization.service';
 import { BreakpointService } from 'src/app/services/breakpoint.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { PersonService } from 'src/app/services/person.service';
 
 @Component({
   selector: 'app-navbar',
@@ -19,15 +19,15 @@ import { NavigationService } from 'src/app/services/navigation.service';
 export class NavbarComponent implements OnInit {
 
   public activeLinkId: number = 0;
-  public authorizationDto$: Observable<AuthorizationDto>;
   public isSidebarCollapsed: boolean = true;
-  public sidebarLinks$: Observable<NavGroup[]>;
   public layoutConfig$: Observable<LayoutConfig>;
+  public personExtDto$: Observable<PersonExtDto>;
+  public sidebarLinks$: Observable<NavGroup[]>;
   
   constructor(
     private navigationService: NavigationService,
-    private authorizationService: AuthorizationService,
     private layoutService: LayoutService,
+    private personService: PersonService,
 
     public breakpointService: BreakpointService,
     public route: ActivatedRoute,
@@ -35,8 +35,8 @@ export class NavbarComponent implements OnInit {
   ) {
     this.navigationService.loadSidebarLinksByRole();
     
-    this.authorizationDto$ = this.authorizationService.authorizationDto$;
     this.layoutConfig$ = this.layoutService.layoutConfigObservable;
+    this.personExtDto$ = this.personService.personExtDto$;
     this.sidebarLinks$ = this.navigationService.sidebarLinks$;
   }
 
@@ -45,8 +45,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
-    this.authorizationService.logout().subscribe();
-    this.authorizationService.clearAuthorizationDto();
+    this.personService.logout().subscribe();
+    this.personService.clearPersonExtDto();
     this.navigationService.loadSidebarLinksByRole();
     this.router.navigate(["public/home"]);
     if (this.breakpointService.screenSize.width < 576) {

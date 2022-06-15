@@ -5,7 +5,7 @@
                 <div class="card-body mt-4">
                     <form>
                         <!-- Card Başlığı -->
-                        <h2 class="card-title text-center fs-3">İş Yönetimine Hoşgeldiniz!</h2>
+                        <h2 class="card-title text-center fs-3">Hoşgeldiniz</h2>
                         <!-- /Card Başlığı -->
 
                         <!-- Card Yazısı -->
@@ -30,22 +30,24 @@
                                 <ng-template ngbNavContent>
                                     
                                     <!-- Telefonla Giriş Formu -->
-                                    <form [formGroup]="phoneForm" (ngSubmit)="loginWithPhone()">
+                                    <form #phoneForm="ngForm" (ngSubmit)="loginWithPhone()">
 
                                         <!-- Telefon Numarası -->
                                         <div class="mt-3 mb-3">
                                             <label class="form-label" for="phone-form-phone">Telefon Numarası</label>
                                             <input
                                                 id="phone-form-phone"
-                                                type="number"
-                                                formControlName="phone"
+                                                type="text"
+                                                name="phone"
                                                 class="form-control"
-                                                [ngClass]="{ 'is-invalid': submittedPhone && phoneForm.controls['phone'].errors}"
+                                                [(ngModel)]="personExtDto.phone"
+                                                [ngClass]="{ 'is-invalid': submittedPhone && personExtDtoErrors.phone }"
+                                                (change)="personExtDtoErrors.phone = ''"
                                                 placeholder="5554443322"
                                                 tabindex="1"
                                             />
-                                            <div class="invalid-feedback" *ngIf="submittedPhone && phoneForm.controls['phone'].errors">
-                                                <div *ngIf="phoneForm.controls['phone'].errors?.['required']">Lütfen telefon numaranızı giriniz.</div>
+                                            <div class="invalid-feedback" *ngIf="submittedPhone && personExtDtoErrors.phone">
+                                                <div>{{personExtDtoErrors.phone}}</div>
                                             </div>
                                         </div>
                                         <!-- /Telefon Numarası -->
@@ -64,9 +66,11 @@
                                                 <input
                                                     id="phone-form-password"
                                                     [type]="passwordTextType ? 'text' : 'password'"
-                                                    formControlName="password"
+                                                    name="password"
+                                                    [(ngModel)]="personExtDto.password"
                                                     class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submittedPhone && phoneForm.controls['password'].errors }"
+                                                    [ngClass]="{ 'is-invalid': submittedPhone && personExtDtoErrors.password }"
+                                                    (change)="personExtDtoErrors.password = ''"
                                                     placeholder="******"
                                                     tabindex="2"
                                                 />
@@ -81,8 +85,8 @@
                                                     </i>
                                                 </button>
                                                 <!-- Yerini değiştirme -->
-                                                <div class="invalid-feedback" *ngIf="submittedPhone && phoneForm.controls['password'].errors">
-                                                    <div *ngIf="phoneForm.controls['password'].errors?.['required']">Lütfen şifrenizi giriniz.</div>
+                                                <div class="invalid-feedback" *ngIf="submittedPhone && personExtDtoErrors.password">
+                                                    <div>{{personExtDtoErrors.password}}</div>
                                                 </div>
                                             </div>
 
@@ -95,7 +99,8 @@
                                             <ng-select
                                                 id="phone-form-auth-duration"
                                                 [items]="refreshTokenDurationOptions"
-                                                formControlName="refreshTokenDuration"
+                                                name="refreshTokenDuration"
+                                                [(ngModel)]="personExtDto.refreshTokenDuration"
                                                 bindLabel="text"
                                                 bindValue="duration"
                                                 [clearable]="false"
@@ -109,7 +114,7 @@
                                         <!-- Giriş Butonu -->
                                         <div class="mt-4 d-grid col-12">
                                             <button 
-                                                class="btn btn-success" 
+                                                class="btn btn-outline-success" 
                                                 [disabled]="loadingPhone" 
                                                 tabindex="4"
                                             >
@@ -131,7 +136,7 @@
                                 <ng-template ngbNavContent>
 
                                     <!-- E-Postayla Giriş Formu -->
-                                    <form [formGroup]="emailForm" (ngSubmit)="loginWithEmail()">
+                                    <form #emailForm="ngForm" (ngSubmit)="loginWithEmail()">
 
                                         <!-- E-Posta -->
                                         <div class="mt-3 mb-3">
@@ -139,14 +144,16 @@
                                             <input
                                                 id="email-form-email"
                                                 type="text"
-                                                formControlName="email"
+                                                name="email"
+                                                [(ngModel)]="personExtDto.email"
                                                 class="form-control"
-                                                [ngClass]="{ 'is-invalid': submittedEmail && emailForm.controls['email'].errors }"
+                                                [ngClass]="{ 'is-invalid': submittedEmail && personExtDtoErrors.email }"
+                                                (change)="personExtDtoErrors.email = ''"
                                                 placeholder="example@mail.com"
                                                 tabindex="1"
                                             />
-                                            <div class="invalid-feedback" *ngIf="submittedEmail && emailForm.controls['email'].errors">
-                                                <div *ngIf="emailForm.controls['email'].errors?.['required']">Lütfen e-posta adresinizi giriniz.</div>
+                                            <div class="invalid-feedback" *ngIf="submittedEmail && personExtDtoErrors.email">
+                                                <div>{{personExtDtoErrors.email}}</div>
                                             </div>
                                         </div>
                                         <!-- /E-Posta -->
@@ -165,9 +172,11 @@
                                                 <input
                                                     id="email-form-password"
                                                     [type]="passwordTextType ? 'text' : 'password'"
-                                                    formControlName="password"
+                                                    name="password"
+                                                    [(ngModel)]="personExtDto.password"
                                                     class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submittedEmail && emailForm.controls['password'].errors }"
+                                                    [ngClass]="{ 'is-invalid': submittedEmail && personExtDtoErrors.password }"
+                                                    (change)="personExtDtoErrors.password = ''"
                                                     placeholder="******"
                                                     tabindex="2"
                                                 />
@@ -182,8 +191,8 @@
                                                     </i>
                                                 </button>
                                                 <!-- Yerini değiştirme -->
-                                                <div class="invalid-feedback" *ngIf="submittedEmail && emailForm.controls['password'].errors">
-                                                    <div *ngIf="emailForm.controls['password'].errors?.['required']">Lütfen şifrenizi giriniz.</div>
+                                                <div class="invalid-feedback" *ngIf="submittedEmail && personExtDtoErrors.password">
+                                                    <div>{{personExtDtoErrors.password}}</div>
                                                 </div>
                                             </div>
 
@@ -196,7 +205,8 @@
                                             <ng-select
                                                 id="email-form-auth-duration"
                                                 [items]="refreshTokenDurationOptions"
-                                                formControlName="refreshTokenDuration"
+                                                name="refreshTokenDuration"
+                                                [(ngModel)]="personExtDto.refreshTokenDuration"
                                                 bindLabel="text"
                                                 bindValue="duration"
                                                 [clearable]="false"
@@ -210,7 +220,7 @@
                                         <!-- Giriş Butonu -->
                                         <div class="mt-4 d-grid col-12">
                                             <button 
-                                                class="btn btn-success" 
+                                                class="btn btn-outline-success" 
                                                 [disabled]="loadingEmail" 
                                                 tabindex="4"
                                             >

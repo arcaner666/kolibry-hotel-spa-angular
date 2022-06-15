@@ -1,15 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Subject, takeUntil} from 'rxjs';
 
-import { AuthorizationDto } from 'src/app/models/dtos/authorization-dto';
+import { PersonExtDto } from 'src/app/models/dtos/person-ext-dto';
+import { PersonExtDtoErrors } from 'src/app/models/validation-errors/person-ext-dto-errors';
 import { Result } from 'src/app/models/results/result';
 
-import { AuthorizationService } from 'src/app/services/authorization.service';
 import { BreakpointService } from 'src/app/services/breakpoint.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { PersonService } from 'src/app/services/person.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-login',
@@ -18,12 +19,11 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   
-  public authorizationDto: AuthorizationDto;
-  public emailForm: FormGroup;
   public loadingPhone: boolean = false;
   public loadingEmail: boolean = false;
   public passwordTextType: boolean = false;
-  public phoneForm: FormGroup;
+  public personExtDto: PersonExtDto;
+  public personExtDtoErrors: PersonExtDtoErrors;
   public refreshTokenDurationOptions = [
     { duration: 3600, text: '1 saat boyunca' }, 
     { duration: 86400, text: '1 gün boyunca' }, 
@@ -41,36 +41,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<void> = new Subject<void>();
 
   constructor(
-    private authorizationService: AuthorizationService,
-    private formBuilder: FormBuilder,
     private navigationService: NavigationService,
+    private personService: PersonService,
     private toastService: ToastService,
+    private validationService: ValidationService,
 
     public breakpointService: BreakpointService
   ) {
     console.log("LoginComponent constructor çalıştı.");
 
-    this.authorizationDto = this.authorizationService.emptyAuthorizationDto;
-    
+    this.personExtDto = this.personService.emptyPersonExtDto;
+    this.personExtDtoErrors = this.personService.emptyPersonExtDtoErrors;
+    this.personExtDto.refreshTokenDuration = 3600;
+
     // Oturum açılma durumuna göre kullanıcıları yönlendir.
-    this.navigationService.navigateByRole(this.authorizationService.authorizationDto?.role);
+    this.navigationService.navigateByRole(this.personService.personExtDto?.role);
 
     // Sidebar linklerini düzenle.
     this.navigationService.loadSidebarLinksByRole();
-
-    // Telefonla giriş formu oluşturulur.
-    this.phoneForm = this.formBuilder.group({
-      phone: ["5554443322", [Validators.required]],
-      password: ["123456", [Validators.required]],
-      refreshTokenDuration: [3600, [Validators.required]],
-    });
-
-    // E-postayla giriş formu oluşturulur.
-    this.emailForm = this.formBuilder.group({
-      email: ["caner@mail.com", [Validators.required]],
-      password: ["123456", [Validators.required]],
-      refreshTokenDuration: [3600, [Validators.required]],
-    });
   }
 
   // Şifre göstermeyi tetikler.
@@ -79,85 +67,61 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   loginWithEmail(): void {
-    // "Giriş Yap" butonuna basıldı.
     this.submittedEmail = true;
+    let [isModelValid, errors] = this.validationService.validatePersonExtDtoForLoginWithEmail(this.personExtDto, "add");
+    this.personExtDtoErrors = errors;
+    if (isModelValid) {
+      this.loadingEmail  = true;
 
-    // Form geçersizse burada durur.
-    if (this.emailForm.invalid) {
+      this.personService.loginWithEmail(this.personExtDto)
+      .pipe(
+        takeUntil(this.unsubscribeAll),
+      ).subscribe({
+        // Eğer giriş başarılıysa
+        next: (response) => {      
+          // Kullanıcı bilgilerini sakla.
+          this.personService.personExtDto = response.data;
+
+          // Oturum açılma durumuna göre kullanıcıları yönlendir.
+          this.navigationService.navigateByRole(this.personService.personExtDto?.role);
+
+          // Sidebar linklerini düzenle.
+          this.navigationService.loadSidebarLinksByRole();
+
+          this.loadingEmail = false;
+        },
+        error: (error) => {
+          console.log(error);
+          // error.interceptor.ts'de dönen yanıt ile ilgili açıklama yapılmıştır.
+          this.result.success = error.success;
+          this.result.message = error.message;
+          this.loadingEmail = false;
+        }
+      });
+    } else {
       console.log("Form geçersiz.");
-      console.log(this.emailForm);
-      return;
+      console.log(this.personExtDtoErrors);
     }
-
-    // Sunucuya bir istek yapıldığını ve cevap beklendiğini belirtir.
-    this.loadingEmail = true;
-    
-    // Formdaki veriler sunucuya gönderilecek modele doldurulur.
-    this.authorizationDto.email = this.emailForm.value.email;
-    this.authorizationDto.password = this.emailForm.value.password;
-    this.authorizationDto.refreshTokenDuration = this.emailForm.value.refreshTokenDuration;
-
-    this.authorizationService.loginWithEmail(this.authorizationDto)
-    .pipe(
-      takeUntil(this.unsubscribeAll),
-    ).subscribe({
-      // Eğer giriş başarılıysa
-      next: (response) => {      
-        // Kullanıcı bilgilerini sakla.
-        this.authorizationService.authorizationDto = response.data;
-
-        // Oturum açılma durumuna göre kullanıcıları yönlendir.
-        this.navigationService.navigateByRole(this.authorizationService.authorizationDto?.role);
-
-        // Sidebar linklerini düzenle.
-        this.navigationService.loadSidebarLinksByRole();
-
-        this.loadingEmail = false;
-      },
-      error: (error) => {
-        console.log(error);
-        // error.interceptor.ts'de dönen yanıt ile ilgili açıklama yapılmıştır.
-        this.result.success = error.success;
-        this.result.message = error.message;
-        this.loadingEmail = false;
-      }
-    });
   }
 
   loginWithPhone(): void {
-    // "Giriş Yap" butonuna basıldı.
     this.submittedPhone = true;
+    let [isModelValid, errors] = this.validationService.validatePersonExtDtoForLoginWithPhone(this.personExtDto, "add");
+    this.personExtDtoErrors = errors;
+    if (isModelValid) {
+      this.loadingPhone  = true;
 
-    // Form geçersizse burada durur.
-    if (this.phoneForm.invalid) {
-      console.log("Form geçersiz.");
-      console.log(this.phoneForm);
-      return;
-    }
-
-    // Sunucuya bir istek yapıldığını ve cevap beklendiğini belirtir.
-    this.loadingPhone = true;
-    
-    // Formdaki veriler sunucuya gönderilecek modele doldurulur.
-    this.authorizationDto.phone = this.phoneForm.value.phone.toString();
-    this.authorizationDto.password = this.phoneForm.value.password;
-    this.authorizationDto.refreshTokenDuration = this.phoneForm.value.refreshTokenDuration;
-
-    // Sunucuya giriş isteği gönderilir.
-    this.authorizationService.loginWithPhone(this.authorizationDto)
-    .pipe(
-      takeUntil(this.unsubscribeAll),
+      this.personService.loginWithPhone(this.personExtDto)
+      .pipe(
+        takeUntil(this.unsubscribeAll),
       ).subscribe({
-      // Eğer giriş başarılıysa
+        // Eğer giriş başarılıysa
         next: (response) => {      
-          // Ekranda girişin başarılı olduğuna dair toast mesajı gösterir.
-          this.toastService.success(response.message);
-
           // Kullanıcı bilgilerini sakla.
-          this.authorizationService.authorizationDto = response.data;
+          this.personService.personExtDto = response.data;
 
           // Oturum açılma durumuna göre kullanıcıları yönlendir.
-          this.navigationService.navigateByRole(this.authorizationService.authorizationDto?.role);
+          this.navigationService.navigateByRole(this.personService.personExtDto?.role);
 
           // Sidebar linklerini düzenle.
           this.navigationService.loadSidebarLinksByRole();
@@ -171,7 +135,11 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.result.message = error.message;
           this.loadingPhone = false;
         }
-    });
+      });
+    } else {
+      console.log("Form geçersiz.");
+      console.log(this.personExtDtoErrors);
+    }
   }
 
   // Giriş tipleri arasında geçiş yapıldığında formları varsayılan hallerine getirir.
@@ -181,17 +149,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       message: "",
     };
 
-    this.phoneForm.reset({
-      phone: "5554443322",
-      password: "123456",
-      refreshTokenDuration: 3600,
-    });
-
-    this.emailForm.reset({
-      email: "caner@mail.com",
-      password: "123456",
-      refreshTokenDuration: 3600,
-    });
+    this.personExtDto = this.personService.emptyPersonExtDto;
+    this.personExtDtoErrors = this.personService.emptyPersonExtDtoErrors;
+    this.personExtDto.refreshTokenDuration = 3600;
   }
 
   ngOnInit(): void {

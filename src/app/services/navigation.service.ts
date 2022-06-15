@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash';
 import { NavGroup } from 'src/app/models/various/nav-group';
 import { RouteHistory } from 'src/app/models/various/route-history';
 
-import { AuthorizationService } from 'src/app/services/authorization.service';
+import { PersonService } from 'src/app/services/person.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,29 +33,60 @@ export class NavigationService {
       hidden: false,
       navLinks: [],
     },
-  ];
-  public companyManagerSidebarLinks: NavGroup[] = [
     {
-      id: "company",
-      title: "Company Manager",
-      url: "",
-      type: "",
-      role: [],
+      id: "persons",
+      title: "Kişiler",
+      url: "admin/person",
+      type: "item",
+      role: ["Admin"],
       icon: "",
       disabled: false,
       hidden: false,
-      navLinks: [
-        {
-          id: "company",
-          title: "Company Manager",
-          url: "",
-          type: "",
-          role: [],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        }
-      ],
+      navLinks: [],
+    },
+    {
+      id: "suites",
+      title: "Odalar",
+      url: "admin/suite",
+      type: "item",
+      role: ["Admin"],
+      icon: "",
+      disabled: false,
+      hidden: false,
+      navLinks: [],
+    },
+    {
+      id: "invoices",
+      title: "Satışlar",
+      url: "admin/invoice",
+      type: "item",
+      role: ["Admin"],
+      icon: "",
+      disabled: false,
+      hidden: false,
+      navLinks: [],
+    },
+    {
+      id: "reservations",
+      title: "Rezervasyonlar",
+      url: "admin/reservation",
+      type: "item",
+      role: ["Admin"],
+      icon: "",
+      disabled: false,
+      hidden: false,
+      navLinks: [],
+    },
+    {
+      id: "contacts",
+      title: "İletişim Formları",
+      url: "admin/contact",
+      type: "item",
+      role: ["Admin"],
+      icon: "",
+      disabled: false,
+      hidden: false,
+      navLinks: [],
     },
   ];
   public customerSidebarLinks: NavGroup[] = [
@@ -118,201 +149,23 @@ export class NavigationService {
     },
   ];
   public routeHistory$: Observable<RouteHistory>;
-  public sectionManagerSidebarLinks: NavGroup[] = [
+  public employeeSidebarLinks: NavGroup[] = [
     {
-      id: "manager-dashboard",
+      id: "employee-dashboard",
       title: "Özet",
-      url: "manager/manager-dashboard",
+      url: "employee/employee-dashboard",
       type: "item",
-      role: ["Manager"],
+      role: ["Employee"],
       icon: "",
       disabled: false,
       hidden: false,
       navLinks: [],
     },
-    {
-      id: "general-management",
-      title: "Yönetim",
-      url: "",
-      type: "collapsible",
-      role: ["Manager"],
-      icon: "",
-      disabled: false,
-      hidden: false,
-      navLinks: [
-        {
-          id: "business",
-          title: "İşletme",
-          url: "manager/general-management/business",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-        {
-          id: "branch",
-          title: "Şubeler",
-          url: "manager/general-management/branch",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-      ],
-    },
-    {
-      id: "person-management",
-      title: "Kişiler",
-      url: "",
-      type: "collapsible",
-      role: ["Manager"],
-      icon: "",
-      disabled: false,
-      hidden: false,
-      navLinks: [
-        {
-          id: "employee",
-          title: "Personeller",
-          url: "manager/person-management/employee",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-        {
-          id: "house-owner",
-          title: "Mülk Sahipleri",
-          url: "manager/person-management/house-owner",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-        {
-          id: "tenant",
-          title: "Kiracılar",
-          url: "manager/person-management/tenant",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-      ],
-    },
-    {
-      id: "section-management",
-      title: "Siteler",
-      url: "",
-      type: "collapsible",
-      role: ["Manager"],
-      icon: "",
-      disabled: false,
-      hidden: false,
-      navLinks: [
-        {
-          id: "section-group",
-          title: "Site Grupları",
-          url: "manager/section-management/section-group",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-        {
-          id: "section",
-          title: "Siteler",
-          url: "manager/section-management/section",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-        {
-          id: "apartment",
-          title: "Apartmanlar",
-          url: "manager/section-management/apartment",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-        {
-          id: "flat",
-          title: "Daireler",
-          url: "manager/section-management/flat",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-      ],
-    },
-    {
-      id: "accounting",
-      title: "Muhasebe",
-      url: "",
-      type: "collapsible",
-      role: ["Manager"],
-      icon: "",
-      disabled: false,
-      hidden: false,
-      navLinks: [
-        {
-          id: "account-group",
-          title: "Hesap Grupları",
-          url: "manager/accounting/account-group",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-        {
-          id: "account",
-          title: "Cari Hesaplar",
-          url: "manager/accounting/account",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-        {
-          id: "cash",
-          title: "Kasa",
-          url: "manager/accounting/cash",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-        {
-          id: "bank",
-          title: "Banka",
-          url: "manager/accounting/bank",
-          type: "item",
-          role: ["Manager"],
-          icon: "",
-          disabled: false,
-          hidden: false,
-        },
-      ],
-    },
   ];
   public sidebarLinks$: Observable<NavGroup[]>;
 
   constructor(
-    private authorizationService: AuthorizationService,
+    private personService: PersonService,
     private router: Router
   ) {
     this.sidebarLinksSubject = new BehaviorSubject<NavGroup[]>(this.publicSidebarLinks);
@@ -343,11 +196,11 @@ export class NavigationService {
   }
 
   loadSidebarLinksByRole(): void {
-    if(this.authorizationService.authorizationDto?.role == "Admin"){
+    if(this.personService.personExtDto?.role == "Admin"){
       this.sidebarLinks = this.adminSidebarLinks;
-    } else if (this.authorizationService.authorizationDto?.role == "Manager") {
-      this.sidebarLinks = this.sectionManagerSidebarLinks;
-    } else if (this.authorizationService.authorizationDto?.role == "Customer") {
+    } else if (this.personService.personExtDto?.role == "Employee") {
+      this.sidebarLinks = this.employeeSidebarLinks;
+    } else if (this.personService.personExtDto?.role == "Customer") {
       this.sidebarLinks = this.customerSidebarLinks;
     } else {
       this.sidebarLinks = this.publicSidebarLinks;
@@ -359,7 +212,7 @@ export class NavigationService {
     if(role) {
       switch (role) {
         case "Admin": this.router.navigate(['admin/admin-dashboard']); break;
-        case "Manager": this.router.navigate(['manager/manager-dashboard']); break;
+        case "Employee": this.router.navigate(['employee/employee-dashboard']); break;
         case "Customer": this.router.navigate(['customer/customer-dashboard']); break;
         default: this.router.navigate(['/']); break;
       }
