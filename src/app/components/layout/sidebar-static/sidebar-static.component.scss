@@ -13,14 +13,14 @@
     .item-link {
         color: rgba(#000000, .7);
         &:hover {
-            color: #000000;
+            color: $c-color-2;
         }
     }
     
     .collapsible-link {
         color: rgba(#000000, .7);
         &:hover {
-            color: #000000;
+            color: $c-color-2;
         }
     }
 }
