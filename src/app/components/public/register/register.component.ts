@@ -48,12 +48,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   add(): void {
     this.submitted = true;
-    let [isModelValid, errors] = this.validationService.validatePersonExtDtoForRegister(this.personExtDto, "add");
+    let [isModelValid, errors] = this.validationService.validatePersonExtDtoForAdd(this.personExtDto);
     this.personExtDtoErrors = errors;
     if (isModelValid) {
       this.loading = true;
 
-      this.personService.register(this.personExtDto)
+      this.personService.add(this.personExtDto)
       .pipe(
         takeUntil(this.unsubscribeAll),
       ).subscribe({

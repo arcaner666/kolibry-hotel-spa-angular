@@ -4,4 +4,6 @@ export interface ContactDtoErrors {
     email: string;
     phone: string;
     message: string;
+    createdAt: string;
+    updatedAt: string;
 }

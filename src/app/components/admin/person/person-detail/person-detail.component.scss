@@ -1,0 +1,41 @@
+@import 'src/assets/scss/_variables.scss';
+@import 'src/assets/scss/_mixins.scss';
+
+.form-control {
+    &:focus {
+        border-color: $c-color-2;
+        box-shadow: 0 0 0 3px rgba($c-color-2, 0.3);
+    }
+}
+
+.btn-success-custom {
+    color: $c-color-2;
+    border-color: $c-color-2;
+
+    &:hover {
+        color: #ffffff;
+        border-color: $c-color-2;
+        background-color: $c-color-2;
+        box-shadow: 0 0 0 3px rgba($c-color-2, 0.3);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 3px rgba($c-color-2, 0.3);
+    }
+}
+
+.btn-cancel-custom {
+    color: $c-color-3;
+    border-color: $c-color-3;
+
+    &:hover {
+        color: #ffffff;
+        border-color: $c-color-3;
+        background-color: $c-color-3;
+        box-shadow: 0 0 0 3px rgba($c-color-3, 0.3);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 3px rgba($c-color-3, 0.3);
+    }
+}

@@ -1,0 +1,160 @@
+<div class="container-fluid g-0 p-3">
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <h2 class="card-title text-center fs-4">{{cardHeader}}</h2>
+
+            <form #form="ngForm" (ngSubmit)="save(selectedSuiteDto)">
+                <!-- Ad -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="title">Ad</label>
+                    <input
+                        id="title"
+                        type="text"
+                        name="title"
+                        [(ngModel)]="selectedSuiteDto.title"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && selectedSuiteDtoErrors.title }"
+                        (change)="selectedSuiteDtoErrors.title = ''"
+                        tabindex="1"
+                    />
+                    <div class="invalid-feedback" *ngIf="submitted && selectedSuiteDtoErrors.title">
+                        <div>{{selectedSuiteDtoErrors.title}}</div>
+                    </div>
+                </div>
+                <!-- /Ad -->
+                
+                <!-- Yatak Sayısı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="bed">Yatak Sayısı</label>
+                    <input
+                        id="bed"
+                        type="number"
+                        name="bed"
+                        [(ngModel)]="selectedSuiteDto.bed"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && selectedSuiteDtoErrors.bed }"
+                        (change)="selectedSuiteDtoErrors.bed = ''"
+                        tabindex="2"
+                    />
+                    <div class="invalid-feedback" *ngIf="submitted && selectedSuiteDtoErrors.bed">
+                        <div>{{selectedSuiteDtoErrors.bed}}</div>
+                    </div>
+                </div>
+                <!-- /Yatak Sayısı -->
+                
+                <!-- Alan -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="m2">Alan</label>
+                    <input
+                        id="m2"
+                        type="number"
+                        name="m2"
+                        [(ngModel)]="selectedSuiteDto.m2"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && selectedSuiteDtoErrors.m2 }"
+                        (change)="selectedSuiteDtoErrors.m2 = ''"
+                        tabindex="3"
+                    />
+                    <div class="invalid-feedback" *ngIf="submitted && selectedSuiteDtoErrors.m2">
+                        <div>{{selectedSuiteDtoErrors.m2}}</div>
+                    </div>
+                </div>
+                <!-- /Alan -->
+                
+                <!-- Fiyat(Günlük) -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="price">Fiyat(Günlük)</label>
+                    <input
+                        id="price"
+                        type="number"
+                        name="price"
+                        [(ngModel)]="selectedSuiteDto.price"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && selectedSuiteDtoErrors.price }"
+                        (change)="selectedSuiteDtoErrors.price = ''"
+                        tabindex="4"
+                    />
+                    <div class="invalid-feedback" *ngIf="submitted && selectedSuiteDtoErrors.price">
+                        <div>{{selectedSuiteDtoErrors.price}}</div>
+                    </div>
+                </div>
+                <!-- /Fiyat(Günlük) -->
+                
+                <!-- KDV Oranı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="vat">KDV Oranı</label>
+                    <input
+                        id="vat"
+                        type="number"
+                        name="vat"
+                        [(ngModel)]="selectedSuiteDto.vat"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && selectedSuiteDtoErrors.vat }"
+                        (change)="selectedSuiteDtoErrors.vat = ''"
+                        tabindex="5"
+                    />
+                    <div class="invalid-feedback" *ngIf="submitted && selectedSuiteDtoErrors.vat">
+                        <div>{{selectedSuiteDtoErrors.vat}}</div>
+                    </div>
+                </div>
+                <!-- /KDV Oranı -->
+                
+                <!-- KDV Tutarı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="total-vat">KDV Tutarı</label>
+                    <input
+                        id="total-vat"
+                        type="number"
+                        name="totalVat"
+                        [(ngModel)]="selectedSuiteDto.totalVat"
+                        class="form-control"
+                        readOnly
+                        tabindex="6"
+                    />
+                </div>
+                <!-- /KDV Tutarı -->
+                
+                <!-- Toplam Fiyat -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="total-price">Toplam Fiyat</label>
+                    <input
+                        id="total-price"
+                        type="number"
+                        name="totalPrice"
+                        [(ngModel)]="selectedSuiteDto.totalPrice"
+                        class="form-control"
+                        readOnly
+                        tabindex="7"
+                    />
+                </div>
+                <!-- /Toplam Fiyat -->
+                
+                <!-- Butonlar -->
+                <div class="container-fluid m-0">
+                    <div class="row">
+                        <div class="col-6">
+                            <button 
+                                type="submit" 
+                                class="btn btn-outline-success btn-success-custom w-100" 
+                                [disabled]="loading"
+                                tabindex="6"
+                            >
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>Kaydet
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button 
+                                type="button" 
+                                class="btn btn-outline-secondary btn-cancel-custom w-100"
+                                (click)="cancel()"
+                            >İptal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Butonlar -->
+            </form>
+        </div>
+    </div>
+</div>
+    

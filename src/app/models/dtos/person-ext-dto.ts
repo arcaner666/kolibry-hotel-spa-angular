@@ -10,6 +10,7 @@
   updatedAt: Date;
 
   // Extended
+  oldPassword: string;
   password: string;
   passwordAgain: string;
   refreshTokenDuration: number;

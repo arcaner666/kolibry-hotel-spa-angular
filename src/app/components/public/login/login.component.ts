@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginWithEmail(): void {
     this.submittedEmail = true;
-    let [isModelValid, errors] = this.validationService.validatePersonExtDtoForLoginWithEmail(this.personExtDto, "add");
+    let [isModelValid, errors] = this.validationService.validatePersonExtDtoForLoginWithEmail(this.personExtDto);
     this.personExtDtoErrors = errors;
     if (isModelValid) {
       this.loadingEmail  = true;
@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginWithPhone(): void {
     this.submittedPhone = true;
-    let [isModelValid, errors] = this.validationService.validatePersonExtDtoForLoginWithPhone(this.personExtDto, "add");
+    let [isModelValid, errors] = this.validationService.validatePersonExtDtoForLoginWithPhone(this.personExtDto);
     this.personExtDtoErrors = errors;
     if (isModelValid) {
       this.loadingPhone  = true;

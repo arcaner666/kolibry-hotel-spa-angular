@@ -42,6 +42,17 @@ import { SidebarStaticComponent } from 'src/app/components/layout/sidebar-static
 // Modal Components
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 
+// Admin Components
+import { ContactFormComponent } from 'src/app/components/admin/contact-form/contact-form.component';
+import { ContactFormDetailComponent } from 'src/app/components/admin/contact-form/contact-form-detail/contact-form-detail.component';
+import { ContactFormListComponent } from 'src/app/components/admin/contact-form/contact-form-list/contact-form-list.component';
+import { PersonComponent } from 'src/app/components/admin/person/person.component';
+import { PersonDetailComponent } from 'src/app/components/admin/person/person-detail/person-detail.component';
+import { PersonListComponent } from 'src/app/components/admin/person/person-list/person-list.component';
+import { SuiteComponent } from 'src/app/components/admin/suite/suite.component';
+import { SuiteDetailComponent } from 'src/app/components/admin/suite/suite-detail/suite-detail.component';
+import { SuiteListComponent } from 'src/app/components/admin/suite/suite-list/suite-list.component';
+
 // Public Components
 import { AboutComponent } from 'src/app/components/public/about/about.component';
 import { ContactComponent } from 'src/app/components/public/contact/contact.component';
@@ -65,6 +76,7 @@ import { PersonExtDto } from 'src/app/models/dtos/person-ext-dto';
 // Services
 import { CustomDateAdapter } from 'src/app/services/custom-date-adapter.service';
 import { CustomDateParserFormatter } from 'src/app/services/custom-date-parser-formatter.service';
+import { SubstringPipe } from './pipes/substring.pipe';
 
 @NgModule({
   declarations: [
@@ -91,6 +103,17 @@ import { CustomDateParserFormatter } from 'src/app/services/custom-date-parser-f
     // Modal Components
     ModalComponent,
 
+    // Admin Components
+    ContactFormComponent,
+    ContactFormDetailComponent,
+    ContactFormListComponent,
+    PersonComponent,
+    PersonDetailComponent,
+    PersonListComponent,
+    SuiteComponent,
+    SuiteDetailComponent,
+    SuiteListComponent,
+
     // Public Components
     AboutComponent,
     ContactComponent,
@@ -100,10 +123,10 @@ import { CustomDateParserFormatter } from 'src/app/services/custom-date-parser-f
     LoginComponent,
     NotAuthorizedComponent,
     RegisterComponent,
-    ReservationComponent,
+    ReservationComponent,    
 
     // Toast Components
-    ToastComponent,
+    ToastComponent, SubstringPipe,
   ],
   imports: [
     // Angular Modules

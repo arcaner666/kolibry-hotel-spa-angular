@@ -4,4 +4,6 @@ export interface ContactDto {
     email: string;
     phone: string;
     message: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

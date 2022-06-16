@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { concatMap, Subject, takeUntil } from 'rxjs';
+import { concatMap, Subject, takeUntil, throttleTime } from 'rxjs';
 
 import { ContactDto } from 'src/app/models/dtos/contact-dto';
 import { ContactDtoErrors } from 'src/app/models/validation-errors/contact-dto-errors';
@@ -37,17 +37,19 @@ export class ContactComponent implements OnInit, OnDestroy {
   save(contactDto: ContactDto): void {
     this.submitted = true;
     
-    let [isModelValid, errors] = this.validationService.validateContactDto(contactDto, "add");
+    let [isModelValid, errors] = this.validationService.validateContactDtoForAdd(contactDto);
     this.contactDtoErrors = errors;
     if (isModelValid) {
       this.loading = true;
       this.contactService.add(this.contactDto)
       .pipe(
-        takeUntil(this.unsubscribeAll)
+        takeUntil(this.unsubscribeAll),
       ).subscribe({
         next: (response) => {
           this.toastService.success(response.message);
           this.loading = false;
+          this.contactDto = this.contactService.emptyContactDto;
+          this.contactDtoErrors = this.contactService.emptyContactDtoErrors;
         },
         error: (error) => {
           console.log(error);

@@ -78,9 +78,9 @@ export class NavigationService {
       navLinks: [],
     },
     {
-      id: "contacts",
+      id: "contact-forms",
       title: "İletişim Formları",
-      url: "admin/contact",
+      url: "admin/contact-form",
       type: "item",
       role: ["Admin"],
       icon: "",

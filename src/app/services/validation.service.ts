@@ -4,9 +4,12 @@ import { ContactDto } from 'src/app/models/dtos/contact-dto';
 import { ContactDtoErrors } from 'src/app/models/validation-errors/contact-dto-errors';
 import { PersonExtDto } from 'src/app/models/dtos/person-ext-dto';
 import { PersonExtDtoErrors } from 'src/app/models/validation-errors/person-ext-dto-errors';
+import { SuiteDto } from 'src/app/models/dtos/suite-dto';
+import { SuiteDtoErrors } from 'src/app/models/validation-errors/suite-dto-errors';
 
 import { ContactService } from 'src/app/services/contact.service';
 import { PersonService } from 'src/app/services/person.service';
+import { SuiteService } from 'src/app/services/suite.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +20,7 @@ export class ValidationService {
 
     private contactService: ContactService,
     private personService: PersonService,
+    private suiteService: SuiteService,
   ) {}
 
   // Validasyon başarılıysa true, başarısız olursa false dönmeli.
@@ -103,24 +107,24 @@ export class ValidationService {
   }
 
   // Kurallar
-  validateContactDto(contactDto: ContactDto, validationType: string): [boolean, ContactDtoErrors] {
+  validateContactDtoForAdd(contactDto: ContactDto): [boolean, ContactDtoErrors] {
     let contactDtoErrors = this.contactService.emptyContactDtoErrors;  
     let isValid: boolean = true;
 
-    const branchId: boolean = this.string(contactDto.nameSurname);
-    if (!branchId && validationType == "add")
+    const nameSurname: boolean = this.string(contactDto.nameSurname);
+    if (!nameSurname)
       contactDtoErrors.nameSurname = "Lütfen adınızı ve soyadınızı giriniz.";
 
-    const accountName: boolean = this.string(contactDto.email);
-    if (!accountName && validationType == "add")
+    const email: boolean = this.string(contactDto.email);
+    if (!email)
       contactDtoErrors.email = "Lütfen e-posta adresinizi giriniz.";
 
-    const accountCode: boolean = this.string(contactDto.phone);
-    if (!accountCode && validationType == "add")
+    const phone: boolean = this.string(contactDto.phone);
+    if (!phone)
       contactDtoErrors.phone = "Lütfen telefon numaranızı giriniz.";
 
-    const limit: boolean = this.string(contactDto.message);
-    if (!limit && validationType == "add")
+    const message: boolean = this.string(contactDto.message);
+    if (!message)
       contactDtoErrors.message = "Lütfen iletmek istediğiniz mesajınızı yazınız.";
       
     for (const key in contactDtoErrors) {
@@ -131,16 +135,16 @@ export class ValidationService {
     return [isValid, contactDtoErrors];
   }
 
-  validatePersonExtDtoForLoginWithEmail(personExtDto: PersonExtDto, validationType: string): [boolean, PersonExtDtoErrors] {
+  validatePersonExtDtoForLoginWithEmail(personExtDto: PersonExtDto): [boolean, PersonExtDtoErrors] {
     let personExtDtoErrors = this.personService.emptyPersonExtDtoErrors;  
     let isValid: boolean = true;
 
     const email: boolean = this.string(personExtDto.email);
-    if (!email && validationType == "add")
+    if (!email)
       personExtDtoErrors.email = "Lütfen e-posta adresi giriniz.";
 
     const password: boolean = this.string(personExtDto.password);
-    if (!password && validationType == "add")
+    if (!password)
       personExtDtoErrors.password = "Lütfen şifre giriniz.";
 
     for (const key in personExtDtoErrors) {
@@ -151,16 +155,16 @@ export class ValidationService {
     return [isValid, personExtDtoErrors];
   }
 
-  validatePersonExtDtoForLoginWithPhone(personExtDto: PersonExtDto, validationType: string): [boolean, PersonExtDtoErrors] {
+  validatePersonExtDtoForLoginWithPhone(personExtDto: PersonExtDto): [boolean, PersonExtDtoErrors] {
     let personExtDtoErrors = this.personService.emptyPersonExtDtoErrors;  
     let isValid: boolean = true;
 
     const phone: boolean = this.string(personExtDto.phone);
-    if (!phone && validationType == "add")
+    if (!phone)
       personExtDtoErrors.phone = "Lütfen telefon numarası giriniz.";
 
     const password: boolean = this.string(personExtDto.password);
-    if (!password && validationType == "add")
+    if (!password)
       personExtDtoErrors.password = "Lütfen şifre giriniz.";
 
     for (const key in personExtDtoErrors) {
@@ -171,32 +175,32 @@ export class ValidationService {
     return [isValid, personExtDtoErrors];
   }
 
-  validatePersonExtDtoForRegister(personExtDto: PersonExtDto, validationType: string): [boolean, PersonExtDtoErrors] {
+  validatePersonExtDtoForAdd(personExtDto: PersonExtDto): [boolean, PersonExtDtoErrors] {
     let personExtDtoErrors = this.personService.emptyPersonExtDtoErrors;  
     let isValid: boolean = true;
 
     const email: boolean = this.string(personExtDto.email);
-    if (!email && validationType == "add")
+    if (!email)
       personExtDtoErrors.email = "Lütfen e-posta adresi giriniz.";
     
     const phone1: boolean = this.stringPreciseLength(personExtDto.phone, 10);
-    if (!phone1 && validationType == "add")
+    if (!phone1)
       personExtDtoErrors.phone = "Telefon numarası 10 haneden oluşmalıdır. Örneğin; 5554443322";
       
     const phone2: boolean = this.string(personExtDto.phone);
-    if (!phone2 && validationType == "add")
+    if (!phone2)
       personExtDtoErrors.phone = "Lütfen telefon numarası giriniz.";
 
     const password1: boolean = this.stringMinLength(personExtDto.password, 6);
-    if (!password1 && validationType == "add")
+    if (!password1)
       personExtDtoErrors.password = "Şifre en az 6 karakterden oluşmalıdır.";
       
     const password2: boolean = this.string(personExtDto.password);
-    if (!password2 && validationType == "add")
+    if (!password2)
       personExtDtoErrors.password = "Lütfen şifre giriniz.";
 
     const passwordAgain: boolean = this.compareString(personExtDto.password, personExtDto.passwordAgain);
-    if (!passwordAgain && validationType == "add")
+    if (!passwordAgain)
       personExtDtoErrors.passwordAgain = "Şifreler eşleşmiyor.";
 
     for (const key in personExtDtoErrors) {
@@ -207,4 +211,63 @@ export class ValidationService {
     return [isValid, personExtDtoErrors];
   }
 
+  validatePersonExtDtoForUpdate(personExtDto: PersonExtDto): [boolean, PersonExtDtoErrors] {
+    let personExtDtoErrors = this.personService.emptyPersonExtDtoErrors;  
+    let isValid: boolean = true;
+
+    const oldPassword: boolean = this.string(personExtDto.oldPassword);
+    if (!oldPassword)
+      personExtDtoErrors.oldPassword = "Lütfen eski şifrenizi giriniz.";
+
+    const password1: boolean = this.stringMinLength(personExtDto.password, 6);
+    if (!password1)
+      personExtDtoErrors.password = "Şifre en az 6 karakterden oluşmalıdır.";
+      
+    const password2: boolean = this.string(personExtDto.password);
+    if (!password2)
+      personExtDtoErrors.password = "Lütfen yeni şifrenizi giriniz.";
+
+    const passwordAgain: boolean = this.compareString(personExtDto.password, personExtDto.passwordAgain);
+    if (!passwordAgain)
+      personExtDtoErrors.passwordAgain = "Şifreler eşleşmiyor.";
+
+    for (const key in personExtDtoErrors) {
+      if (personExtDtoErrors[key as keyof PersonExtDtoErrors] != "")
+        isValid = false;
+    }
+
+    return [isValid, personExtDtoErrors];
+  }
+
+  validateSuiteDtoForAdd(suiteDto: SuiteDto): [boolean, SuiteDtoErrors] {
+    let suiteDtoErrors = this.suiteService.emptySuiteDtoErrors;  
+    let isValid: boolean = true;
+
+    const title: boolean = this.string(suiteDto.title);
+    if (!title)
+      suiteDtoErrors.title = "Lütfen oda adı giriniz.";
+    
+    const bed: boolean = this.tinyint(suiteDto.bed);
+    if (!bed)
+      suiteDtoErrors.bed = "Lütfen odadaki yatak sayısını giriniz.";
+      
+    const m2: boolean = this.smallintPositive(suiteDto.m2);
+    if (!m2)
+      suiteDtoErrors.m2 = "Lütfen odanın alanını metrekare cinsinden giriniz.";
+
+    const price: boolean = this.smallmoney(suiteDto.price);
+    if (!price)
+      suiteDtoErrors.price = "Lütfen günlük oda fiyatını giriniz.";
+      
+    const vat: boolean = this.smallmoney(suiteDto.vat);
+    if (!vat)
+      suiteDtoErrors.vat = "Lütfen KDV oranını giriniz.";
+
+    for (const key in suiteDtoErrors) {
+      if (suiteDtoErrors[key as keyof SuiteDtoErrors] != "")
+        isValid = false;
+    }
+
+    return [isValid, suiteDtoErrors];
+  }
 }

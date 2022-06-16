@@ -5,6 +5,17 @@ import { RouterModule, Routes } from '@angular/router';
 // Admin - Admin Dashboard Components
 import { AdminDashboardComponent } from 'src/app/components/admin/admin-dashboard/admin-dashboard.component';
 
+// Admin Components
+import { ContactFormComponent } from 'src/app/components/admin/contact-form/contact-form.component';
+import { ContactFormDetailComponent } from 'src/app/components/admin/contact-form/contact-form-detail/contact-form-detail.component';
+import { ContactFormListComponent } from 'src/app/components/admin/contact-form/contact-form-list/contact-form-list.component';
+import { PersonComponent } from 'src/app/components/admin/person/person.component';
+import { PersonDetailComponent } from 'src/app/components/admin/person/person-detail/person-detail.component';
+import { PersonListComponent } from 'src/app/components/admin/person/person-list/person-list.component';
+import { SuiteComponent } from 'src/app/components/admin/suite/suite.component';
+import { SuiteDetailComponent } from 'src/app/components/admin/suite/suite-detail/suite-detail.component';
+import { SuiteListComponent } from 'src/app/components/admin/suite/suite-list/suite-list.component';
+
 // Customer - Customer Dashboard Components
 import { CustomerDashboardComponent } from 'src/app/components/customer/customer-dashboard/customer-dashboard.component';
 
@@ -37,9 +48,45 @@ const routes: Routes = [
   { path: 'public/register', component: RegisterComponent },
   { path: 'public/reservation', component: ReservationComponent },
 
-  // Admin - Dashboard
+  // Admin
   {
     path: 'admin/admin-dashboard', component: AdminDashboardComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/contact-form', component: ContactFormComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/contact-form/contact-form-detail', component: ContactFormDetailComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/contact-form/contact-form-list', component: ContactFormListComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/person', component: PersonComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/person/person-detail', component: PersonDetailComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/person/person-list', component: PersonListComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/suite', component: SuiteComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/suite/suite-detail', component: SuiteDetailComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/suite/suite-list', component: SuiteListComponent, 
     canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
   },
   

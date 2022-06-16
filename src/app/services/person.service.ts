@@ -6,6 +6,8 @@ import { cloneDeep } from 'lodash';
 
 import { environment } from 'src/environments/environment';
 
+import { ListDataResult } from 'src/app/models/results/list-data-result';
+import { PersonDto } from 'src/app/models/dtos/person-dto';
 import { PersonExtDto } from 'src/app/models/dtos/person-ext-dto';
 import { PersonExtDtoErrors } from 'src/app/models/validation-errors/person-ext-dto-errors';
 import { Result } from 'src/app/models/results/result';
@@ -30,6 +32,7 @@ export class PersonService {
     updatedAt: new Date(),
   
     // Extended
+    oldPassword: "",
     password: "",
     passwordAgain: "",
     refreshTokenDuration: 0,
@@ -47,6 +50,7 @@ export class PersonService {
     updatedAt: "",
   
     // Extended
+    oldPassword: "",
     password: "",
     passwordAgain: "",
     refreshTokenDuration: "",
@@ -88,6 +92,18 @@ export class PersonService {
   }
 
   // API İstekleri
+  add(personExtDto: PersonExtDto): Observable<Result> {
+    return this.http.post<Result>(`${environment.apiUrl}/${this.controllerUrl}/add`, personExtDto);
+  }
+
+  delete(id: number): Observable<Result> {
+    return this.http.delete<Result>(`${environment.apiUrl}/${this.controllerUrl}/delete/${id}`);
+  }
+
+  getExts(): Observable<ListDataResult<PersonExtDto>> {
+    return this.http.get<ListDataResult<PersonExtDto>>(`${environment.apiUrl}/${this.controllerUrl}/getexts`);
+  }
+
   loginWithEmail(personExtDto: PersonExtDto): Observable<SingleDataResult<PersonExtDto>> {
     return this.http.post<SingleDataResult<PersonExtDto>>(`${environment.apiUrl}/${this.controllerUrl}/loginwithemail`, personExtDto);
   }
@@ -104,7 +120,7 @@ export class PersonService {
     return this.http.post<SingleDataResult<PersonExtDto>>(`${environment.apiUrl}/${this.controllerUrl}/refreshaccesstoken`, personExtDto);
   }
 
-  register(personExtDto: PersonExtDto): Observable<Result> {
-    return this.http.post<Result>(`${environment.apiUrl}/${this.controllerUrl}/register`, personExtDto);
+  update(personExtDto: PersonExtDto): Observable<Result> {
+    return this.http.post<Result>(`${environment.apiUrl}/${this.controllerUrl}/update`, personExtDto);
   }
 }
