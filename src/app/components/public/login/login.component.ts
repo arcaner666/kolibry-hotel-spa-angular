@@ -121,7 +121,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.personService.personExtDto = response.data;
 
           // Oturum açılma durumuna göre kullanıcıları yönlendir.
-          this.navigationService.navigateByRole(this.personService.personExtDto?.role);
+          this.navigationService.navigateByRole(this.personService.personExtDto.role);
 
           // Sidebar linklerini düzenle.
           this.navigationService.loadSidebarLinksByRole();

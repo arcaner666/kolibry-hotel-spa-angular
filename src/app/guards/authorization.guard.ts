@@ -1,13 +1,13 @@
-import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 
+import { catchError } from 'rxjs/operators';
 import { Observable, concatMap, of } from 'rxjs';
 
 import { PersonExtDto } from 'src/app/models/dtos/person-ext-dto';
 
-import { PersonService } from 'src/app/services/person.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { PersonService } from 'src/app/services/person.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthorizationGuard implements CanActivate {
@@ -15,9 +15,9 @@ export class AuthorizationGuard implements CanActivate {
   private personExtDto: PersonExtDto;
   
   constructor(
+    private jwtHelperService: JwtHelperService,
     private personService: PersonService,
     private router: Router,
-    private jwtHelperService: JwtHelperService,
   ) { 
     this.personExtDto = this.personService.personExtDto;
   }
