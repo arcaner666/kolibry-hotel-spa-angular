@@ -19,7 +19,9 @@
         [cardHeader]="cardHeader"
         [loading]="loading"
         [selectedSuiteDto]="selectedSuiteDto"
+        [selectedSuiteDtoErrors]="selectedSuiteDtoErrors"
         (cancelled)="cancel()"
+        (saved)="save($event)"
     ></app-suite-detail>
 </ng-template>
 

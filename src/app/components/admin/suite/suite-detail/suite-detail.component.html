@@ -44,7 +44,7 @@
                 
                 <!-- Alan -->
                 <div class="mt-3 mb-3">
-                    <label class="form-label" for="m2">Alan</label>
+                    <label class="form-label" for="m2">Alan(m2)</label>
                     <input
                         id="m2"
                         type="number"
@@ -100,7 +100,7 @@
                 <!-- /KDV Oranı -->
                 
                 <!-- KDV Tutarı -->
-                <div class="mt-3 mb-3">
+                <div class="mt-3 mb-3" *ngIf="selectedSuiteDto.suiteId != 0">
                     <label class="form-label" for="total-vat">KDV Tutarı</label>
                     <input
                         id="total-vat"
@@ -115,7 +115,7 @@
                 <!-- /KDV Tutarı -->
                 
                 <!-- Toplam Fiyat -->
-                <div class="mt-3 mb-3">
+                <div class="mt-3 mb-3" *ngIf="selectedSuiteDto.suiteId != 0">
                     <label class="form-label" for="total-price">Toplam Fiyat</label>
                     <input
                         id="total-price"
