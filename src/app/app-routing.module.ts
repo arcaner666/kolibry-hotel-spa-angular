@@ -9,6 +9,9 @@ import { AdminDashboardComponent } from 'src/app/components/admin/admin-dashboar
 import { ContactFormComponent } from 'src/app/components/admin/contact-form/contact-form.component';
 import { ContactFormDetailComponent } from 'src/app/components/admin/contact-form/contact-form-detail/contact-form-detail.component';
 import { ContactFormListComponent } from 'src/app/components/admin/contact-form/contact-form-list/contact-form-list.component';
+import { InvoiceComponent } from 'src/app/components/admin/invoice/invoice.component';
+import { InvoiceDetailComponent } from 'src/app/components/admin/invoice/invoice-detail/invoice-detail.component';
+import { InvoiceListComponent } from 'src/app/components/admin/invoice/invoice-list/invoice-list.component';
 import { PersonComponent } from 'src/app/components/admin/person/person.component';
 import { PersonDetailComponent } from 'src/app/components/admin/person/person-detail/person-detail.component';
 import { PersonListComponent } from 'src/app/components/admin/person/person-list/person-list.component';
@@ -87,6 +90,18 @@ const routes: Routes = [
   },
   {
     path: 'admin/suite/suite-list', component: SuiteListComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/invoice', component: InvoiceComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/invoice/invoice-detail', component: InvoiceDetailComponent, 
+    canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
+  },
+  {
+    path: 'admin/invoice/invoice-list', component: InvoiceListComponent, 
     canActivate: [AuthorizationGuard], data: { roles: ["Admin"] },
   },
   

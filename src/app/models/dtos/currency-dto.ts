@@ -1,5 +1,5 @@
 export interface CurrencyDto {
     currencyId: number;
-    currencyName: string;
+    title: string;
     currencySymbol: string;
 }

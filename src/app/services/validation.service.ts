@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { ContactDto } from 'src/app/models/dtos/contact-dto';
 import { ContactDtoErrors } from 'src/app/models/validation-errors/contact-dto-errors';
+import { InvoiceExtDto } from 'src/app/models/dtos/invoice-ext-dto';
+import { InvoiceExtDtoErrors } from 'src/app/models/validation-errors/invoice-ext-dto-errors';
 import { PersonExtDto } from 'src/app/models/dtos/person-ext-dto';
 import { PersonExtDtoErrors } from 'src/app/models/validation-errors/person-ext-dto-errors';
 import { SuiteDto } from 'src/app/models/dtos/suite-dto';
 import { SuiteDtoErrors } from 'src/app/models/validation-errors/suite-dto-errors';
 
 import { ContactService } from 'src/app/services/contact.service';
+import { InvoiceService } from 'src/app/services/invoice.service';
 import { PersonService } from 'src/app/services/person.service';
 import { SuiteService } from 'src/app/services/suite.service';
 
@@ -17,8 +20,8 @@ import { SuiteService } from 'src/app/services/suite.service';
 export class ValidationService {
 
   constructor(
-
     private contactService: ContactService,
+    private invoiceService: InvoiceService,
     private personService: PersonService,
     private suiteService: SuiteService,
   ) {}

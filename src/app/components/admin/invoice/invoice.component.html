@@ -1,0 +1,23 @@
+<ng-container *ngIf="activePage == 'list'">
+    <ng-container *ngTemplateOutlet="invoiceList"></ng-container>
+</ng-container>
+
+<ng-container *ngIf="activePage == 'detail'">
+    <ng-container *ngTemplateOutlet="invoiceDetail"></ng-container>
+</ng-container>
+
+<ng-template #invoiceList>
+    <app-invoice-list
+        [invoiceExtDtos]="(invoiceExtDtos$ | async)?.data || []"
+        (selected)="select($event)"
+    ></app-invoice-list>
+</ng-template>
+
+<ng-template #invoiceDetail>
+    <app-invoice-detail
+        [cardHeader]="cardHeader"
+        [currencyDtos]="(currencyDtos$ | async)?.data || []"
+        [selectedInvoiceExtDto]="selectedInvoiceExtDto"
+        (cancelled)="cancel()"
+    ></app-invoice-detail>
+</ng-template>

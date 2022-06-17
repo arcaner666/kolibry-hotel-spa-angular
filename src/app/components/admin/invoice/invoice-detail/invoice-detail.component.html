@@ -1,0 +1,319 @@
+<div class="container-fluid g-0 p-3">
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <h2 class="card-title text-center fs-4">{{cardHeader}}</h2>
+
+            <form #form="ngForm">
+                <!-- Ad Soyad -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="buyer-name-surname">Ad Soyad</label>
+                    <input
+                        id="buyer-name-surname"
+                        type="text"
+                        name="buyerNameSurname"
+                        [(ngModel)]="selectedInvoiceExtDto.buyerNameSurname"
+                        class="form-control"
+                        readOnly
+                        tabindex="1"
+                    />
+                </div>
+                <!-- /Ad Soyad -->
+                
+                <!-- E-Posta -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="buyer-email">E-Posta</label>
+                    <input
+                        id="buyer-email"
+                        type="text"
+                        name="buyerEmail"
+                        [(ngModel)]="selectedInvoiceExtDto.buyerEmail"
+                        class="form-control"
+                        readOnly
+                        tabindex="2"
+                    />
+                </div>
+                <!-- /E-Posta -->
+                
+                <!-- Telefon -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="buyer-phone">Telefon</label>
+                    <input
+                        id="buyer-phone"
+                        type="text"
+                        name="buyerPhone"
+                        [(ngModel)]="selectedInvoiceExtDto.buyerPhone"
+                        class="form-control"
+                        readOnly
+                        tabindex="3"
+                    />
+                </div>
+                <!-- /Telefon -->
+                
+                <!-- Giriş Tarihi -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="reservation-start-date">Giriş Tarihi</label>
+                    <div class="input-group">
+                        <input
+                            id="reservation-start-date"
+                            type="text"
+                            name="reservationStartDate"
+                            ngbDatepicker
+                            #reservationStartDate="ngbDatepicker"
+                            [minDate]="{year: 2021, month: 1, day: 1}"
+                            [maxDate]="{year: 2030, month: 12, day: 31}"
+                            class="form-control"
+                            [(ngModel)]="selectedInvoiceExtDto.reservationStartDate"
+                            placeholder="gg/aa/yyyy"
+                            tabindex="4"
+                        />
+                        <button class="btn btn-outline-color-2" (click)="reservationStartDate.toggle()" type="button">
+                            <i class="far fa-calendar-alt fa-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /Giriş Tarihi -->
+
+                <!-- Çıkış Tarihi -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="reservation-end-date">Çıkış Tarihi</label>
+                    <div class="input-group">
+                        <input
+                            id="reservation-end-date"
+                            type="text"
+                            name="reservationEndDate"
+                            ngbDatepicker
+                            #reservationEndDate="ngbDatepicker"
+                            [minDate]="{year: 2021, month: 1, day: 1}"
+                            [maxDate]="{year: 2030, month: 12, day: 31}"
+                            class="form-control"
+                            [(ngModel)]="selectedInvoiceExtDto.reservationEndDate"
+                            placeholder="gg/aa/yyyy"
+                            tabindex="5"
+                        />
+                        <button class="btn btn-outline-color-2" (click)="reservationEndDate.toggle()" type="button">
+                            <i class="far fa-calendar-alt fa-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /Çıkış Tarihi -->
+
+                <!-- Yetişkin Sayısı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="bed">Yetişkin Sayısı</label>
+                    <input
+                        id="adult"
+                        type="number"
+                        name="adult"
+                        [(ngModel)]="selectedInvoiceExtDto.adult"
+                        class="form-control"
+                        readOnly
+                        tabindex="6"
+                    />
+                </div>
+                <!-- /Yetişkin Sayısı -->
+                
+                <!-- Çocuk Sayısı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="child">Çocuk Sayısı</label>
+                    <input
+                        id="child"
+                        type="number"
+                        name="child"
+                        [(ngModel)]="selectedInvoiceExtDto.child"
+                        class="form-control"
+                        readOnly
+                        tabindex="7"
+                    />
+                </div>
+                <!-- /Çocuk Sayısı -->
+                
+                <!-- 2. Çocuğun Yaşı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="child-age-2">2. Çocuğun Yaşı</label>
+                    <input
+                        id="child-age-2"
+                        type="number"
+                        name="childAge2"
+                        [(ngModel)]="selectedInvoiceExtDto.childAge2"
+                        class="form-control"
+                        readOnly
+                        tabindex="8"
+                    />
+                </div>
+                <!-- /2. Çocuğun Yaşı -->
+                
+                <!-- 3. Çocuğun Yaşı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="child-age-3">3. Çocuğun Yaşı</label>
+                    <input
+                        id="child-age-3"
+                        type="number"
+                        name="childAge3"
+                        [(ngModel)]="selectedInvoiceExtDto.childAge3"
+                        class="form-control"
+                        readOnly
+                        tabindex="9"
+                    />
+                </div>
+                <!-- /3. Çocuğun Yaşı -->
+                
+                <!-- 4. Çocuğun Yaşı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="child-age-4">4. Çocuğun Yaşı</label>
+                    <input
+                        id="child-age-4"
+                        type="number"
+                        name="childAge4"
+                        [(ngModel)]="selectedInvoiceExtDto.childAge4"
+                        class="form-control"
+                        readOnly
+                        tabindex="10"
+                    />
+                </div>
+                <!-- /4. Çocuğun Yaşı -->
+
+                <!-- 5. Çocuğun Yaşı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="child-age-5">5. Çocuğun Yaşı</label>
+                    <input
+                        id="child-age-5"
+                        type="number"
+                        name="childAge5"
+                        [(ngModel)]="selectedInvoiceExtDto.childAge5"
+                        class="form-control"
+                        readOnly
+                        tabindex="11"
+                    />
+                </div>
+                <!-- /5. Çocuğun Yaşı -->
+
+                <!-- 6. Çocuğun Yaşı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="child-age-6">6. Çocuğun Yaşı</label>
+                    <input
+                        id="child-age-6"
+                        type="number"
+                        name="childAge6"
+                        [(ngModel)]="selectedInvoiceExtDto.childAge6"
+                        class="form-control"
+                        readOnly
+                        tabindex="12"
+                    />
+                </div>
+                <!-- /6. Çocuğun Yaşı -->
+
+                <!-- Başlık -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="title">Başlık</label>
+                    <input
+                        id="title"
+                        type="text"
+                        name="title"
+                        [(ngModel)]="selectedInvoiceExtDto.title"
+                        class="form-control"
+                        readOnly
+                        tabindex="13"
+                    />
+                </div>
+                <!-- /Başlık -->
+                
+                <!-- Döviz Tipi -->
+                <div class="mt-3 mb-3">
+                    <label class="mb-2" for="currency-id">Döviz Tipi</label>
+                    <select 
+                        id="currency-id"
+                        name="currencyId"
+                        class="form-select"
+                        [(ngModel)]="selectedInvoiceExtDto.currencyId"
+                        disabled
+                        tabindex="14"
+                    >
+                        <option 
+                            *ngFor="let currencyDto of currencyDtos"
+                            [value]="currencyDto.currencyId"
+                        >
+                            {{currencyDto.title}}
+                        </option>
+                    </select>
+                </div>
+                <!-- /Döviz Tipi -->
+                
+                <!-- Satır Toplamı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="net-price">Satır Toplamı</label>
+                    <input
+                        id="net-price"
+                        type="number"
+                        name="netPrice"
+                        [(ngModel)]="selectedInvoiceExtDto.netPrice"
+                        class="form-control"
+                        readOnly
+                        tabindex="15"
+                    />
+                </div>
+                <!-- /Satır Toplamı -->
+                
+                <!-- KDV Oranı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="vat">KDV Oranı</label>
+                    <input
+                        id="vat"
+                        type="number"
+                        name="vat"
+                        [(ngModel)]="selectedInvoiceExtDto.vat"
+                        class="form-control"
+                        readOnly
+                        tabindex="16"
+                    />
+                </div>
+                <!-- /KDV Oranı -->
+                
+                <!-- Toplam KDV -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="total-vat">Toplam KDV</label>
+                    <input
+                        id="total-vat"
+                        type="number"
+                        name="totalVat"
+                        [(ngModel)]="selectedInvoiceExtDto.totalVat"
+                        class="form-control"
+                        readOnly
+                        tabindex="17"
+                    />
+                </div>
+                <!-- /Toplam KDV -->
+                
+                <!-- Toplam Tutar -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="total-price">Toplam Tutar</label>
+                    <input
+                        id="total-price"
+                        type="number"
+                        name="totalPrice"
+                        [(ngModel)]="selectedInvoiceExtDto.totalPrice"
+                        class="form-control"
+                        readOnly
+                        tabindex="18"
+                    />
+                </div>
+                <!-- /Toplam Tutar -->
+                
+                <!-- Butonlar -->
+                <div class="container-fluid m-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <button 
+                                type="button" 
+                                class="btn btn-outline-secondary btn-cancel-custom w-100"
+                                (click)="cancel()"
+                            >İptal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Butonlar -->
+            </form>
+        </div>
+    </div>
+</div>
+    

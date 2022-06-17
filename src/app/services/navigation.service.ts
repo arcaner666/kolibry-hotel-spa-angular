@@ -58,7 +58,7 @@ export class NavigationService {
     {
       id: "reservations",
       title: "Rezervasyonlar",
-      url: "admin/reservation",
+      url: "admin/invoice",
       type: "item",
       role: ["Admin"],
       icon: "",
