@@ -56,17 +56,6 @@ export class NavigationService {
       navLinks: [],
     },
     {
-      id: "invoices",
-      title: "Satışlar",
-      url: "admin/invoice",
-      type: "item",
-      role: ["Admin"],
-      icon: "",
-      disabled: false,
-      hidden: false,
-      navLinks: [],
-    },
-    {
       id: "reservations",
       title: "Rezervasyonlar",
       url: "admin/reservation",
