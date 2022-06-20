@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { ContactDto } from 'src/app/models/dtos/contact-dto';
 import { ContactDtoErrors } from 'src/app/models/validation-errors/contact-dto-errors';
+import { InvoiceDetailDto } from 'src/app/models/dtos/invoice-detail-dto';
+import { InvoiceDetailDtoErrors } from 'src/app/models/validation-errors/invoice-detail-dto-errors';
 import { InvoiceExtDto } from 'src/app/models/dtos/invoice-ext-dto';
 import { InvoiceExtDtoErrors } from 'src/app/models/validation-errors/invoice-ext-dto-errors';
 import { PersonExtDto } from 'src/app/models/dtos/person-ext-dto';
@@ -49,6 +51,12 @@ export class ValidationService {
     return (value == undefined || value == null || new Date(value).valueOf() > Date.now().valueOf() ? false : true);
   }
 
+  dateDifferencePositive(value1: Date | undefined | null, value2: Date | undefined | null,): boolean {
+    return (
+      value1 == undefined || value1 == null ||
+      value2 == undefined || value2 == null || new Date(value2).valueOf() <= new Date(value1).valueOf() ? false : true);
+  }
+
   int(value: number | undefined | null): boolean {
     return (value == undefined || value == null || value < -2147483648 || value > 2147483647 ? false : true);
   }
@@ -75,6 +83,10 @@ export class ValidationService {
   }
 
   range(value: number | undefined | null, minValue: number, maxValue: number): boolean {
+    return (value == undefined || value == null || value <= minValue || value >= maxValue ? false : true);
+  }
+
+  rangeInclude(value: number | undefined | null, minValue: number, maxValue: number): boolean {
     return (value == undefined || value == null || value < minValue || value > maxValue ? false : true);
   }
 
@@ -109,6 +121,10 @@ export class ValidationService {
     return (value == undefined || value == null || value <= 0 || value > 255 ? false : true);
   }
 
+  tinyintWithZero(value: number | undefined | null): boolean {
+    return (value == undefined || value == null || value < 0 || value > 255 ? false : true);
+  }
+
   // Kurallar
   validateContactDtoForAdd(contactDto: ContactDto): [boolean, ContactDtoErrors] {
     let contactDtoErrors = this.contactService.emptyContactDtoErrors;  
@@ -122,8 +138,12 @@ export class ValidationService {
     if (!email)
       contactDtoErrors.email = "Lütfen e-posta adresinizi giriniz.";
 
-    const phone: boolean = this.string(contactDto.phone);
-    if (!phone)
+    const phone1: boolean = this.stringPreciseLength(contactDtoErrors.phone, 10);
+    if (!phone1)
+      contactDtoErrors.phone = "Telefon numarası 10 haneden oluşmalıdır. Örneğin; 5554443322";
+      
+    const phone2: boolean = this.string(contactDto.phone);
+    if (!phone2)
       contactDtoErrors.phone = "Lütfen telefon numaranızı giriniz.";
 
     const message: boolean = this.string(contactDto.message);
@@ -138,6 +158,110 @@ export class ValidationService {
     return [isValid, contactDtoErrors];
   }
 
+  validateInvoiceDetailDtoForAdd(invoiceDetailDto: InvoiceDetailDto): [boolean, InvoiceDetailDtoErrors] {
+    let invoiceDetailDtoErrors = this.invoiceService.emptyInvoiceDetailDtoErrors;  
+    let isValid: boolean = true;
+
+    const suiteId: boolean = this.intPositive(invoiceDetailDto.suiteId);
+    if (!suiteId)
+      invoiceDetailDtoErrors.suiteId = "Lütfen odanızı seçiniz.";
+
+    const amount: boolean = this.tinyint(invoiceDetailDto.amount);
+    if (!amount)
+      invoiceDetailDtoErrors.amount = "Otelden çıkış tarihi giriş tarihinden önce olamaz.";
+      
+    for (const key in invoiceDetailDtoErrors) {
+      if (invoiceDetailDtoErrors[key as keyof InvoiceDetailDtoErrors] != "")
+        isValid = false;
+    }
+
+    return [isValid, invoiceDetailDtoErrors];
+  }
+  
+  validateInvoiceExtDtoForAdd(invoiceExtDto: InvoiceExtDto): [boolean, InvoiceExtDtoErrors] {
+    let invoiceExtDtoErrors = this.invoiceService.emptyInvoiceExtDtoErrors;  
+    let isValid: boolean = true;
+
+    const currencyId: boolean = this.tinyint(invoiceExtDto.currencyId);
+    if (!currencyId)
+      invoiceExtDtoErrors.currencyId = "Lütfen döviz tipini seçiniz.";
+
+    const buyerNameSurname: boolean = this.string(invoiceExtDto.buyerNameSurname);
+    if (!buyerNameSurname)
+      invoiceExtDtoErrors.buyerNameSurname = "Lütfen adınızı ve soyadınızı giriniz.";
+    
+    const buyerEmail: boolean = this.string(invoiceExtDto.buyerEmail);
+    if (!buyerEmail)
+      invoiceExtDtoErrors.buyerEmail = "Lütfen e-posta adresinizi giriniz.";
+    
+    const buyerPhone: boolean = this.string(invoiceExtDto.buyerPhone);
+    if (!buyerPhone)
+      invoiceExtDtoErrors.buyerPhone = "Lütfen telefon numarası giriniz.";
+      
+    const reservationStartDate: boolean = this.date(invoiceExtDto.reservationStartDate);
+    if (!reservationStartDate)
+      invoiceExtDtoErrors.reservationStartDate = "Lütfen otele giriş yapacağınız tarihi seçiniz.";
+      
+    const reservationEndDate1: boolean = this.dateDifferencePositive(invoiceExtDto.reservationStartDate, invoiceExtDto.reservationEndDate);
+    if (!reservationEndDate1)
+      invoiceExtDtoErrors.reservationEndDate = "Otelden çıkış tarihi giriş tarihinden önce olamaz.";
+    
+    const reservationEndDate2: boolean = this.date(invoiceExtDto.reservationEndDate);
+    if (!reservationEndDate2)
+      invoiceExtDtoErrors.reservationEndDate = "Lütfen otele çıkış yapacağınız tarihi seçiniz.";
+      
+    const adult: boolean = this.rangeInclude(invoiceExtDto.adult, 1, 12);
+    if (!adult)
+      invoiceExtDtoErrors.adult = "Lütfen yetişkin sayısını seçiniz.";
+
+    const child: boolean = this.rangeInclude(invoiceExtDto.child, 0, 6);
+    if (!child)
+      invoiceExtDtoErrors.child = "Lütfen çocuk sayısını seçiniz.";
+    
+    if (invoiceExtDto.child >= 1) {
+      const childAge1: boolean = this.rangeInclude(invoiceExtDto.childAge1, 1, 12);
+      if (!childAge1)
+        invoiceExtDtoErrors.childAge1 = "Lütfen birinci çocuğun yaşını seçiniz.";
+    }
+
+    if (invoiceExtDto.child >= 2) {
+      const childAge2: boolean = this.rangeInclude(invoiceExtDto.childAge2, 1, 12);
+      if (!childAge2)
+        invoiceExtDtoErrors.childAge2 = "Lütfen ikinci çocuğun yaşını seçiniz.";
+    }
+    
+    if (invoiceExtDto.child >= 3) {
+      const childAge3: boolean = this.rangeInclude(invoiceExtDto.childAge3, 1, 12);
+      if (!childAge3)
+        invoiceExtDtoErrors.childAge3 = "Lütfen üçüncü çocuğun yaşını seçiniz.";
+    }
+        
+    if (invoiceExtDto.child >= 4) {
+      const childAge4: boolean = this.rangeInclude(invoiceExtDto.childAge4, 1, 12);
+      if (!childAge4)
+        invoiceExtDtoErrors.childAge4 = "Lütfen dördüncü çocuğun yaşını seçiniz.";
+    }
+        
+    if (invoiceExtDto.child >= 5) {
+      const childAge5: boolean = this.rangeInclude(invoiceExtDto.childAge5, 1, 12);
+      if (!childAge5)
+        invoiceExtDtoErrors.childAge5 = "Lütfen beşinci çocuğun yaşını seçiniz.";
+    }
+        
+    if (invoiceExtDto.child >= 6) {
+      const childAge6: boolean = this.rangeInclude(invoiceExtDto.childAge6, 1, 12);
+      if (!childAge6)
+        invoiceExtDtoErrors.childAge6 = "Lütfen altıncı çocuğun yaşını seçiniz.";
+    }
+
+    for (const key in invoiceExtDtoErrors) {
+      if (invoiceExtDtoErrors[key as keyof InvoiceExtDtoErrors] != "")
+        isValid = false;
+    }
+
+    return [isValid, invoiceExtDtoErrors];
+  }
+  
   validatePersonExtDtoForLoginWithEmail(personExtDto: PersonExtDto): [boolean, PersonExtDtoErrors] {
     let personExtDtoErrors = this.personService.emptyPersonExtDtoErrors;  
     let isValid: boolean = true;

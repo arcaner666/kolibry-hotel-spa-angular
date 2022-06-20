@@ -6,6 +6,8 @@ import { cloneDeep } from 'lodash';
 
 import { environment } from 'src/environments/environment';
 
+import { InvoiceDetailDto } from 'src/app/models/dtos/invoice-detail-dto';
+import { InvoiceDetailDtoErrors } from 'src/app/models/validation-errors/invoice-detail-dto-errors';
 import { InvoiceExtDto } from 'src/app/models/dtos/invoice-ext-dto';
 import { InvoiceExtDtoErrors } from 'src/app/models/validation-errors/invoice-ext-dto-errors';
 import { ListDataResult } from 'src/app/models/results/list-data-result';
@@ -18,6 +20,26 @@ import { SingleDataResult } from 'src/app/models/results/single-data-result';
 export class InvoiceService {
 
   private controllerUrl: string = "invoices";
+  private _emptyInvoiceDetailDto: InvoiceDetailDto = {
+    invoiceDetailId: 0,
+    invoiceId: 0,
+    suiteId: 0,
+    amount: 0,
+    price: 0,
+    vat: 0,
+    totalVat: 0,
+    totalPrice: 0,
+  };
+  private _emptyInvoiceDetailDtoErrors: InvoiceDetailDtoErrors = {
+    invoiceDetailId: "",
+    invoiceId: "",
+    suiteId: "",
+    amount: "",
+    price: "",
+    vat: "",
+    totalVat: "",
+    totalPrice: "",
+  };
   private _emptyInvoiceExtDto: InvoiceExtDto = {
     invoiceId: 0,
     currencyId: 0,
@@ -86,6 +108,14 @@ export class InvoiceService {
   constructor(
     private http: HttpClient,
   ) {}
+
+  public get emptyInvoiceDetailDto(): InvoiceDetailDto {
+    return cloneDeep(this._emptyInvoiceDetailDto);
+  }
+
+  public get emptyInvoiceDetailDtoErrors(): InvoiceDetailDtoErrors {
+    return cloneDeep(this._emptyInvoiceDetailDtoErrors);
+  }
 
   public get emptyInvoiceExtDto(): InvoiceExtDto {
     return cloneDeep(this._emptyInvoiceExtDto);

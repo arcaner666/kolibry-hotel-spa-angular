@@ -127,6 +127,21 @@
                 </div>
                 <!-- /Çocuk Sayısı -->
                 
+                <!-- 1. Çocuğun Yaşı -->
+                <div class="mt-3 mb-3">
+                    <label class="form-label" for="child-age-1">1. Çocuğun Yaşı</label>
+                    <input
+                        id="child-age-1"
+                        type="number"
+                        name="childAge1"
+                        [(ngModel)]="selectedInvoiceExtDto.childAge1"
+                        class="form-control"
+                        readOnly
+                        tabindex="8"
+                    />
+                </div>
+                <!-- /1. Çocuğun Yaşı -->
+                
                 <!-- 2. Çocuğun Yaşı -->
                 <div class="mt-3 mb-3">
                     <label class="form-label" for="child-age-2">2. Çocuğun Yaşı</label>
@@ -137,7 +152,7 @@
                         [(ngModel)]="selectedInvoiceExtDto.childAge2"
                         class="form-control"
                         readOnly
-                        tabindex="8"
+                        tabindex="9"
                     />
                 </div>
                 <!-- /2. Çocuğun Yaşı -->
@@ -152,7 +167,7 @@
                         [(ngModel)]="selectedInvoiceExtDto.childAge3"
                         class="form-control"
                         readOnly
-                        tabindex="9"
+                        tabindex="10"
                     />
                 </div>
                 <!-- /3. Çocuğun Yaşı -->
@@ -167,7 +182,7 @@
                         [(ngModel)]="selectedInvoiceExtDto.childAge4"
                         class="form-control"
                         readOnly
-                        tabindex="10"
+                        tabindex="11"
                     />
                 </div>
                 <!-- /4. Çocuğun Yaşı -->
@@ -182,7 +197,7 @@
                         [(ngModel)]="selectedInvoiceExtDto.childAge5"
                         class="form-control"
                         readOnly
-                        tabindex="11"
+                        tabindex="12"
                     />
                 </div>
                 <!-- /5. Çocuğun Yaşı -->
@@ -197,7 +212,7 @@
                         [(ngModel)]="selectedInvoiceExtDto.childAge6"
                         class="form-control"
                         readOnly
-                        tabindex="12"
+                        tabindex="13"
                     />
                 </div>
                 <!-- /6. Çocuğun Yaşı -->
@@ -212,7 +227,7 @@
                         [(ngModel)]="selectedInvoiceExtDto.title"
                         class="form-control"
                         readOnly
-                        tabindex="13"
+                        tabindex="14"
                     />
                 </div>
                 <!-- /Başlık -->
@@ -226,7 +241,7 @@
                         class="form-select"
                         [(ngModel)]="selectedInvoiceExtDto.currencyId"
                         disabled
-                        tabindex="14"
+                        tabindex="15"
                     >
                         <option 
                             *ngFor="let currencyDto of currencyDtos"
@@ -248,7 +263,7 @@
                         [(ngModel)]="selectedInvoiceExtDto.netPrice"
                         class="form-control"
                         readOnly
-                        tabindex="15"
+                        tabindex="16"
                     />
                 </div>
                 <!-- /Satır Toplamı -->
@@ -263,7 +278,7 @@
                         [(ngModel)]="selectedInvoiceExtDto.vat"
                         class="form-control"
                         readOnly
-                        tabindex="16"
+                        tabindex="17"
                     />
                 </div>
                 <!-- /KDV Oranı -->
@@ -278,7 +293,7 @@
                         [(ngModel)]="selectedInvoiceExtDto.totalVat"
                         class="form-control"
                         readOnly
-                        tabindex="17"
+                        tabindex="18"
                     />
                 </div>
                 <!-- /Toplam KDV -->
@@ -293,7 +308,7 @@
                         [(ngModel)]="selectedInvoiceExtDto.totalPrice"
                         class="form-control"
                         readOnly
-                        tabindex="18"
+                        tabindex="19"
                     />
                 </div>
                 <!-- /Toplam Tutar -->

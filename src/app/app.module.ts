@@ -73,13 +73,15 @@ import { ToastComponent } from 'src/app/components/toast/toast.component';
 // Interceptors
 import { ErrorInterceptor } from 'src/app/interceptors/error.interceptor';
 
+// Pipes
+import { SubstringPipe } from 'src/app/pipes/substring.pipe';
+
 // Models
 import { PersonExtDto } from 'src/app/models/dtos/person-ext-dto';
 
 // Services
 import { CustomDateAdapter } from 'src/app/services/custom-date-adapter.service';
 import { CustomDateParserFormatter } from 'src/app/services/custom-date-parser-formatter.service';
-import { SubstringPipe } from './pipes/substring.pipe';
 
 @NgModule({
   declarations: [
@@ -119,6 +121,9 @@ import { SubstringPipe } from './pipes/substring.pipe';
     SuiteComponent,
     SuiteDetailComponent,
     SuiteListComponent,
+    
+    // Pipes
+    SubstringPipe,
 
     // Public Components
     AboutComponent,
@@ -129,10 +134,11 @@ import { SubstringPipe } from './pipes/substring.pipe';
     LoginComponent,
     NotAuthorizedComponent,
     RegisterComponent,
-    ReservationComponent,    
+    ReservationComponent,
 
     // Toast Components
-    ToastComponent, SubstringPipe,
+    ToastComponent, 
+    
   ],
   imports: [
     // Angular Modules

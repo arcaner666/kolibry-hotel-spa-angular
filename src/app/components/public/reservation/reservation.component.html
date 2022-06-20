@@ -1,1 +1,472 @@
-<p>reservation</p>
+<div class="container-fluid login-special d-flex flex-column justify-content-center" [ngClass]="{'p-2': breakpointService.screenSize.width < 568 }">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-lg-12 col-xl-8 col-xxl-6">
+            <div class="card shadow-lg" [ngClass]="{'mt-4 mb-4': breakpointService.screenSize.width >= 568 }">
+                <div class="card-body">
+                    <h2 class="card-title text-center fs-4">{{cardHeader}}</h2>
+
+                    <form #form="ngForm" (ngSubmit)="add()" class="container-fluid p-0">
+                        <!-- Döviz Tipi -->
+                        <div class="mt-3 mb-3">
+                            <label class="mb-2" for="currency-id">Döviz Tipi</label>
+                            <select 
+                                id="currency-id"
+                                name="currencyId"
+                                class="form-select"
+                                [(ngModel)]="selectedInvoiceExtDto.currencyId"
+                                [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.currencyId }"
+                                (change)="resetModelsAndCalculate()"
+                                (change)="selectedInvoiceExtDtoErrors.currencyId = ''"
+                                tabindex="1"
+                            >
+                                <option 
+                                    *ngFor="let currencyDto of currencyDtos"
+                                    [value]="currencyDto.currencyId"
+                                >
+                                    {{currencyDto.title}}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.currencyId">
+                                <div>{{selectedInvoiceExtDtoErrors.currencyId}}</div>
+                            </div>
+                        </div>
+                        <!-- /Döviz Tipi -->
+
+                        <!-- Ad Soyad -->
+                        <div class="mt-3 mb-3">
+                            <label class="form-label" for="buyer-name-surname">Ad Soyad</label>
+                            <input
+                                id="buyer-name-surname"
+                                type="text"
+                                name="buyerNameSurname"
+                                class="form-control"
+                                [(ngModel)]="selectedInvoiceExtDto.buyerNameSurname"
+                                [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.buyerNameSurname }"
+                                (change)="selectedInvoiceExtDtoErrors.buyerNameSurname = ''"
+                                tabindex="1"
+                            />
+                            <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.buyerNameSurname">
+                                <div>{{selectedInvoiceExtDtoErrors.buyerNameSurname}}</div>
+                            </div>
+                        </div>
+                        <!-- /Ad Soyad -->
+
+                        <!-- E-Posta -->
+                        <div class="mt-3 mb-3">
+                            <label class="form-label" for="buyer-email">E-Posta</label>
+                            <input
+                                id="buyer-email"
+                                type="text"
+                                name="buyerEmail"
+                                class="form-control"
+                                [(ngModel)]="selectedInvoiceExtDto.buyerEmail"
+                                [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.buyerEmail }"
+                                (change)="selectedInvoiceExtDtoErrors.buyerEmail = ''"
+                                tabindex="2"
+                            />
+                            <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.buyerEmail">
+                                <div>{{selectedInvoiceExtDtoErrors.buyerEmail}}</div>
+                            </div>
+                        </div>
+                        <!-- /E-Posta -->
+
+                        <!-- Telefon -->
+                        <div class="mt-3 mb-3">
+                            <label class="form-label" for="buyer-phone">Telefon</label>
+                            <input
+                                id="buyer-phone"
+                                type="text"
+                                name="buyerPhone"
+                                class="form-control"
+                                [(ngModel)]="selectedInvoiceExtDto.buyerPhone"
+                                [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.buyerPhone }"
+                                (change)="selectedInvoiceExtDtoErrors.buyerPhone = ''"
+                                tabindex="3"
+                            />
+                            <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.buyerPhone">
+                                <div>{{selectedInvoiceExtDtoErrors.buyerPhone}}</div>
+                            </div>
+                        </div>
+                        <!-- /Telefon -->
+
+                        <div class="row">
+                            <!-- Giriş Tarihi -->
+                            <div class="col-sm-12 col-lg-6 mt-3 mb-3">
+                                <label class="form-label" for="reservation-start-date">Giriş Tarihi</label>
+                                <div class="input-group">
+                                    <input
+                                        id="reservation-start-date"
+                                        type="text"
+                                        name="reservationStartDate"
+                                        ngbDatepicker
+                                        #reservationStartDate="ngbDatepicker"
+                                        [minDate]="{year: 2021, month: 1, day: 1}"
+                                        [maxDate]="{year: 2030, month: 12, day: 31}"
+                                        class="form-control"
+                                        [(ngModel)]="selectedInvoiceExtDto.reservationStartDate"
+                                        [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.reservationStartDate }"
+                                        (change)="selectedInvoiceExtDtoErrors.reservationStartDate = ''"
+                                        (change)="resetModelsAndCalculate()"
+                                        placeholder="gg/aa/yyyy"
+                                        tabindex="4"
+                                    />
+                                    <button class="btn btn-outline-color-2" (click)="reservationStartDate.toggle()" type="button">
+                                        <i class="far fa-calendar-alt fa-lg"></i>
+                                    </button>
+                                    <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.reservationStartDate">
+                                        <div>{{selectedInvoiceExtDtoErrors.reservationStartDate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Giriş Tarihi -->
+
+                            <!-- Çıkış Tarihi -->
+                            <div class="col-sm-12 col-lg-6 mt-3 mb-3">
+                                <label class="form-label" for="reservation-end-date">Çıkış Tarihi</label>
+                                <div class="input-group">
+                                    <input
+                                        id="reservation-end-date"
+                                        type="text"
+                                        name="reservationEndDate"
+                                        ngbDatepicker
+                                        #reservationEndDate="ngbDatepicker"
+                                        [minDate]="{year: 2021, month: 1, day: 1}"
+                                        [maxDate]="{year: 2030, month: 12, day: 31}"
+                                        class="form-control"
+                                        [(ngModel)]="selectedInvoiceExtDto.reservationEndDate"
+                                        [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.reservationEndDate }"
+                                        (change)="selectedInvoiceExtDtoErrors.reservationEndDate = ''"
+                                        (change)="resetModelsAndCalculate()"
+                                        placeholder="gg/aa/yyyy"
+                                        tabindex="5"
+                                    />
+                                    <button class="btn btn-outline-color-2" (click)="reservationEndDate.toggle()" type="button">
+                                        <i class="far fa-calendar-alt fa-lg"></i>
+                                    </button>
+                                    <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.reservationEndDate">
+                                        <div>{{selectedInvoiceExtDtoErrors.reservationEndDate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Çıkış Tarihi -->
+                        </div>
+                        
+                        <div class="row">
+                            <!-- Yetişkin Sayısı -->
+                            <div class="col-sm-12 col-lg-6 mt-3 mb-3">
+                                <label class="mb-2" for="adult">Yetişkin Sayısı</label>
+                                <select 
+                                    id="adult"
+                                    name="adult"
+                                    class="form-select"
+                                    [(ngModel)]="selectedInvoiceExtDto.adult"
+                                    [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.adult }"
+                                    (change)="selectedInvoiceExtDtoErrors.adult = ''"
+                                    tabindex="6"
+                                >
+                                    <option [value]="1">1</option>
+                                    <option [value]="2">2</option>
+                                    <option [value]="3">3</option>
+                                    <option [value]="4">4</option>
+                                    <option [value]="5">5</option>
+                                    <option [value]="6">6</option>
+                                    <option [value]="7">7</option>
+                                    <option [value]="8">8</option>
+                                    <option [value]="9">9</option>
+                                    <option [value]="10">10</option>
+                                    <option [value]="11">11</option>
+                                    <option [value]="12">12</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.adult">
+                                    <div>{{selectedInvoiceExtDtoErrors.adult}}</div>
+                                </div>
+                            </div>
+                            <!-- /Yetişkin Sayısı -->
+                            
+                            <!-- Çocuk Sayısı -->
+                            <div class="col-sm-12 col-lg-6 mt-3 mb-3">
+                                <label class="mb-2" for="child">Çocuk Sayısı</label>
+                                <select 
+                                    id="child"
+                                    name="child"
+                                    class="form-select"
+                                    [(ngModel)]="selectedInvoiceExtDto.child"
+                                    [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.child }"
+                                    (change)="selectedInvoiceExtDtoErrors.child = ''"
+                                    tabindex="7"
+                                >
+                                    <option [value]="0">0</option>
+                                    <option [value]="1">1</option>
+                                    <option [value]="2">2</option>
+                                    <option [value]="3">3</option>
+                                    <option [value]="4">4</option>
+                                    <option [value]="5">5</option>
+                                    <option [value]="6">6</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.child">
+                                    <div>{{selectedInvoiceExtDtoErrors.child}}</div>
+                                </div>
+                            </div>
+                            <!-- /Çocuk Sayısı -->
+                        </div>
+                        
+                        <!-- 1. Çocuğun Yaşı -->
+                        <div class="col-12 mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 1">
+                            <label class="mb-2" for="child-age-1">1. Çocuğun Yaşı</label>
+                            <select 
+                                id="child-age-1"
+                                name="childAge1"
+                                class="form-select"
+                                [(ngModel)]="selectedInvoiceExtDto.childAge1"
+                                [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge1 }"
+                                (change)="selectedInvoiceExtDtoErrors.childAge1 = ''"
+                                tabindex="8"
+                            >
+                                <option [value]="1">1</option>
+                                <option [value]="2">2</option>
+                                <option [value]="3">3</option>
+                                <option [value]="4">4</option>
+                                <option [value]="5">5</option>
+                                <option [value]="6">6</option>
+                                <option [value]="7">7</option>
+                                <option [value]="8">8</option>
+                                <option [value]="9">9</option>
+                                <option [value]="10">10</option>
+                                <option [value]="11">11</option>
+                                <option [value]="12">12</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.childAge1">
+                                <div>{{selectedInvoiceExtDtoErrors.childAge1}}</div>
+                            </div>
+                        </div>
+                        <!-- /1. Çocuğun Yaşı -->
+                        
+                        <!-- 2. Çocuğun Yaşı -->
+                        <div class="col-12 mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 2">
+                            <label class="mb-2" for="child-age-2">2. Çocuğun Yaşı</label>
+                            <select 
+                                id="child-age-2"
+                                name="childAge2"
+                                class="form-select"
+                                [(ngModel)]="selectedInvoiceExtDto.childAge2"
+                                [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge2 }"
+                                (change)="selectedInvoiceExtDtoErrors.childAge2 = ''"
+                                tabindex="9"
+                            >
+                                <option [value]="1">1</option>
+                                <option [value]="2">2</option>
+                                <option [value]="3">3</option>
+                                <option [value]="4">4</option>
+                                <option [value]="5">5</option>
+                                <option [value]="6">6</option>
+                                <option [value]="7">7</option>
+                                <option [value]="8">8</option>
+                                <option [value]="9">9</option>
+                                <option [value]="10">10</option>
+                                <option [value]="11">11</option>
+                                <option [value]="12">12</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.childAge2">
+                                <div>{{selectedInvoiceExtDtoErrors.childAge2}}</div>
+                            </div>
+                        </div>
+                        <!-- /2. Çocuğun Yaşı -->
+                        
+                        <!-- 3. Çocuğun Yaşı -->
+                        <div class="col-12 mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 3">
+                            <label class="mb-2" for="child-age-3">3. Çocuğun Yaşı</label>
+                            <select 
+                                id="child-age-3"
+                                name="childAge3"
+                                class="form-select"
+                                [(ngModel)]="selectedInvoiceExtDto.childAge3"
+                                [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge3 }"
+                                (change)="selectedInvoiceExtDtoErrors.childAge3 = ''"
+                                tabindex="10"
+                            >
+                                <option [value]="1">1</option>
+                                <option [value]="2">2</option>
+                                <option [value]="3">3</option>
+                                <option [value]="4">4</option>
+                                <option [value]="5">5</option>
+                                <option [value]="6">6</option>
+                                <option [value]="7">7</option>
+                                <option [value]="8">8</option>
+                                <option [value]="9">9</option>
+                                <option [value]="10">10</option>
+                                <option [value]="11">11</option>
+                                <option [value]="12">12</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.childAge3">
+                                <div>{{selectedInvoiceExtDtoErrors.childAge3}}</div>
+                            </div>
+                        </div>
+                        <!-- /3. Çocuğun Yaşı -->
+
+                        <!-- 4. Çocuğun Yaşı -->
+                        <div class="mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 4">
+                            <label class="mb-2" for="child-age-4">4. Çocuğun Yaşı</label>
+                            <select 
+                                id="child-age-4"
+                                name="childAge4"
+                                class="form-select"
+                                [(ngModel)]="selectedInvoiceExtDto.childAge4"
+                                [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge4 }"
+                                (change)="selectedInvoiceExtDtoErrors.childAge4 = ''"
+                                tabindex="11"
+                            >
+                                <option [value]="1">1</option>
+                                <option [value]="2">2</option>
+                                <option [value]="3">3</option>
+                                <option [value]="4">4</option>
+                                <option [value]="5">5</option>
+                                <option [value]="6">6</option>
+                                <option [value]="7">7</option>
+                                <option [value]="8">8</option>
+                                <option [value]="9">9</option>
+                                <option [value]="10">10</option>
+                                <option [value]="11">11</option>
+                                <option [value]="12">12</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.childAge4">
+                                <div>{{selectedInvoiceExtDtoErrors.childAge4}}</div>
+                            </div>
+                        </div>
+                        <!-- /4. Çocuğun Yaşı -->
+                        
+                        <!-- 5. Çocuğun Yaşı -->
+                        <div class="mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 5">
+                            <label class="mb-2" for="child-age-5">5. Çocuğun Yaşı</label>
+                            <select 
+                                id="child-age-5"
+                                name="childAge5"
+                                class="form-select"
+                                [(ngModel)]="selectedInvoiceExtDto.childAge5"
+                                [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge5 }"
+                                (change)="selectedInvoiceExtDtoErrors.childAge5 = ''"
+                                tabindex="12"
+                            >
+                                <option [value]="1">1</option>
+                                <option [value]="2">2</option>
+                                <option [value]="3">3</option>
+                                <option [value]="4">4</option>
+                                <option [value]="5">5</option>
+                                <option [value]="6">6</option>
+                                <option [value]="7">7</option>
+                                <option [value]="8">8</option>
+                                <option [value]="9">9</option>
+                                <option [value]="10">10</option>
+                                <option [value]="11">11</option>
+                                <option [value]="12">12</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.childAge5">
+                                <div>{{selectedInvoiceExtDtoErrors.childAge5}}</div>
+                            </div>
+                        </div>
+                        <!-- /5. Çocuğun Yaşı -->
+
+                        <!-- 6. Çocuğun Yaşı -->
+                        <div class="mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 6">
+                            <label class="mb-2" for="child-age-6">6. Çocuğun Yaşı</label>
+                            <select 
+                                id="child-age-6"
+                                name="childAge6"
+                                class="form-select"
+                                [(ngModel)]="selectedInvoiceExtDto.childAge6"
+                                [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge6 }"
+                                (change)="selectedInvoiceExtDtoErrors.childAge6 = ''"
+                                tabindex="13"
+                            >
+                                <option [value]="1">1</option>
+                                <option [value]="2">2</option>
+                                <option [value]="3">3</option>
+                                <option [value]="4">4</option>
+                                <option [value]="5">5</option>
+                                <option [value]="6">6</option>
+                                <option [value]="7">7</option>
+                                <option [value]="8">8</option>
+                                <option [value]="9">9</option>
+                                <option [value]="10">10</option>
+                                <option [value]="11">11</option>
+                                <option [value]="12">12</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.childAge6">
+                                <div>{{selectedInvoiceExtDtoErrors.childAge6}}</div>
+                            </div>
+                        </div>
+                        <!-- /6. Çocuğun Yaşı -->
+                        
+                        <div class="row">
+                            <!-- Oda -->
+                            <div class="col-sm-12 col-lg-9 mt-3 mb-3">
+                                <label class="mb-2" for="suite-id">Oda</label>
+                                <select 
+                                    id="suite-id"
+                                    name="suiteId"
+                                    class="form-select"
+                                    [(ngModel)]="selectedInvoiceDetailDto.suiteId"
+                                    [ngClass]="{ 'is-invalid': submitted && selectedInvoiceDetailDtoErrors.suiteId }"
+                                    (change)="selectedInvoiceDetailDtoErrors.suiteId = ''"
+                                    (change)="resetModelsAndCalculate()"
+                                    tabindex="1"
+                                >
+                                    <option 
+                                        *ngFor="let suiteDto of suiteDtos"
+                                        [value]="suiteDto.suiteId"
+                                    >
+                                        {{suiteDto.title}}
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceDetailDtoErrors.suiteId">
+                                    <div>{{selectedInvoiceDetailDtoErrors.suiteId}}</div>
+                                </div>
+                            </div>
+                            <!-- /Oda -->
+
+                            <!-- Toplam Tutar -->
+                            <div class="col-sm-12 col-lg-3 mt-3 mb-3">
+                                <label class="form-label" for="total-price">Toplam Tutar</label>
+                                <input
+                                    id="total-price"
+                                    type="number"
+                                    name="totalPrice"
+                                    class="form-control"
+                                    [(ngModel)]="selectedInvoiceExtDto.totalPrice"
+                                    readOnly
+                                    tabindex="19"
+                                />
+                            </div>
+                            <!-- /Toplam Tutar -->
+                        </div>
+
+                        <!-- Butonlar -->
+                        <div class="container-fluid m-0 p-0">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-outline-success btn-success-custom w-100" 
+                                        [disabled]="loading"
+                                        tabindex="6"
+                                    >
+                                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>Devam Et
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-outline-secondary btn-cancel-custom w-100"
+                                        (click)="cancel()"
+                                    >İptal
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Butonlar -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
