@@ -4,6 +4,8 @@ export interface InvoiceExtDtoErrors {
     buyerNameSurname: string;
     buyerEmail: string;
     buyerPhone: string;
+    buyerAddress: string;
+    buyerIp: string;
     reservationStartDate: string;
     reservationEndDate: string;
     adult: string;

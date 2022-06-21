@@ -1,3 +1,7 @@
+<script src="https://www.paytr.com/js/iframeResizer.min.js"></script>
+<iframe *ngIf="iframeOpen" [src]="iframeUrl" id="paytriframe" frameborder="0" scrolling="no" style="width: 100vw; height: 100vh;"></iframe>
+<script>iFrameResize({},'#paytriframe');</script>
+
 <div class="container-fluid login-special d-flex flex-column justify-content-center" [ngClass]="{'p-2': breakpointService.screenSize.width < 568 }">
     <div class="row justify-content-center align-items-center">
         <div class="col-lg-12 col-xl-8 col-xxl-6">
@@ -89,6 +93,25 @@
                         </div>
                         <!-- /Telefon -->
 
+                        <!-- Adres -->
+                        <div class="mt-3 mb-3">
+                            <label class="form-label" for="buyer-address">Adres</label>
+                            <input
+                                id="buyer-address"
+                                type="text"
+                                name="buyerAddress"
+                                class="form-control"
+                                [(ngModel)]="selectedInvoiceExtDto.buyerAddress"
+                                [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.buyerAddress }"
+                                (change)="selectedInvoiceExtDtoErrors.buyerAddress = ''"
+                                tabindex="5"
+                            />
+                            <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.buyerAddress">
+                                <div>{{selectedInvoiceExtDtoErrors.buyerAddress}}</div>
+                            </div>
+                        </div>
+                        <!-- /Adres -->
+                        
                         <div class="row">
                             <!-- Giriş Tarihi -->
                             <div class="col-sm-12 col-lg-6 mt-3 mb-3">
@@ -109,7 +132,7 @@
                                         (dateSelect)="selectedInvoiceDetailDtoErrors.amount = ''"
                                         (dateSelect)="selectReservationStartDate($event)"
                                         placeholder="gg/aa/yyyy"
-                                        tabindex="5"
+                                        tabindex="6"
                                     />
                                     <button 
                                         class="btn btn-outline-color-2" 
@@ -143,7 +166,7 @@
                                         (dateSelect)="selectedInvoiceExtDtoErrors.reservationEndDate = ''"
                                         (dateSelect)="selectReservationEndDate($event)"
                                         placeholder="gg/aa/yyyy"
-                                        tabindex="6"
+                                        tabindex="7"
                                     />
                                     <button 
                                         class="btn btn-outline-color-2" 
@@ -171,7 +194,7 @@
                                 [(ngModel)]="selectedInvoiceDetailDto.amount"
                                 [ngClass]="{ 'is-invalid': submitted && selectedInvoiceDetailDtoErrors.amount }"
                                 readOnly
-                                tabindex="7"
+                                tabindex="8"
                             />
                             <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceDetailDtoErrors.amount">
                                 <div>{{selectedInvoiceDetailDtoErrors.amount}}</div>
@@ -190,7 +213,7 @@
                                     [(ngModel)]="selectedInvoiceExtDto.adult"
                                     [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.adult }"
                                     (change)="selectedInvoiceExtDtoErrors.adult = ''"
-                                    tabindex="8"
+                                    tabindex="9"
                                 >
                                     <option [value]="1">1</option>
                                     <option [value]="2">2</option>
@@ -221,7 +244,7 @@
                                     [(ngModel)]="selectedInvoiceExtDto.child"
                                     [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.child }"
                                     (change)="selectedInvoiceExtDtoErrors.child = ''"
-                                    tabindex="9"
+                                    tabindex="10"
                                 >
                                     <option [value]="0">0</option>
                                     <option [value]="1">1</option>
@@ -248,7 +271,7 @@
                                 [(ngModel)]="selectedInvoiceExtDto.childAge1"
                                 [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge1 }"
                                 (change)="selectedInvoiceExtDtoErrors.childAge1 = ''"
-                                tabindex="10"
+                                tabindex="11"
                             >
                                 <option [value]="1">1</option>
                                 <option [value]="2">2</option>
@@ -279,7 +302,7 @@
                                 [(ngModel)]="selectedInvoiceExtDto.childAge2"
                                 [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge2 }"
                                 (change)="selectedInvoiceExtDtoErrors.childAge2 = ''"
-                                tabindex="11"
+                                tabindex="12"
                             >
                                 <option [value]="1">1</option>
                                 <option [value]="2">2</option>
@@ -310,7 +333,7 @@
                                 [(ngModel)]="selectedInvoiceExtDto.childAge3"
                                 [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge3 }"
                                 (change)="selectedInvoiceExtDtoErrors.childAge3 = ''"
-                                tabindex="12"
+                                tabindex="13"
                             >
                                 <option [value]="1">1</option>
                                 <option [value]="2">2</option>
@@ -341,7 +364,7 @@
                                 [(ngModel)]="selectedInvoiceExtDto.childAge4"
                                 [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge4 }"
                                 (change)="selectedInvoiceExtDtoErrors.childAge4 = ''"
-                                tabindex="13"
+                                tabindex="14"
                             >
                                 <option [value]="1">1</option>
                                 <option [value]="2">2</option>
@@ -372,7 +395,7 @@
                                 [(ngModel)]="selectedInvoiceExtDto.childAge5"
                                 [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge5 }"
                                 (change)="selectedInvoiceExtDtoErrors.childAge5 = ''"
-                                tabindex="14"
+                                tabindex="15"
                             >
                                 <option [value]="1">1</option>
                                 <option [value]="2">2</option>
@@ -403,7 +426,7 @@
                                 [(ngModel)]="selectedInvoiceExtDto.childAge6"
                                 [ngClass]="{ 'is-invalid': submitted && selectedInvoiceExtDtoErrors.childAge6 }"
                                 (change)="selectedInvoiceExtDtoErrors.childAge6 = ''"
-                                tabindex="15"
+                                tabindex="16"
                             >
                                 <option [value]="1">1</option>
                                 <option [value]="2">2</option>
@@ -436,7 +459,7 @@
                                     [ngClass]="{ 'is-invalid': submitted && selectedInvoiceDetailDtoErrors.suiteId }"
                                     (change)="selectedInvoiceDetailDtoErrors.suiteId = ''"
                                     (change)="resetAndCalculate()"
-                                    tabindex="16"
+                                    tabindex="17"
                                 >
                                     <option 
                                         *ngFor="let suiteDto of suiteDtos"
@@ -462,7 +485,7 @@
                                         class="form-control"
                                         [(ngModel)]="selectedInvoiceExtDto.totalPrice"
                                         readOnly
-                                        tabindex="17"
+                                        tabindex="18"
                                     />
                                     <button 
                                         class="btn btn-outline-color-2" 
@@ -485,7 +508,7 @@
                                         type="submit" 
                                         class="btn btn-outline-success btn-success-custom w-100" 
                                         [disabled]="loading"
-                                        tabindex="18"
+                                        tabindex="19"
                                     >
                                         <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>Devam Et
                                     </button>

@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, concatMap, Observable } from 'rxjs';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { CurrencyDto } from 'src/app/models/dtos/currency-dto';
@@ -9,11 +10,14 @@ import { InvoiceDetailDto } from 'src/app/models/dtos/invoice-detail-dto';
 import { InvoiceDetailDtoErrors } from 'src/app/models/validation-errors/invoice-detail-dto-errors';
 import { InvoiceExtDto } from 'src/app/models/dtos/invoice-ext-dto';
 import { InvoiceExtDtoErrors } from 'src/app/models/validation-errors/invoice-ext-dto-errors';
+import { PayTrIframeDto } from 'src/app/models/dtos/paytr-iframe-dto';
+import { SingleDataResult } from 'src/app/models/results/single-data-result';
 import { SuiteDto } from 'src/app/models/dtos/suite-dto';
 
 import { BreakpointService } from 'src/app/services/breakpoint.service';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { InvoiceService } from 'src/app/services/invoice.service';
+import { PayTrService } from 'src/app/services/paytr.service';
 import { SuiteService } from 'src/app/services/suite.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ValidationService } from 'src/app/services/validation.service';
@@ -26,7 +30,11 @@ import { ValidationService } from 'src/app/services/validation.service';
 export class ReservationComponent implements OnInit, OnDestroy {
 
   public cardHeader: string = "Rezervasyon";
+  public clientIp: string = "";
   public currencyDtos: CurrencyDto[] = [];
+  public iframeOpen: boolean = false;
+  public iframeUrl: SafeUrl = "";
+  public payTrIframeDto$!: Observable<SingleDataResult<PayTrIframeDto>>;
   public loading: boolean = false;
   public selectedCurrencyTitle: string = "";
   public selectedInvoiceDetailDto: InvoiceDetailDto;
@@ -34,6 +42,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
   public selectedInvoiceDetailDtos: InvoiceDetailDto[] = [];
   public selectedInvoiceExtDto: InvoiceExtDto;
   public selectedInvoiceExtDtoErrors: InvoiceExtDtoErrors;
+  public selectedPayTrIframeDto: PayTrIframeDto;
   public submitted: boolean = false;
   public suiteDtos: SuiteDto[] = [];
   
@@ -41,7 +50,9 @@ export class ReservationComponent implements OnInit, OnDestroy {
   
   constructor(
     private currencyService: CurrencyService,
+    private domSanitizer: DomSanitizer,
     private invoiceService: InvoiceService,
+    private payTrService: PayTrService,
     private router: Router,
     private suiteService: SuiteService,
     private toastService: ToastService,
@@ -55,12 +66,15 @@ export class ReservationComponent implements OnInit, OnDestroy {
     this.selectedInvoiceDetailDtoErrors = this.invoiceService.emptyInvoiceDetailDtoErrors;
     this.selectedInvoiceExtDto = this.invoiceService.emptyInvoiceExtDto;
     this.selectedInvoiceExtDtoErrors = this.invoiceService.emptyInvoiceExtDtoErrors;
+    this.selectedPayTrIframeDto = this.payTrService.emptyPayTrIframeDto;
 
     this.getAllCurrencies();
     this.getAllSuites();
+    this.getClientIp();
   }
 
   add(): void {
+    this.selectedInvoiceExtDto.buyerIp = this.clientIp;
     this.submitted = true;
     let [isModelValid1, errors1] = this.validationService.validateInvoiceDetailDtoForAdd(this.selectedInvoiceDetailDto);
     let [isModelValid2, errors2] = this.validationService.validateInvoiceExtDtoForAdd(this.selectedInvoiceExtDto);
@@ -72,10 +86,24 @@ export class ReservationComponent implements OnInit, OnDestroy {
       this.invoiceService.add(this.selectedInvoiceExtDto)
       .pipe(
         takeUntil(this.unsubscribeAll),
-      ).subscribe({
-        next: (response) => {
+        concatMap((response) => {
           this.toastService.success(response.message);
           this.loading = false;
+
+          return this.getIframeToken(response.data.invoiceId);
+        }),
+      ).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.toastService.success(response.message);
+          this.loading = false;
+          this.createIframe(response.data.iframeToken);
+
+          this.selectedInvoiceDetailDto = this.invoiceService.emptyInvoiceDetailDto;
+          this.selectedInvoiceDetailDtoErrors = this.invoiceService.emptyInvoiceDetailDtoErrors;
+          this.selectedInvoiceExtDto = this.invoiceService.emptyInvoiceExtDto;
+          this.selectedInvoiceExtDtoErrors = this.invoiceService.emptyInvoiceExtDtoErrors;
+          this.selectedPayTrIframeDto = this.payTrService.emptyPayTrIframeDto;
         }, error: (error) => {
           console.log(error);
           this.toastService.danger(error.message);
@@ -129,6 +157,14 @@ export class ReservationComponent implements OnInit, OnDestroy {
     window.scroll(0,0);
   }
 
+  createIframe(iframeToken: string): void {
+    console.log(iframeToken);
+    const dangerousIframeUrl = `https://www.paytr.com/odeme/guvenli/${iframeToken}`;
+    this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(dangerousIframeUrl);
+    this.iframeOpen = true;
+    window.scroll(0,0);
+  }
+
   dateDifferenceInDays(startDate: Date, endDate: Date): number {
     const instantiatedStartDate = new Date(startDate);
     const instantiatedEndDate = new Date(endDate);
@@ -169,6 +205,48 @@ export class ReservationComponent implements OnInit, OnDestroy {
         this.toastService.danger(error.message);
       }
     });
+  }
+
+  getClientIp(): void {
+    this.payTrService.getClientIp()
+    .pipe(
+      takeUntil(this.unsubscribeAll)
+    ).subscribe({
+      next: (response) => {
+        this.clientIp = response.ip;
+      }, error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  getIframeToken(invoiceId: number): Observable<SingleDataResult<PayTrIframeDto>> {
+    this.selectedPayTrIframeDto = this.payTrService.emptyPayTrIframeDto;
+
+    this.selectedPayTrIframeDto.nameSurname = this.selectedInvoiceExtDto.buyerNameSurname;
+    this.selectedPayTrIframeDto.email = this.selectedInvoiceExtDto.buyerEmail;
+    this.selectedPayTrIframeDto.phone = this.selectedInvoiceExtDto.buyerPhone;
+    this.selectedPayTrIframeDto.address = this.selectedInvoiceExtDto.buyerAddress;
+    this.selectedPayTrIframeDto.paymentAmount = this.selectedInvoiceExtDto.totalPrice;
+    this.selectedPayTrIframeDto.userBasket = this.selectedInvoiceExtDto.invoiceDetailDtos;
+    this.selectedPayTrIframeDto.merchantOid = invoiceId.toString();
+    this.selectedPayTrIframeDto.merchantOkUrl = "https://localhost:4200/public/reservation-success";
+    this.selectedPayTrIframeDto.merchantFailUrl = "https://localhost:4200/public/reservation-fail";
+    this.selectedPayTrIframeDto.userIp = this.selectedInvoiceExtDto.buyerIp;
+
+    const filteredCurrencyDto: CurrencyDto = this.currencyDtos.filter(c => c.currencyId == this.selectedInvoiceExtDto.currencyId)[0];
+    if (filteredCurrencyDto.title = "TL") {
+      this.selectedPayTrIframeDto.currency = "TL";
+    } else if (filteredCurrencyDto.title = "Dolar") {
+      this.selectedPayTrIframeDto.currency = "USD";
+    } else if (filteredCurrencyDto.title = "Euro") {
+      this.selectedPayTrIframeDto.currency = "EUR";
+    }
+
+    this.selectedPayTrIframeDto.language = "tr";
+
+    this.payTrIframeDto$ = this.payTrService.getIframeToken(this.selectedPayTrIframeDto);
+    return this.payTrIframeDto$;
   }
 
   reset(): void {

@@ -198,6 +198,10 @@ export class ValidationService {
     if (!buyerPhone)
       invoiceExtDtoErrors.buyerPhone = "Lütfen telefon numarası giriniz.";
       
+    const buyerAddress: boolean = this.string(invoiceExtDto.buyerAddress);
+    if (!buyerAddress)
+      invoiceExtDtoErrors.buyerAddress = "Lütfen adresinizi giriniz.";
+
     const reservationStartDate: boolean = this.date(invoiceExtDto.reservationStartDate);
     if (!reservationStartDate)
       invoiceExtDtoErrors.reservationStartDate = "Lütfen otele giriş yapacağınız tarihi seçiniz.";
@@ -261,7 +265,7 @@ export class ValidationService {
 
     return [isValid, invoiceExtDtoErrors];
   }
-  
+
   validatePersonExtDtoForLoginWithEmail(personExtDto: PersonExtDto): [boolean, PersonExtDtoErrors] {
     let personExtDtoErrors = this.personService.emptyPersonExtDtoErrors;  
     let isValid: boolean = true;

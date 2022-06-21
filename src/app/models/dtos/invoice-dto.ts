@@ -4,6 +4,8 @@ export interface InvoiceDto {
     buyerNameSurname: string;
     buyerEmail: string;
     buyerPhone: string;
+    buyerAddress: string;
+    buyerIp: string;
     reservationStartDate: Date;
     reservationEndDate: Date;
     adult: number;

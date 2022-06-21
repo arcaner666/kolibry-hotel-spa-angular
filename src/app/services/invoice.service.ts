@@ -46,6 +46,8 @@ export class InvoiceService {
     buyerNameSurname: "",
     buyerEmail: "",
     buyerPhone: "",
+    buyerAddress: "",
+    buyerIp: "",
     reservationStartDate: new Date(),
     reservationEndDate: new Date(),
     adult: 0,
@@ -78,6 +80,8 @@ export class InvoiceService {
     buyerNameSurname: "",
     buyerEmail: "",
     buyerPhone: "",
+    buyerAddress: "",
+    buyerIp: "",
     reservationStartDate: "",
     reservationEndDate: "",
     adult: "",
@@ -125,8 +129,8 @@ export class InvoiceService {
     return cloneDeep(this._emptyInvoiceExtDtoErrors);
   }
 
-  add(invoiceExtDto: InvoiceExtDto): Observable<Result> {
-    return this.http.post<Result>(`${environment.apiUrl}/${this.controllerUrl}/add`, invoiceExtDto);
+  add(invoiceExtDto: InvoiceExtDto): Observable<SingleDataResult<InvoiceExtDto>> {
+    return this.http.post<SingleDataResult<InvoiceExtDto>>(`${environment.apiUrl}/${this.controllerUrl}/add`, invoiceExtDto);
   }
 
   delete(id: number): Observable<Result> {
