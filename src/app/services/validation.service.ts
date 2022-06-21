@@ -168,7 +168,7 @@ export class ValidationService {
 
     const amount: boolean = this.tinyint(invoiceDetailDto.amount);
     if (!amount)
-      invoiceDetailDtoErrors.amount = "Otelden çıkış tarihi giriş tarihinden önce olamaz.";
+      invoiceDetailDtoErrors.amount = "Rezervasyon oluşturabilmek için en az bir gün konaklamanız gerekmektedir.";
       
     for (const key in invoiceDetailDtoErrors) {
       if (invoiceDetailDtoErrors[key as keyof InvoiceDetailDtoErrors] != "")

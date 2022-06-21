@@ -35,6 +35,8 @@ import { LoginComponent } from 'src/app/components/public/login/login.component'
 import { NotAuthorizedComponent } from 'src/app/components/public/not-authorized/not-authorized.component';
 import { RegisterComponent } from 'src/app/components/public/register/register.component';
 import { ReservationComponent } from 'src/app/components/public/reservation/reservation.component';
+import { ReservationSuccessComponent } from 'src/app/components/public/reservation//reservation-success/reservation-success.component';
+import { ReservationFailComponent } from 'src/app/components/public/reservation/reservation-fail/reservation-fail.component';
 
 // Guards
 import { AuthorizationGuard } from 'src/app/guards/authorization.guard';
@@ -50,6 +52,8 @@ const routes: Routes = [
   { path: 'public/not-authorized', component: NotAuthorizedComponent },
   { path: 'public/register', component: RegisterComponent },
   { path: 'public/reservation', component: ReservationComponent },
+  { path: 'public/reservation-success', component: ReservationSuccessComponent },
+  { path: 'public/reservation-fail', component: ReservationFailComponent },
 
   // Admin
   {

@@ -2,13 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Subject, takeUntil } from 'rxjs';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { CurrencyDto } from 'src/app/models/dtos/currency-dto';
 import { InvoiceDetailDto } from 'src/app/models/dtos/invoice-detail-dto';
 import { InvoiceDetailDtoErrors } from 'src/app/models/validation-errors/invoice-detail-dto-errors';
 import { InvoiceExtDto } from 'src/app/models/dtos/invoice-ext-dto';
 import { InvoiceExtDtoErrors } from 'src/app/models/validation-errors/invoice-ext-dto-errors';
-import { ListDataResult } from 'src/app/models/results/list-data-result';
 import { SuiteDto } from 'src/app/models/dtos/suite-dto';
 
 import { BreakpointService } from 'src/app/services/breakpoint.service';
@@ -28,6 +28,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
   public cardHeader: string = "Rezervasyon";
   public currencyDtos: CurrencyDto[] = [];
   public loading: boolean = false;
+  public selectedCurrencyTitle: string = "";
   public selectedInvoiceDetailDto: InvoiceDetailDto;
   public selectedInvoiceDetailDtoErrors: InvoiceDetailDtoErrors;
   public selectedInvoiceDetailDtos: InvoiceDetailDto[] = [];
@@ -61,7 +62,6 @@ export class ReservationComponent implements OnInit, OnDestroy {
 
   add(): void {
     this.submitted = true;
-    console.log(this.selectedInvoiceExtDto);
     let [isModelValid1, errors1] = this.validationService.validateInvoiceDetailDtoForAdd(this.selectedInvoiceDetailDto);
     let [isModelValid2, errors2] = this.validationService.validateInvoiceExtDtoForAdd(this.selectedInvoiceExtDto);
     this.selectedInvoiceDetailDtoErrors = errors1;
@@ -89,25 +89,39 @@ export class ReservationComponent implements OnInit, OnDestroy {
     }
   }
 
-  calculatePrice(currencyId: number, suiteId: number, reservationStartDate: Date, reservationEndDate: Date) {
-    const filteredCurrencyDto = this.currencyDtos.filter(c => c.currencyId == currencyId)[0];
-    const filteredSuiteDto = this.suiteDtos.filter(s => s.suiteId == suiteId)[0];
-    this.selectedInvoiceDetailDto.amount = this.dateDifferenceInDays(reservationStartDate, reservationEndDate);
-    this.selectedInvoiceDetailDto.price = Math.round(((filteredSuiteDto.price / filteredCurrencyDto.exchangeRate) + Number.EPSILON) * 100) / 100;
-    this.selectedInvoiceDetailDto.vat = filteredSuiteDto.vat;
-    this.selectedInvoiceDetailDto.totalVat = Math.round(((filteredSuiteDto.totalVat / filteredCurrencyDto.exchangeRate) + Number.EPSILON) * 100) / 100;
-    this.selectedInvoiceDetailDto.totalPrice = Math.round((((this.selectedInvoiceDetailDto.price + this.selectedInvoiceDetailDto.totalVat) * this.selectedInvoiceDetailDto.amount) + Number.EPSILON) * 100) / 100;
-    
+  calculate(currencyId: number, suiteId: number, reservationStartDate: Date, reservationEndDate: Date) {
+    const filteredCurrencyDto: CurrencyDto = this.currencyDtos.filter(c => c.currencyId == currencyId)[0];
+    const filteredSuiteDto: SuiteDto = this.suiteDtos.filter(s => s.suiteId == suiteId)[0];
+    const amount: number = this.dateDifferenceInDays(reservationStartDate, reservationEndDate);
+    const price: number = Math.round(((filteredSuiteDto.price / filteredCurrencyDto.exchangeRate) + Number.EPSILON) * 100) / 100;
+    const vat: number = filteredSuiteDto.vat;
+    const totalVat: number = Math.round(((filteredSuiteDto.totalVat / filteredCurrencyDto.exchangeRate) + Number.EPSILON) * 100) / 100;
+    const totalPrice: number = Math.round((((price + totalVat) * amount) + Number.EPSILON) * 100) / 100;
+    this.selectedInvoiceDetailDto.amount = amount;
+    this.selectedInvoiceDetailDto.price = price;
+    this.selectedInvoiceDetailDto.vat = vat;
+    this.selectedInvoiceDetailDto.totalVat = totalVat;
+    this.selectedInvoiceDetailDto.totalPrice = totalPrice;
+
     this.selectedInvoiceExtDto.invoiceDetailDtos.push(this.selectedInvoiceDetailDto);
 
+    let netPrice: number = 0;
+    let totalVat2: number = 0;
+    let totalPrice2: number = 0;
     this.selectedInvoiceExtDto.invoiceDetailDtos.forEach(
-      (invoiceDetailDto) => {
-        this.selectedInvoiceExtDto.netPrice += invoiceDetailDto.price;
-        this.selectedInvoiceExtDto.totalVat += invoiceDetailDto.totalVat;
+      (invoiceDetailDto: InvoiceDetailDto) => {
+        netPrice += invoiceDetailDto.price * invoiceDetailDto.amount;
+        totalVat2 += invoiceDetailDto.totalVat * invoiceDetailDto.amount;
       }
     );
-    this.selectedInvoiceExtDto.totalPrice = this.selectedInvoiceExtDto.netPrice + this.selectedInvoiceExtDto.totalVat;
-    console.log(this.selectedInvoiceExtDto.totalPrice);
+    totalPrice2 = netPrice + totalVat2;
+
+    this.selectedInvoiceExtDto.netPrice = netPrice;
+    // Bu modelde KDV olmaması gerekiyor çünkü faturanın her bir satırının KDV oranı farklı olabilir. Fatura bazında KDV diye birşey yok. 
+    // Yine de modelin çalışması için gerekiyor.
+    this.selectedInvoiceExtDto.vat = vat;
+    this.selectedInvoiceExtDto.totalVat = totalVat2;
+    this.selectedInvoiceExtDto.totalPrice = totalPrice2;
   }
 
   cancel(): void {
@@ -125,7 +139,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
     const utc2 = Date.UTC(instantiatedEndDate.getFullYear(), instantiatedEndDate.getMonth(), instantiatedEndDate.getDate());
 
     const result: number = Math.floor((utc2 - utc1) / _MS_PER_DAY);
-    console.log("DateDifference" + result);
+
     return result;
   }
 
@@ -157,9 +171,8 @@ export class ReservationComponent implements OnInit, OnDestroy {
     });
   }
 
-  resetCalculations(): void {
+  reset(): void {
     // Döviz tipi değişikliklerinde sayılar çarpılarak katlanmasın diye sıfırlama yapıyoruz.
-    this.selectedInvoiceDetailDto.amount = 0;
     this.selectedInvoiceDetailDto.price = 0;
     this.selectedInvoiceDetailDto.vat = 0;
     this.selectedInvoiceDetailDto.totalVat = 0;
@@ -172,23 +185,51 @@ export class ReservationComponent implements OnInit, OnDestroy {
     this.selectedInvoiceExtDto.totalPrice = 0;
   }
 
-  resetModelsAndCalculate(): void {
-    this.resetCalculations();
-    if (this.selectedInvoiceExtDto.currencyId != 0 &&
-      this.selectedInvoiceDetailDto.suiteId != 0 &&
-      this.selectedInvoiceExtDto.reservationStartDate &&
-      this.selectedInvoiceExtDto.reservationEndDate) {
-      this.calculatePrice(
+  resetAndCalculate(): void {
+    this.reset();
+    this.submitted = true;
+    let [isModelValid1, errors1] = this.validationService.validateInvoiceDetailDtoForAdd(this.selectedInvoiceDetailDto);
+    let [isModelValid2, errors2] = this.validationService.validateInvoiceExtDtoForAdd(this.selectedInvoiceExtDto);
+    this.selectedInvoiceDetailDtoErrors = errors1;
+    this.selectedInvoiceExtDtoErrors = errors2;
+    if (isModelValid1 && isModelValid2) {
+      this.calculate(
         this.selectedInvoiceExtDto.currencyId, 
-        this.selectedInvoiceDetailDto.suiteId, 
-        this.selectedInvoiceExtDto.reservationStartDate, 
+        this.selectedInvoiceDetailDto.suiteId,
+        this.selectedInvoiceExtDto.reservationStartDate,
         this.selectedInvoiceExtDto.reservationEndDate
       );
+    } else {
+      console.log("Form geçersiz.");
+      console.log(this.selectedInvoiceDetailDtoErrors);
+      console.log(this.selectedInvoiceExtDtoErrors);
     }
   }
 
-  selectReservationStartDate(): void {
+  resetSuite(): void {
+    this.selectedInvoiceDetailDto.suiteId = 0;
+  }
 
+  selectCurrency(currencyId: number): void {
+    this.resetSuite();
+    const filteredCurrencyDto = this.currencyDtos.filter(c => c.currencyId == currencyId)[0];
+    this.selectedCurrencyTitle = filteredCurrencyDto.title;
+  }
+
+  selectReservationStartDate(ngbDateStruct: NgbDateStruct): void {
+    this.resetSuite();
+    this.selectedInvoiceDetailDto.amount = this.dateDifferenceInDays(
+      this.selectedInvoiceExtDto.reservationStartDate, 
+      this.selectedInvoiceExtDto.reservationEndDate
+    );
+  }
+
+  selectReservationEndDate(ngbDateStruct: NgbDateStruct): void {
+    this.resetSuite();
+    this.selectedInvoiceDetailDto.amount = this.dateDifferenceInDays(
+      this.selectedInvoiceExtDto.reservationStartDate, 
+      this.selectedInvoiceExtDto.reservationEndDate
+    );
   }
 
   ngOnInit(): void {

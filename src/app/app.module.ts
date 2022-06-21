@@ -66,6 +66,8 @@ import { LoginComponent } from 'src/app/components/public/login/login.component'
 import { NotAuthorizedComponent } from 'src/app/components/public/not-authorized/not-authorized.component';
 import { RegisterComponent } from 'src/app/components/public/register/register.component';
 import { ReservationComponent } from 'src/app/components/public/reservation/reservation.component';
+import { ReservationSuccessComponent } from 'src/app/components/public/reservation//reservation-success/reservation-success.component';
+import { ReservationFailComponent } from 'src/app/components/public/reservation/reservation-fail/reservation-fail.component';
 
 // Toast Components
 import { ToastComponent } from 'src/app/components/toast/toast.component';
@@ -135,6 +137,8 @@ import { CustomDateParserFormatter } from 'src/app/services/custom-date-parser-f
     NotAuthorizedComponent,
     RegisterComponent,
     ReservationComponent,
+    ReservationSuccessComponent,
+    ReservationFailComponent,
 
     // Toast Components
     ToastComponent, 
