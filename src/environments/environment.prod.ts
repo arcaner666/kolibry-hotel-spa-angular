@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://localhost:5001/api',
-  serverUrl: 'https://localhost:5001'
+  apiUrl: 'https://www.kolibryhotelspa.com/api',
+  serverUrl: 'https://www.kolibryhotelspa.com'
 };
