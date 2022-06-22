@@ -1,8 +1,19 @@
 <script src="https://www.paytr.com/js/iframeResizer.min.js"></script>
-<iframe *ngIf="iframeOpen" [src]="iframeUrl" id="paytriframe" frameborder="0" scrolling="no" style="width: 100vw; height: 100vh;"></iframe>
+<iframe 
+    *ngIf="iframeOpen" 
+    [src]="iframeUrl" 
+    id="paytriframe" 
+    frameborder="0" 
+    scrolling="no"
+>
+</iframe>
 <script>iFrameResize({},'#paytriframe');</script>
 
-<div class="container-fluid login-special d-flex flex-column justify-content-center" [ngClass]="{'p-2': breakpointService.screenSize.width < 568 }">
+<div 
+    *ngIf="!iframeOpen" 
+    class="container-fluid login-special d-flex flex-column justify-content-center" 
+    [ngClass]="{'p-2': breakpointService.screenSize.width < 568 }"
+>
     <div class="row justify-content-center align-items-center">
         <div class="col-lg-12 col-xl-8 col-xxl-6">
             <div class="card shadow-lg" [ngClass]="{'mt-4 mb-4': breakpointService.screenSize.width >= 568 }">
