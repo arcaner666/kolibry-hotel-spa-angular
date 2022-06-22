@@ -97,7 +97,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
           console.log(response);
           this.toastService.success(response.message);
           this.loading = false;
-          this.createIframe(response.data.iframeToken);
+          this.openIframe(response.data.iframeToken);
 
           this.selectedInvoiceDetailDto = this.invoiceService.emptyInvoiceDetailDto;
           this.selectedInvoiceDetailDtoErrors = this.invoiceService.emptyInvoiceDetailDtoErrors;
@@ -157,7 +157,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
     window.scroll(0,0);
   }
 
-  createIframe(iframeToken: string): void {
+  openIframe(iframeToken: string): void {
     console.log(iframeToken);
     const dangerousIframeUrl = `https://www.paytr.com/odeme/guvenli/${iframeToken}`;
     this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(dangerousIframeUrl);
