@@ -8,12 +8,20 @@
 
     <!-- 1. Blok-->
     <div class="row m-0 gx-3">
-        <div class="col-sm-12 col-md-6 col-lg-3 col-xxl-3 p-0">
+        <!-- <div class="col-sm-12 col-md-6 col-lg-3 col-xxl-3 p-0">
             <div class="card shadow bg-primary">
                 <div class="card-body overflow-hidden gap-4 p-0">
                     <a href="assets/images/hotel/kolibry-hotel-room-7.jpeg" target="_blank">
                         <img class="img-fluid rounded zoom" src="assets/images/hotel/kolibry-hotel-room-7.jpeg" alt="otel odası">
                     </a>
+                </div>
+            </div>
+        </div>
+         -->
+        <div class="col-sm-12 col-md-6 col-lg-3 col-xxl-3 p-0">
+            <div class="card shadow bg-primary">
+                <div class="card-body overflow-hidden gap-4 p-0">
+                    <img (click)="openImageModal()" class="img-fluid rounded zoom cursor-pointer" src="assets/images/hotel/kolibry-hotel-room-7.jpeg" alt="otel odası">
                 </div>
             </div>
         </div>
@@ -270,3 +278,28 @@
     </div>
     <!-- /6. Blok-->
 </div>
+
+<!-- Silme Onay Modal'ı -->
+<ng-template #galleryModal let-modal>
+    <div class="modal-header justify-content-between">
+        <img class="opacity-0" src="#" width="24" height="24">
+        <h4 class="modal-title" id="modal-basic-title">Mesajı Silme</h4>
+        <button type="button" class="btn-close m-0" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
+    </div>
+    <div class="modal-body">
+        <p class="text-center m-0"> adlı oda silinecektir. Onaylıyor musunuz?</p>
+    </div>
+    <div class="modal-footer w-100">
+        <div class="container-fluid m-0">
+            <div class="row">
+                <div class="col-6">
+                    <button type="button" class="btn btn-danger w-100" (click)="modal.close('ok')">Sil</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-secondary w-100" (click)="modal.dismiss('cancel')">İptal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!-- /Silme Onay Modal'ı -->
