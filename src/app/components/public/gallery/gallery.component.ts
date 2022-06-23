@@ -21,7 +21,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.modalService.open(this.galleryModal, {
       ariaLabelledBy: 'modal-basic-title',
       centered: true,
-      
+      fullscreen: true,
     });
   }
 
