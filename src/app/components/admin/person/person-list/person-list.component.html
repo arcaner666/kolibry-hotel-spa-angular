@@ -1,7 +1,7 @@
-<div class="container-fluid g-0 p-3">
+<div class="container-fluid p-3">
     <div class="card shadow-lg">
         <!-- Sayfa Başına Kayıt Menüsü -->
-        <div class="row g-0 p-3">
+        <div class="row gx-0 p-3">
             <ng-container *ngIf="personExtDtos.length > 10">
                 <div class="col-6 d-flex">
                     <label class="form-label">
@@ -25,7 +25,7 @@
         </div>
         <!-- /Sayfa Başına Kayıt Menüsü -->
 
-        <div class="row g-0 p-3" id="basic-table">
+        <div class="row gx-0 p-3" id="basic-table">
             <div class="col-12">
                 <div class="table-responsive">
                     <table class="table">
@@ -76,7 +76,7 @@
 
         <!-- Sayfalama Menüsü -->
         <ng-container *ngIf="personExtDtos.length > 10">
-            <div class="row g-0 ps-3 pe-3 pt-0 pb-0">
+            <div class="row gx-0 ps-3 pe-3 pt-0 pb-0">
                 <div class="col-12 d-flex">
                     <ngb-pagination class="ms-auto" [collectionSize]="personExtDtos.length" [pageSize]="itemsPerPage" [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
                         <ng-template ngbPaginationPrevious>

@@ -11,10 +11,10 @@
 
 <div 
     *ngIf="!iframeOpen" 
-    class="container-fluid login-special d-flex flex-column justify-content-center" 
+    class="container-fluid d-flex flex-column justify-content-center" 
     [ngClass]="{'p-2': breakpointService.screenSize.width < 568 }"
 >
-    <div class="row justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center gx-0">
         <div class="col-lg-12 col-xl-8 col-xxl-6">
             <div class="card shadow-lg" [ngClass]="{'mt-4 mb-4': breakpointService.screenSize.width >= 568 }">
                 <div class="card-body">

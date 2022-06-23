@@ -7,23 +7,9 @@
 
 .img-slider {
     display: block;
-    width: 100%;
-    height: 98vh;
+    width: 100vw;
+    height: 100vh;
     object-fit: contain;
-}
-
-.zoom {
-    transition: transform .2s;
-
-    &:hover {
-        transform: scale(1.2);
-    }
-}
-
-.swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #000;
 }
 
 .btn-close-custom {
@@ -31,6 +17,7 @@
     top: 25px;
     right: 25px;
     background-color: $c-color-1;
+    color: $c-color-2;
     padding: 10px;
     font-size: 20px;
     z-index: 2;
