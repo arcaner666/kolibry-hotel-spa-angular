@@ -68,7 +68,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
     this.selectedInvoiceExtDtoErrors = this.invoiceService.emptyInvoiceExtDtoErrors;
     this.selectedPayTrIframeDto = this.payTrService.emptyPayTrIframeDto;
 
-    this.updateAndGetAllCurrencies();
+    this.getAllCurrencies();
     this.getAllSuites();
     this.getClientIp();
   }
@@ -179,14 +179,10 @@ export class ReservationComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  updateAndGetAllCurrencies(): void {
-    this.currencyService.updateExchangeRates()
+  getAllCurrencies(): void {
+    this.currencyService.getAll()
     .pipe(
       takeUntil(this.unsubscribeAll),
-      concatMap((response) => {
-        console.log(response);
-        return this.currencyService.getAll();
-      }),
     ).subscribe({
       next: (response) => {
         console.log(response);

@@ -24,8 +24,4 @@ export class CurrencyService {
   getAll(): Observable<ListDataResult<CurrencyDto>> {
     return this.http.get<ListDataResult<CurrencyDto>>(`${environment.apiUrl}/${this.controllerUrl}/getall`);
   }
-
-  updateExchangeRates(): Observable<Result> {
-    return this.http.get<Result>(`${environment.apiUrl}/${this.controllerUrl}/updateexchangerates`);
-  }
 }
