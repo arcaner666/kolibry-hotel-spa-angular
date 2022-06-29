@@ -160,8 +160,13 @@ import { CustomDateParserFormatter } from 'src/app/services/custom-date-parser-f
           return personExtDto?.accessToken;
         },
         allowedDomains: [
-          "localhost:5001",
-          "localhost:5000",
+          // Production
+          "https://www.kolibryhotelspa.com",
+          "https://www.kolibryhotelspa.com",
+
+          // Development
+          // "localhost:5001",
+          // "localhost:5000",
         ]
       },
     }),
@@ -176,7 +181,7 @@ import { CustomDateParserFormatter } from 'src/app/services/custom-date-parser-f
     SwiperModule,
   ],
   providers: [
-    //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: NgbDateAdapter, useClass: CustomDateAdapter},
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter}
   ],
