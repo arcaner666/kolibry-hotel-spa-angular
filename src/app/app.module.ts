@@ -181,7 +181,7 @@ import { CustomDateParserFormatter } from 'src/app/services/custom-date-parser-f
     SwiperModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: NgbDateAdapter, useClass: CustomDateAdapter},
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter}
   ],
