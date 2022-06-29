@@ -6,7 +6,7 @@
     "start": "ng serve --port 4200",
     "build": "node ./node_modules/@angular/cli/bin/ng build",
     "build-stats": "node ./node_modules/@angular/cli/bin/ng build --stats-json",
-    "build:prod": "node ./node_modules/@angular/cli/bin/ng build --configuration production",
+    "build:prod": "node ./node_modules/@angular/cli/bin/ng build --configuration production --deploy-url /kolibry-hotel-spa-angular/ --base-ref /kolibry-hotel-spa-angular/",
     "build:prod-stats": "node ./node_modules/@angular/cli/bin/ng build --configuration production --stats-json",
     "bundle-analyzer": "webpack-bundle-analyzer dist/kolibry-hotel-spa-angular/stats.json",
     "test": "ng test"
