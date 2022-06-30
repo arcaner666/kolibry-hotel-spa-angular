@@ -41,7 +41,7 @@ export class PayTrService {
   }
 
   getClientIp() {
-    return this.http.get<Ip>("http://api.ipify.org/?format=json");
+    return this.http.get<Ip>("https://api.ipify.org/?format=json");
   }
 
   getIframeToken(payTrIframeDto: PayTrIframeDto): Observable<SingleDataResult<PayTrIframeDto>> {
