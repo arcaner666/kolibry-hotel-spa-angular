@@ -30,7 +30,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     private currencyService: CurrencyService,
     private invoiceService: InvoiceService,
   ) { 
-    console.log("InvoiceComponent constructor çalıştı.");
+    //console.log("InvoiceComponent constructor çalıştı.");
 
     this.selectedInvoiceExtDto = this.invoiceService.emptyInvoiceExtDto;
 

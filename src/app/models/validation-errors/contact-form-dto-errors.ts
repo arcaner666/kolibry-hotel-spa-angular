@@ -1,5 +1,5 @@
-export interface ContactDtoErrors {
-    contactId: string;
+export interface ContactFormDtoErrors {
+    contactFormId: string;
     nameSurname: string;
     email: string;
     phone: string;

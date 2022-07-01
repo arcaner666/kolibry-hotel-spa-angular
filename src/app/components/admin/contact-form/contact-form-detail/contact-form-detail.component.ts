@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { ContactDto } from 'src/app/models/dtos/contact-dto';
+import { ContactFormDto } from 'src/app/models/dtos/contact-form-dto';
 
 @Component({
   selector: 'app-contact-form-detail',
@@ -14,7 +14,7 @@ export class ContactFormDetailComponent {
   
   @Input() cardHeader!: string;
   @Input() loading!: boolean;
-  @Input() selectedContactDto!: ContactDto;
+  @Input() selectedContactFormDto!: ContactFormDto;
   
   @Output() cancelled = new EventEmitter();
   
@@ -23,7 +23,7 @@ export class ContactFormDetailComponent {
   constructor(
 
   ) {
-    console.log("ContactFormDetailComponent constructor çalıştı.");
+    //console.log("ContactFormDetailComponent constructor çalıştı.");
   }
 
   cancel(): void {

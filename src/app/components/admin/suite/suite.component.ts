@@ -35,7 +35,7 @@ export class SuiteComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
     private validationService: ValidationService,
   ) { 
-    console.log("SuiteComponent constructor çalıştı.");
+    //console.log("SuiteComponent constructor çalıştı.");
 
     this.selectedSuiteDto = this.suiteService.emptySuiteDto;
     this.selectedSuiteDtoErrors = this.suiteService.emptySuiteDtoErrors;
@@ -103,7 +103,6 @@ export class SuiteComponent implements OnInit, OnDestroy {
       })
     ).subscribe({
       next: (response) => {
-        console.log(response);
         this.toastService.success(response.message);
         this.loading = false;
       }, error: (error) => {

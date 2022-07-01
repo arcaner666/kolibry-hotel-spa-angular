@@ -23,17 +23,6 @@ export class NavigationService {
 
   public adminSidebarLinks: NavGroup[] = [
     {
-      id: "admin-dashboard",
-      title: "Özet",
-      url: "admin/admin-dashboard",
-      type: "item",
-      role: ["Admin"],
-      icon: "",
-      disabled: false,
-      hidden: false,
-      navLinks: [],
-    },
-    {
       id: "persons",
       title: "Kişiler",
       url: "admin/person",
@@ -200,7 +189,7 @@ export class NavigationService {
   navigateByRole(role: string): void {
     if(role) {
       switch (role) {
-        case "Admin": this.router.navigate(['admin/admin-dashboard']); break;
+        case "Admin": this.router.navigate(['admin/invoice']); break;
         case "Employee": this.router.navigate(['employee/employee-dashboard']); break;
         case "Customer": this.router.navigate(['customer/customer-dashboard']); break;
         default: this.router.navigate(['/']); break;

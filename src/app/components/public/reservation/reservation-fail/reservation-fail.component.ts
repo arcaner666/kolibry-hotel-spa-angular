@@ -15,7 +15,7 @@ export class ReservationFailComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
   ) { 
-    console.log("ReservationFailComponent constructor çalıştı.");
+    //console.log("ReservationFailComponent constructor çalıştı.");
   }
 
   ngOnInit(): void {

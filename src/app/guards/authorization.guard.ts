@@ -23,7 +23,7 @@ export class AuthorizationGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    console.log("AuthorizationGuard çalıştı.");
+    //console.log("AuthorizationGuard çalıştı.");
     return this.personService.personExtDto$
     .pipe(
       concatMap((personExtDto) => {

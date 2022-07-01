@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     public breakpointService: BreakpointService
   ) {
-    console.log("LoginComponent constructor çalıştı.");
+    //console.log("LoginComponent constructor çalıştı.");
 
     this.personExtDto = this.personService.emptyPersonExtDto;
     this.personExtDtoErrors = this.personService.emptyPersonExtDtoErrors;

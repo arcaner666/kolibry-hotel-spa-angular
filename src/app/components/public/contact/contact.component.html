@@ -5,7 +5,7 @@
             <div class="horizontal-line-lg"></div>
             <div class="mt-4">
                 <!-- İletişim Formu -->
-                <form #form="ngForm" (ngSubmit)="save(contactDto)">
+                <form #form="ngForm" (ngSubmit)="save(contactFormDto)">
                     <!-- Ad Soyad -->
                     <div class="mt-3 mb-3">
                         <label class="form-label" for="name-surname">Adınız ve Soyadınız</label>
@@ -13,14 +13,14 @@
                             id="name-surname"
                             type="text"
                             name="nameSurname"
-                            [(ngModel)]="contactDto.nameSurname"
+                            [(ngModel)]="contactFormDto.nameSurname"
                             class="form-control shadow"
-                            [ngClass]="{ 'is-invalid': submitted && contactDtoErrors.nameSurname }"
-                            (change)="contactDtoErrors.nameSurname = ''"
+                            [ngClass]="{ 'is-invalid': submitted && contactFormDtoErrors.nameSurname }"
+                            (change)="contactFormDtoErrors.nameSurname = ''"
                             tabindex="1"
                         />
-                        <div class="invalid-feedback" *ngIf="submitted && contactDtoErrors.nameSurname">
-                            <div>{{contactDtoErrors.nameSurname}}</div>
+                        <div class="invalid-feedback" *ngIf="submitted && contactFormDtoErrors.nameSurname">
+                            <div>{{contactFormDtoErrors.nameSurname}}</div>
                         </div>
                     </div>
                     <!-- /Ad Soyad -->
@@ -32,14 +32,14 @@
                             id="email"
                             type="text"
                             name="email"
-                            [(ngModel)]="contactDto.email"
+                            [(ngModel)]="contactFormDto.email"
                             class="form-control shadow"
-                            [ngClass]="{ 'is-invalid': submitted && contactDtoErrors.email }"
-                            (change)="contactDtoErrors.email = ''"
+                            [ngClass]="{ 'is-invalid': submitted && contactFormDtoErrors.email }"
+                            (change)="contactFormDtoErrors.email = ''"
                             tabindex="2"
                         />
-                        <div class="invalid-feedback" *ngIf="submitted && contactDtoErrors.email">
-                            <div>{{contactDtoErrors.email}}</div>
+                        <div class="invalid-feedback" *ngIf="submitted && contactFormDtoErrors.email">
+                            <div>{{contactFormDtoErrors.email}}</div>
                         </div>
                     </div>
                     <!-- /E-Posta -->
@@ -51,14 +51,14 @@
                             id="phone"
                             type="text"
                             name="phone"
-                            [(ngModel)]="contactDto.phone"
+                            [(ngModel)]="contactFormDto.phone"
                             class="form-control shadow"
-                            [ngClass]="{ 'is-invalid': submitted && contactDtoErrors.phone }"
-                            (change)="contactDtoErrors.phone = ''"
+                            [ngClass]="{ 'is-invalid': submitted && contactFormDtoErrors.phone }"
+                            (change)="contactFormDtoErrors.phone = ''"
                             tabindex="3"
                         />
-                        <div class="invalid-feedback" *ngIf="submitted && contactDtoErrors.phone">
-                            <div>{{contactDtoErrors.phone}}</div>
+                        <div class="invalid-feedback" *ngIf="submitted && contactFormDtoErrors.phone">
+                            <div>{{contactFormDtoErrors.phone}}</div>
                         </div>
                     </div>
                     <!-- /Telefon -->
@@ -69,14 +69,14 @@
                         <textarea
                             id="message"
                             name="message"
-                            [(ngModel)]="contactDto.message"
+                            [(ngModel)]="contactFormDto.message"
                             class="form-control shadow"
-                            [ngClass]="{ 'is-invalid': submitted && contactDtoErrors.message }"
-                            (change)="contactDtoErrors.message = ''"
+                            [ngClass]="{ 'is-invalid': submitted && contactFormDtoErrors.message }"
+                            (change)="contactFormDtoErrors.message = ''"
                             tabindex="4"
                         ></textarea>
-                        <div class="invalid-feedback" *ngIf="submitted && contactDtoErrors.message">
-                            <div>{{contactDtoErrors.message}}</div>
+                        <div class="invalid-feedback" *ngIf="submitted && contactFormDtoErrors.message">
+                            <div>{{contactFormDtoErrors.message}}</div>
                         </div>
                     </div>
                     <!-- /Mesaj -->

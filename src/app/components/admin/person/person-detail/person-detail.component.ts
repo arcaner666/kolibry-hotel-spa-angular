@@ -27,7 +27,7 @@ export class PersonDetailComponent {
   constructor(
 
   ) {
-    console.log("PersonDetailComponent constructor çalıştı.");
+    //console.log("PersonDetailComponent constructor çalıştı.");
   }
 
   cancel(): void {

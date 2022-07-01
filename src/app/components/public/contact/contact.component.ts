@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { concatMap, Subject, takeUntil, throttleTime } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
-import { ContactDto } from 'src/app/models/dtos/contact-dto';
-import { ContactDtoErrors } from 'src/app/models/validation-errors/contact-dto-errors';
+import { ContactFormDto } from 'src/app/models/dtos/contact-form-dto';
+import { ContactFormDtoErrors } from 'src/app/models/validation-errors/contact-form-dto-errors';
 
-import { ContactService } from 'src/app/services/contact.service';
+import { ContactFormService } from 'src/app/services/contact-form.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ValidationService } from 'src/app/services/validation.service';
 
@@ -16,40 +16,40 @@ import { ValidationService } from 'src/app/services/validation.service';
 })
 export class ContactComponent implements OnInit, OnDestroy {
 
-  public contactDto: ContactDto;
-  public contactDtoErrors: ContactDtoErrors;
+  public contactFormDto: ContactFormDto;
+  public contactFormDtoErrors: ContactFormDtoErrors;
   public loading: boolean = false;
   public submitted: boolean = false;
 
   private unsubscribeAll: Subject<void> = new Subject<void>();
   
   constructor(
-    private contactService: ContactService,
+    private contactFormService: ContactFormService,
     private toastService: ToastService,
     private validationService: ValidationService,
   ) {
-    console.log("ContactComponent constructor çalıştı.");
+    //console.log("ContactComponent constructor çalıştı.");
 
-    this.contactDto = this.contactService.emptyContactDto;
-    this.contactDtoErrors = this.contactService.emptyContactDtoErrors;
+    this.contactFormDto = this.contactFormService.emptyContactFormDto;
+    this.contactFormDtoErrors = this.contactFormService.emptyContactFormDtoErrors;
   }
 
-  save(contactDto: ContactDto): void {
+  save(contactFormDto: ContactFormDto): void {
     this.submitted = true;
     
-    let [isModelValid, errors] = this.validationService.validateContactDtoForAdd(contactDto);
-    this.contactDtoErrors = errors;
+    let [isModelValid, errors] = this.validationService.validateContactFormDtoForAdd(contactFormDto);
+    this.contactFormDtoErrors = errors;
     if (isModelValid) {
       this.loading = true;
-      this.contactService.add(this.contactDto)
+      this.contactFormService.add(this.contactFormDto)
       .pipe(
         takeUntil(this.unsubscribeAll),
       ).subscribe({
         next: (response) => {
           this.toastService.success(response.message);
           this.loading = false;
-          this.contactDto = this.contactService.emptyContactDto;
-          this.contactDtoErrors = this.contactService.emptyContactDtoErrors;
+          this.contactFormDto = this.contactFormService.emptyContactFormDto;
+          this.contactFormDtoErrors = this.contactFormService.emptyContactFormDtoErrors;
         },
         error: (error) => {
           console.log(error);
@@ -59,7 +59,7 @@ export class ContactComponent implements OnInit, OnDestroy {
       });
     } else {
       console.log("Form geçersiz.");
-      console.log(this.contactDtoErrors);
+      console.log(this.contactFormDtoErrors);
     }
   }
 

@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class ErrorComponent implements OnInit {
 
   constructor() {
-    console.log("ErrorComponent constructor çalıştı.");
+    //console.log("ErrorComponent constructor çalıştı.");
   }
 
   ngOnInit(): void {

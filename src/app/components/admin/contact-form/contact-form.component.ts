@@ -3,10 +3,10 @@ import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/co
 import { Observable, concatMap, Subject, tap, EMPTY, from, take } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ContactDto } from 'src/app/models/dtos/contact-dto';
+import { ContactFormDto } from 'src/app/models/dtos/contact-form-dto';
 import { ListDataResult } from 'src/app/models/results/list-data-result';
 
-import { ContactService } from 'src/app/services/contact.service';
+import { ContactFormService } from 'src/app/services/contact-form.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -20,22 +20,22 @@ export class ContactFormComponent implements OnInit, OnDestroy {
   
   public activePage: string = "list";
   public cardHeader: string = "İletişim Formları";
-  public contactDtos$!: Observable<ListDataResult<ContactDto>>;
+  public contactFormDtos$!: Observable<ListDataResult<ContactFormDto>>;
   public loading: boolean = false;
-  public selectedContactDto: ContactDto;
+  public selectedContactFormDto: ContactFormDto;
 
   private unsubscribeAll: Subject<void> = new Subject<void>();
   
   constructor(
-    private contactService: ContactService,
+    private contactFormService: ContactFormService,
     private modalService: NgbModal,
     private toastService: ToastService,
   ) { 
-    console.log("ContactFormComponent constructor çalıştı.");
+    //console.log("ContactFormComponent constructor çalıştı.");
 
-    this.selectedContactDto = this.contactService.emptyContactDto;
+    this.selectedContactFormDto = this.contactFormService.emptyContactFormDto;
 
-    this.contactDtos$ = this.getContacts();
+    this.contactFormDtos$ = this.getContacts();
   }
 
   cancel(): void {
@@ -43,8 +43,8 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     window.scroll(0,0);
   }
 
-  delete(selectedContactDto: ContactDto): void {
-    this.selectedContactDto = selectedContactDto;
+  delete(selectedContactFormDto: ContactFormDto): void {
+    this.selectedContactFormDto = selectedContactFormDto;
     from(this.modalService.open(this.deleteModal, {
       ariaLabelledBy: 'modal-basic-title',
       centered: true
@@ -54,7 +54,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       // Burada response, açılan modal'daki seçeneklere verilen yanıtı tutar.
       concatMap((response) => {
         if (response == "ok") {
-          return this.contactService.delete(selectedContactDto.contactId)
+          return this.contactFormService.delete(selectedContactFormDto.contactFormId)
           .pipe(
             tap((response) => {
               this.toastService.success(response.message);
@@ -68,7 +68,6 @@ export class ContactFormComponent implements OnInit, OnDestroy {
       })
     ).subscribe({
       next: (response) => {
-        console.log(response);
         this.toastService.success(response.message);
         this.loading = false;
       }, error: (error) => {
@@ -81,16 +80,16 @@ export class ContactFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  getContacts(): Observable<ListDataResult<ContactDto>> {
-    this.contactDtos$ = this.contactService.getAll();
-    return this.contactDtos$;
+  getContacts(): Observable<ListDataResult<ContactFormDto>> {
+    this.contactFormDtos$ = this.contactFormService.getAll();
+    return this.contactFormDtos$;
   }
 
-  select(selectedContactDto: ContactDto): void {
-    if (selectedContactDto) {
-      this.selectedContactDto = selectedContactDto;
+  select(selectedContactFormDto: ContactFormDto): void {
+    if (selectedContactFormDto) {
+      this.selectedContactFormDto = selectedContactFormDto;
     } else {
-      this.selectedContactDto = this.contactService.emptyContactDto;  
+      this.selectedContactFormDto = this.contactFormService.emptyContactFormDto;  
     }
     this.activePage = "detail";
   }

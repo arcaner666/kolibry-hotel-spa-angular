@@ -22,7 +22,7 @@ export class SuiteListComponent {
   public pageSize: number = 0;
 
   constructor() {
-    console.log("SuiteListComponent constructor çalıştı.");
+    //console.log("SuiteListComponent constructor çalıştı.");
   }
 
   // Paginator'daki değişiklikleri tabloya uygular.

@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     public breakpointService: BreakpointService
     ) {
-    console.log("RegisterComponent constructor çalıştı.");
+    //console.log("RegisterComponent constructor çalıştı.");
 
     this.personExtDto = this.personService.emptyPersonExtDto;
     this.personExtDtoErrors = this.personService.emptyPersonExtDtoErrors;

@@ -2,7 +2,7 @@
     <div class="card shadow-lg">
         <!-- Sayfa Başına Kayıt Menüsü -->
         <div class="row gx-0 p-3">
-            <ng-container *ngIf="contactDtos.length > 10">
+            <ng-container *ngIf="contactFormDtos.length > 10">
                 <div class="col-6 d-flex">
                     <label class="form-label">
                         <select class="form-select" [(ngModel)]="itemsPerPage">
@@ -33,13 +33,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let contactDto of contactDtos | slice: pageSize | slice: 0 : itemsPerPage; let i = index">
+                            <tr *ngFor="let contactFormDto of contactFormDtos | slice: pageSize | slice: 0 : itemsPerPage; let i = index">
                                 <td>{{ elementIndex + i + 1 }}</td>
-                                <td>{{ contactDto.nameSurname }}</td>
-                                <td>{{ contactDto.email }}</td>
-                                <td>{{ contactDto.phone }}</td>
-                                <td>{{ contactDto.message | substring }}</td>
-                                <td>{{ contactDto.createdAt | date: "dd/MM/yyyy HH:mm:ss" }}</td>
+                                <td>{{ contactFormDto.nameSurname }}</td>
+                                <td>{{ contactFormDto.email }}</td>
+                                <td>{{ contactFormDto.phone }}</td>
+                                <td>{{ contactFormDto.message | substring }}</td>
+                                <td>{{ contactFormDto.createdAt | date: "dd/MM/yyyy HH:mm:ss" }}</td>
                                 <td class="overflow-hidden">
                                     <div ngbDropdown container="body">
                                         <button type="button" class="btn btn-sm hide-arrow" ngbDropdownToggle data-toggle="dropdown">
@@ -48,13 +48,13 @@
                                             </div>
                                         </button>
                                         <div ngbDropdownMenu>
-                                            <a ngbDropdownItem class="cursor-pointer" (click)="openEditPage(contactDto)">
+                                            <a ngbDropdownItem class="cursor-pointer" (click)="openEditPage(contactFormDto)">
                                                 <div class="icon me-2">
                                                     <i class="fas fa-search fa-lg"></i>
                                                 </div>
                                                 <span>Görüntüle</span>
                                             </a>
-                                            <a ngbDropdownItem class="cursor-pointer" (click)="openDeleteModal(contactDto)">
+                                            <a ngbDropdownItem class="cursor-pointer" (click)="openDeleteModal(contactFormDto)">
                                                 <div class="icon me-2">
                                                     <i class="fas fa-trash fa-lg"></i>
                                                 </div>
@@ -71,10 +71,10 @@
         </div>
 
         <!-- Sayfalama Menüsü -->
-        <ng-container *ngIf="contactDtos.length > 10">
+        <ng-container *ngIf="contactFormDtos.length > 10">
             <div class="row gx-0 ps-3 pe-3 pt-0 pb-0">
                 <div class="col-12 d-flex">
-                    <ngb-pagination class="ms-auto" [collectionSize]="contactDtos.length" [pageSize]="itemsPerPage" [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
+                    <ngb-pagination class="ms-auto" [collectionSize]="contactFormDtos.length" [pageSize]="itemsPerPage" [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
                         <ng-template ngbPaginationPrevious>
                             <i class="fas fa-angle-left fa-lg"></i>
                         </ng-template>

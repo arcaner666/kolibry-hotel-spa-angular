@@ -11,9 +11,9 @@
                         id="name-surname"
                         type="text"
                         name="name-surname"
-                        [(ngModel)]="selectedContactDto.nameSurname"
+                        [(ngModel)]="selectedContactFormDto.nameSurname"
                         class="form-control"
-                        [readOnly]="selectedContactDto.contactId != 0"
+                        [readOnly]="selectedContactFormDto.contactFormId != 0"
                         tabindex="1"
                     />
                 </div>
@@ -26,9 +26,9 @@
                         id="email"
                         type="text"
                         name="email"
-                        [(ngModel)]="selectedContactDto.email"
+                        [(ngModel)]="selectedContactFormDto.email"
                         class="form-control"
-                        [readOnly]="selectedContactDto.contactId != 0"
+                        [readOnly]="selectedContactFormDto.contactFormId != 0"
                         tabindex="2"
                     />
                 </div>
@@ -41,9 +41,9 @@
                         id="phone"
                         type="text"
                         name="phone"
-                        [(ngModel)]="selectedContactDto.phone"
+                        [(ngModel)]="selectedContactFormDto.phone"
                         class="form-control"
-                        [readOnly]="selectedContactDto.contactId != 0"
+                        [readOnly]="selectedContactFormDto.contactFormId != 0"
                         tabindex="3"
                     />
                 </div>
@@ -56,9 +56,9 @@
                         id="message"
                         type="text"
                         name="message"
-                        [(ngModel)]="selectedContactDto.message"
+                        [(ngModel)]="selectedContactFormDto.message"
                         class="form-control"
-                        [readOnly]="selectedContactDto.contactId != 0"
+                        [readOnly]="selectedContactFormDto.contactFormId != 0"
                         tabindex="4"
                     ></textarea>
                 </div>

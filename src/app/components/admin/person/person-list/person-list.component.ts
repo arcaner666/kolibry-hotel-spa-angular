@@ -22,7 +22,7 @@ export class PersonListComponent {
   public pageSize: number = 0;
 
   constructor() {
-    console.log("PersonListComponent constructor çalıştı.");
+    //console.log("PersonListComponent constructor çalıştı.");
   }
 
   // Paginator'daki değişiklikleri tabloya uygular.

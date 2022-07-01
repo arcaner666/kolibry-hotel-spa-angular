@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { cloneDeep } from 'lodash';
 
-import { ContactDto } from 'src/app/models/dtos/contact-dto';
+import { ContactFormDto } from 'src/app/models/dtos/contact-form-dto';
 
 @Component({
   selector: 'app-contact-form-list',
@@ -11,10 +11,10 @@ import { ContactDto } from 'src/app/models/dtos/contact-dto';
 })
 export class ContactFormListComponent {
 
-  @Input() contactDtos: ContactDto[] = [];
+  @Input() contactFormDtos: ContactFormDto[] = [];
 
-  @Output() deleted = new EventEmitter<ContactDto>();
-  @Output() selected = new EventEmitter<ContactDto>();
+  @Output() deleted = new EventEmitter<ContactFormDto>();
+  @Output() selected = new EventEmitter<ContactFormDto>();
 
   public currentPage: number = 1;
   public elementIndex: number = 0;
@@ -22,7 +22,7 @@ export class ContactFormListComponent {
   public pageSize: number = 0;
 
   constructor() {
-    console.log("ContactFormListComponent constructor çalıştı.");
+    //console.log("ContactFormListComponent constructor çalıştı.");
   }
 
   // Paginator'daki değişiklikleri tabloya uygular.
@@ -39,11 +39,11 @@ export class ContactFormListComponent {
     this.selected.emit();
   }
   
-  openDeleteModal(selectedContactDto: ContactDto): void {
-    this.deleted.emit(cloneDeep(selectedContactDto));
+  openDeleteModal(selectedContactFormDto: ContactFormDto): void {
+    this.deleted.emit(cloneDeep(selectedContactFormDto));
   }
 
-  openEditPage(selectedContactDto: ContactDto): void {
-    this.selected.emit(cloneDeep(selectedContactDto));
+  openEditPage(selectedContactFormDto: ContactFormDto): void {
+    this.selected.emit(cloneDeep(selectedContactFormDto));
   }
 }

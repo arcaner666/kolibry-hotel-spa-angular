@@ -1,24 +1,24 @@
 <ng-container *ngIf="activePage == 'list'">
-    <ng-container *ngTemplateOutlet="contactList"></ng-container>
+    <ng-container *ngTemplateOutlet="contactFormList"></ng-container>
 </ng-container>
 
 <ng-container *ngIf="activePage == 'detail'">
-    <ng-container *ngTemplateOutlet="contactDetail"></ng-container>
+    <ng-container *ngTemplateOutlet="contactFormDetail"></ng-container>
 </ng-container>
 
-<ng-template #contactList>
+<ng-template #contactFormList>
     <app-contact-form-list
-        [contactDtos]="(contactDtos$ | async)?.data || []"
+        [contactFormDtos]="(contactFormDtos$ | async)?.data || []"
         (deleted)="delete($event)"
         (selected)="select($event)"
     ></app-contact-form-list>
 </ng-template>
 
-<ng-template #contactDetail>
+<ng-template #contactFormDetail>
     <app-contact-form-detail
         [cardHeader]="cardHeader"
         [loading]="loading"
-        [selectedContactDto]="selectedContactDto"
+        [selectedContactFormDto]="selectedContactFormDto"
         (cancelled)="cancel()"
     ></app-contact-form-detail>
 </ng-template>
@@ -31,7 +31,7 @@
         <button type="button" class="btn-close m-0" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
     </div>
     <div class="modal-body">
-        <p class="text-center m-0">"{{selectedContactDto.nameSurname}}" adlı kişinin mesajı silinecektir. Onaylıyor musunuz?</p>
+        <p class="text-center m-0">"{{selectedContactFormDto.nameSurname}}" adlı kişinin mesajı silinecektir. Onaylıyor musunuz?</p>
     </div>
     <div class="modal-footer w-100">
         <div class="container-fluid m-0">

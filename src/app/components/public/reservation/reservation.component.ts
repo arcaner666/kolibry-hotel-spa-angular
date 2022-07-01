@@ -60,7 +60,7 @@ export class ReservationComponent implements OnInit, OnDestroy {
     
     public breakpointService: BreakpointService,
   ) { 
-    console.log("ReservationComponent constructor çalıştı.");
+    //console.log("ReservationComponent constructor çalıştı.");
 
     this.selectedInvoiceDetailDto = this.invoiceService.emptyInvoiceDetailDto;
     this.selectedInvoiceDetailDtoErrors = this.invoiceService.emptyInvoiceDetailDtoErrors;
@@ -94,7 +94,6 @@ export class ReservationComponent implements OnInit, OnDestroy {
         }),
       ).subscribe({
         next: (response) => {
-          console.log(response);
           this.toastService.success(response.message);
           this.loading = false;
           this.openIframe(response.data.iframeToken);
@@ -158,7 +157,6 @@ export class ReservationComponent implements OnInit, OnDestroy {
   }
 
   openIframe(iframeToken: string): void {
-    console.log(iframeToken);
     const dangerousIframeUrl = `https://www.paytr.com/odeme/guvenli/${iframeToken}`;
     this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(dangerousIframeUrl);
     this.iframeOpen = true;
@@ -185,7 +183,6 @@ export class ReservationComponent implements OnInit, OnDestroy {
       takeUntil(this.unsubscribeAll),
     ).subscribe({
       next: (response) => {
-        console.log(response);
         this.currencyDtos = response.data;
       }, error: (error) => {
         console.log(error);
@@ -236,9 +233,9 @@ export class ReservationComponent implements OnInit, OnDestroy {
     this.selectedPayTrIframeDto.userIp = this.selectedInvoiceExtDto.buyerIp;
 
     const filteredCurrencyDto: CurrencyDto = this.currencyDtos.filter(c => c.currencyId == this.selectedInvoiceExtDto.currencyId)[0];
-    if (filteredCurrencyDto.title = "TL") {
+    if (filteredCurrencyDto.title = "Türk Lirası") {
       this.selectedPayTrIframeDto.currency = "TL";
-    } else if (filteredCurrencyDto.title = "Dolar") {
+    } else if (filteredCurrencyDto.title = "Dollar") {
       this.selectedPayTrIframeDto.currency = "USD";
     } else if (filteredCurrencyDto.title = "Euro") {
       this.selectedPayTrIframeDto.currency = "EUR";

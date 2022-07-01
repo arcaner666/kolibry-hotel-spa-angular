@@ -21,7 +21,7 @@ export class InvoiceListComponent {
   public pageSize: number = 0;
 
   constructor() {
-    console.log("InvoiceListComponent constructor çalıştı.");
+    //console.log("InvoiceListComponent constructor çalıştı.");
   }
 
   // Paginator'daki değişiklikleri tabloya uygular.

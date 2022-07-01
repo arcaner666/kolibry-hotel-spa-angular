@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class NotAuthorizedComponent implements OnInit {
 
   constructor() {
-    console.log("NotAuthorizedComponent constructor çalıştı.");
+    //console.log("NotAuthorizedComponent constructor çalıştı.");
   }
 
   ngOnInit(): void {

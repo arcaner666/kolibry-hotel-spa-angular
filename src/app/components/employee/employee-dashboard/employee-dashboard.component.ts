@@ -37,7 +37,7 @@ export class EmployeeDashboardComponent implements OnInit {
   ];
 
   constructor() {
-    console.log("EmployeeDashboardComponent constructor çalıştı.");
+    //console.log("EmployeeDashboardComponent constructor çalıştı.");
   }
 
   ngOnInit(): void {

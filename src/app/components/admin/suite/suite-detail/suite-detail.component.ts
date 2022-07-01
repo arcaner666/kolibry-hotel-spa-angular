@@ -24,7 +24,7 @@ export class SuiteDetailComponent {
   public submitted: boolean = false;
   
   constructor() {
-    console.log("SuiteDetailComponent constructor çalıştı.");
+    //console.log("SuiteDetailComponent constructor çalıştı.");
   }
 
   cancel(): void {

@@ -20,7 +20,7 @@ export class InvoiceDetailComponent {
   @Output() cancelled = new EventEmitter();
   
   constructor() {
-    console.log("InvoiceDetailComponent constructor çalıştı.");
+    //console.log("InvoiceDetailComponent constructor çalıştı.");
   }
 
   cancel(): void {

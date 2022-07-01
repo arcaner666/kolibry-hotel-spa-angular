@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { ContactDto } from 'src/app/models/dtos/contact-dto';
-import { ContactDtoErrors } from 'src/app/models/validation-errors/contact-dto-errors';
+import { ContactFormDto } from 'src/app/models/dtos/contact-form-dto';
+import { ContactFormDtoErrors } from 'src/app/models/validation-errors/contact-form-dto-errors';
 import { InvoiceDetailDto } from 'src/app/models/dtos/invoice-detail-dto';
 import { InvoiceDetailDtoErrors } from 'src/app/models/validation-errors/invoice-detail-dto-errors';
 import { InvoiceExtDto } from 'src/app/models/dtos/invoice-ext-dto';
@@ -11,7 +11,7 @@ import { PersonExtDtoErrors } from 'src/app/models/validation-errors/person-ext-
 import { SuiteDto } from 'src/app/models/dtos/suite-dto';
 import { SuiteDtoErrors } from 'src/app/models/validation-errors/suite-dto-errors';
 
-import { ContactService } from 'src/app/services/contact.service';
+import { ContactFormService } from 'src/app/services/contact-form.service';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { PersonService } from 'src/app/services/person.service';
 import { SuiteService } from 'src/app/services/suite.service';
@@ -22,7 +22,7 @@ import { SuiteService } from 'src/app/services/suite.service';
 export class ValidationService {
 
   constructor(
-    private contactService: ContactService,
+    private contactFormService: ContactFormService,
     private invoiceService: InvoiceService,
     private personService: PersonService,
     private suiteService: SuiteService,
@@ -126,36 +126,32 @@ export class ValidationService {
   }
 
   // Kurallar
-  validateContactDtoForAdd(contactDto: ContactDto): [boolean, ContactDtoErrors] {
-    let contactDtoErrors = this.contactService.emptyContactDtoErrors;  
+  validateContactFormDtoForAdd(contactFormDto: ContactFormDto): [boolean, ContactFormDtoErrors] {
+    let contactFormDtoErrors = this.contactFormService.emptyContactFormDtoErrors;  
     let isValid: boolean = true;
 
-    const nameSurname: boolean = this.string(contactDto.nameSurname);
+    const nameSurname: boolean = this.string(contactFormDto.nameSurname);
     if (!nameSurname)
-      contactDtoErrors.nameSurname = "Lütfen adınızı ve soyadınızı giriniz.";
+      contactFormDtoErrors.nameSurname = "Lütfen adınızı ve soyadınızı giriniz.";
 
-    const email: boolean = this.string(contactDto.email);
+    const email: boolean = this.string(contactFormDto.email);
     if (!email)
-      contactDtoErrors.email = "Lütfen e-posta adresinizi giriniz.";
-
-    const phone1: boolean = this.stringPreciseLength(contactDtoErrors.phone, 10);
-    if (!phone1)
-      contactDtoErrors.phone = "Telefon numarası 10 haneden oluşmalıdır. Örneğin; 5554443322";
+      contactFormDtoErrors.email = "Lütfen e-posta adresinizi giriniz.";
       
-    const phone2: boolean = this.string(contactDto.phone);
-    if (!phone2)
-      contactDtoErrors.phone = "Lütfen telefon numaranızı giriniz.";
+    const phone: boolean = this.string(contactFormDto.phone);
+    if (!phone)
+      contactFormDtoErrors.phone = "Lütfen telefon numaranızı giriniz.";
 
-    const message: boolean = this.string(contactDto.message);
+    const message: boolean = this.string(contactFormDto.message);
     if (!message)
-      contactDtoErrors.message = "Lütfen iletmek istediğiniz mesajınızı yazınız.";
+      contactFormDtoErrors.message = "Lütfen iletmek istediğiniz mesajınızı yazınız.";
       
-    for (const key in contactDtoErrors) {
-      if (contactDtoErrors[key as keyof ContactDtoErrors] != "")
+    for (const key in contactFormDtoErrors) {
+      if (contactFormDtoErrors[key as keyof ContactFormDtoErrors] != "")
         isValid = false;
     }
 
-    return [isValid, contactDtoErrors];
+    return [isValid, contactFormDtoErrors];
   }
 
   validateInvoiceDetailDtoForAdd(invoiceDetailDto: InvoiceDetailDto): [boolean, InvoiceDetailDtoErrors] {
@@ -313,13 +309,9 @@ export class ValidationService {
     const email: boolean = this.string(personExtDto.email);
     if (!email)
       personExtDtoErrors.email = "Lütfen e-posta adresi giriniz.";
-    
-    const phone1: boolean = this.stringPreciseLength(personExtDto.phone, 10);
-    if (!phone1)
-      personExtDtoErrors.phone = "Telefon numarası 10 haneden oluşmalıdır. Örneğin; 5554443322";
       
-    const phone2: boolean = this.string(personExtDto.phone);
-    if (!phone2)
+    const phone: boolean = this.string(personExtDto.phone);
+    if (!phone)
       personExtDtoErrors.phone = "Lütfen telefon numarası giriniz.";
 
     const password1: boolean = this.stringMinLength(personExtDto.password, 6);

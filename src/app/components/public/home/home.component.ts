@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private navigationService: NavigationService,
     private personService: PersonService
   ) {
-    console.log("HomeComponent constructor çalıştı.");
+    //console.log("HomeComponent constructor çalıştı.");
 
     this.navigationService.navigateByRole(this.personService.personExtDto?.role);
   }

@@ -42,8 +42,8 @@
                                 <td>{{ invoiceExtDto.buyerNameSurname }}</td>
                                 <td>{{ invoiceExtDto.buyerEmail }}</td>
                                 <td>{{ invoiceExtDto.buyerPhone }}</td>
-                                <td>{{ invoiceExtDto.reservationStartDate }}</td>
-                                <td>{{ invoiceExtDto.reservationEndDate }}</td>
+                                <td>{{ invoiceExtDto.reservationStartDate | date: "dd/MM/yyyy" }}</td>
+                                <td>{{ invoiceExtDto.reservationEndDate | date: "dd/MM/yyyy" }}</td>
                                 <td>{{ invoiceExtDto.title }}</td>
                                 <td>{{ invoiceExtDto.totalPrice }}</td>
                                 <td>{{ invoiceExtDto.canceled }}</td>

@@ -23,7 +23,7 @@
                     <form #form="ngForm" (ngSubmit)="add()" class="container-fluid p-0">
                         <!-- Döviz Tipi -->
                         <div class="mt-3 mb-3">
-                            <label class="mb-2" for="currency-id">Döviz Tipi</label>
+                            <label class="mb-2" for="currency-id">Döviz Tipi / Currency</label>
                             <select 
                                 id="currency-id"
                                 name="currencyId"
@@ -38,7 +38,7 @@
                                     *ngFor="let currencyDto of currencyDtos"
                                     [value]="currencyDto.currencyId"
                                 >
-                                    {{currencyDto.title}}
+                                    {{currencyDto.title}} / {{currencyDto.alphabeticCode}}
                                 </option>
                             </select>
                             <div class="invalid-feedback" *ngIf="submitted && selectedInvoiceExtDtoErrors.currencyId">
@@ -49,7 +49,7 @@
 
                         <!-- Ad Soyad -->
                         <div class="mt-3 mb-3">
-                            <label class="form-label" for="buyer-name-surname">Ad Soyad</label>
+                            <label class="form-label" for="buyer-name-surname">Ad Soyad / Name Surname</label>
                             <input
                                 id="buyer-name-surname"
                                 type="text"
@@ -68,7 +68,7 @@
 
                         <!-- E-Posta -->
                         <div class="mt-3 mb-3">
-                            <label class="form-label" for="buyer-email">E-Posta</label>
+                            <label class="form-label" for="buyer-email">E-Posta / E-Mail</label>
                             <input
                                 id="buyer-email"
                                 type="text"
@@ -87,7 +87,7 @@
 
                         <!-- Telefon -->
                         <div class="mt-3 mb-3">
-                            <label class="form-label" for="buyer-phone">Telefon</label>
+                            <label class="form-label" for="buyer-phone">Telefon / Phone</label>
                             <input
                                 id="buyer-phone"
                                 type="text"
@@ -106,7 +106,7 @@
 
                         <!-- Adres -->
                         <div class="mt-3 mb-3">
-                            <label class="form-label" for="buyer-address">Adres</label>
+                            <label class="form-label" for="buyer-address">Adres / Address</label>
                             <input
                                 id="buyer-address"
                                 type="text"
@@ -126,7 +126,7 @@
                         <div class="row">
                             <!-- Giriş Tarihi -->
                             <div class="col-sm-12 col-lg-6 mt-3 mb-3">
-                                <label class="form-label" for="reservation-start-date">Giriş Tarihi</label>
+                                <label class="form-label" for="reservation-start-date">Giriş Tarihi / Check-In</label>
                                 <div class="input-group">
                                     <input
                                         id="reservation-start-date"
@@ -161,7 +161,7 @@
 
                             <!-- Çıkış Tarihi -->
                             <div class="col-sm-12 col-lg-6 mt-3 mb-3">
-                                <label class="form-label" for="reservation-end-date">Çıkış Tarihi</label>
+                                <label class="form-label" for="reservation-end-date">Çıkış Tarihi / Check-Out</label>
                                 <div class="input-group">
                                     <input
                                         id="reservation-end-date"
@@ -196,7 +196,7 @@
                         
                         <!-- Kalınacak Gün Sayısı -->
                         <div class="mt-3 mb-3">
-                            <label class="form-label" for="amount">Kalınacak Gün Sayısı</label>
+                            <label class="form-label" for="amount">Kalınacak Gün Sayısı / Night</label>
                             <input
                                 id="amount"
                                 type="number"
@@ -214,9 +214,9 @@
                         <!-- /Kalınacak Gün Sayısı -->
                         
                         <div class="row">
-                            <!-- Yetişkin Sayısı -->
+                            <!-- Yetişkin -->
                             <div class="col-sm-12 col-lg-6 mt-3 mb-3">
-                                <label class="mb-2" for="adult">Yetişkin Sayısı</label>
+                                <label class="mb-2" for="adult">Yetişkin / Adult</label>
                                 <select 
                                     id="adult"
                                     name="adult"
@@ -243,11 +243,11 @@
                                     <div>{{selectedInvoiceExtDtoErrors.adult}}</div>
                                 </div>
                             </div>
-                            <!-- /Yetişkin Sayısı -->
+                            <!-- /Yetişkin -->
                             
-                            <!-- Çocuk Sayısı -->
+                            <!-- Çocuk -->
                             <div class="col-sm-12 col-lg-6 mt-3 mb-3">
-                                <label class="mb-2" for="child">Çocuk Sayısı</label>
+                                <label class="mb-2" for="child">Çocuk / Child</label>
                                 <select 
                                     id="child"
                                     name="child"
@@ -269,12 +269,12 @@
                                     <div>{{selectedInvoiceExtDtoErrors.child}}</div>
                                 </div>
                             </div>
-                            <!-- /Çocuk Sayısı -->
+                            <!-- /Çocuk -->
                         </div>
                         
                         <!-- 1. Çocuğun Yaşı -->
                         <div class="col-12 mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 1">
-                            <label class="mb-2" for="child-age-1">1. Çocuğun Yaşı</label>
+                            <label class="mb-2" for="child-age-1">1. Çocuğun Yaşı / 1. Child Age</label>
                             <select 
                                 id="child-age-1"
                                 name="childAge1"
@@ -305,7 +305,7 @@
                         
                         <!-- 2. Çocuğun Yaşı -->
                         <div class="col-12 mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 2">
-                            <label class="mb-2" for="child-age-2">2. Çocuğun Yaşı</label>
+                            <label class="mb-2" for="child-age-2">2. Çocuğun Yaşı / 2. Child Age</label>
                             <select 
                                 id="child-age-2"
                                 name="childAge2"
@@ -336,7 +336,7 @@
                         
                         <!-- 3. Çocuğun Yaşı -->
                         <div class="col-12 mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 3">
-                            <label class="mb-2" for="child-age-3">3. Çocuğun Yaşı</label>
+                            <label class="mb-2" for="child-age-3">3. Çocuğun Yaşı / 3. Child Age</label>
                             <select 
                                 id="child-age-3"
                                 name="childAge3"
@@ -367,7 +367,7 @@
 
                         <!-- 4. Çocuğun Yaşı -->
                         <div class="mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 4">
-                            <label class="mb-2" for="child-age-4">4. Çocuğun Yaşı</label>
+                            <label class="mb-2" for="child-age-4">4. Çocuğun Yaşı / 4. Child Age</label>
                             <select 
                                 id="child-age-4"
                                 name="childAge4"
@@ -398,7 +398,7 @@
                         
                         <!-- 5. Çocuğun Yaşı -->
                         <div class="mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 5">
-                            <label class="mb-2" for="child-age-5">5. Çocuğun Yaşı</label>
+                            <label class="mb-2" for="child-age-5">5. Çocuğun Yaşı / 5. Child Age</label>
                             <select 
                                 id="child-age-5"
                                 name="childAge5"
@@ -429,7 +429,7 @@
 
                         <!-- 6. Çocuğun Yaşı -->
                         <div class="mt-3 mb-3" *ngIf="selectedInvoiceExtDto.child >= 6">
-                            <label class="mb-2" for="child-age-6">6. Çocuğun Yaşı</label>
+                            <label class="mb-2" for="child-age-6">6. Çocuğun Yaşı / 6. Child Age</label>
                             <select 
                                 id="child-age-6"
                                 name="childAge6"
@@ -460,8 +460,8 @@
                         
                         <div class="row">
                             <!-- Oda -->
-                            <div class="col-sm-12 col-lg-9 mt-3 mb-3">
-                                <label class="mb-2" for="suite-id">Oda</label>
+                            <div class="col-sm-12 col-lg-8 mt-3 mb-3">
+                                <label class="mb-2" for="suite-id">Oda / Suite</label>
                                 <select 
                                     id="suite-id"
                                     name="suiteId"
@@ -486,8 +486,8 @@
                             <!-- /Oda -->
 
                             <!-- Toplam Tutar -->
-                            <div class="col-sm-12 col-lg-3 mt-3 mb-3">
-                                <label class="form-label" for="total-price">Toplam Tutar</label>
+                            <div class="col-sm-12 col-lg-4 mt-3 mb-3">
+                                <label class="form-label" for="total-price">Toplam Tutar / Total Price</label>
                                 <div class="input-group">
                                     <input
                                         id="total-price"
@@ -521,7 +521,7 @@
                                         [disabled]="loading"
                                         tabindex="19"
                                     >
-                                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>Devam Et
+                                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>Devam Et / Continue
                                     </button>
                                 </div>
                                 <div class="col-6">
@@ -529,7 +529,7 @@
                                         type="button" 
                                         class="btn btn-outline-secondary btn-cancel-custom w-100"
                                         (click)="cancel()"
-                                    >İptal
+                                    >İptal / Cancel
                                     </button>
                                 </div>
                             </div>

@@ -35,7 +35,7 @@ export class PersonComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
     private validationService: ValidationService,
   ) { 
-    console.log("PersonComponent constructor çalıştı.");
+    //console.log("PersonComponent constructor çalıştı.");
 
     this.selectedPersonExtDto = this.personService.emptyPersonExtDto;
     this.selectedPersonExtDtoErrors = this.personService.emptyPersonExtDtoErrors;
@@ -103,7 +103,6 @@ export class PersonComponent implements OnInit, OnDestroy {
       })
     ).subscribe({
       next: (response) => {
-        console.log(response);
         this.toastService.success(response.message);
         this.loading = false;
       }, error: (error) => {

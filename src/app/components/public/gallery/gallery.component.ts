@@ -24,7 +24,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: NgbModal,
   ) {
-    console.log("GalleryComponent constructor çalıştı.");
+    //console.log("GalleryComponent constructor çalıştı.");
   }
 
   openImageModal(initialSlide: number): void {

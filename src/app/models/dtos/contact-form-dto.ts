@@ -1,5 +1,5 @@
-export interface ContactDto {
-    contactId: number;
+export interface ContactFormDto {
+    contactFormId: number;
     nameSurname: string;
     email: string;
     phone: string;
