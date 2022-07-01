@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
@@ -29,6 +29,8 @@ import { ValidationService } from 'src/app/services/validation.service';
 })
 export class ReservationComponent implements OnInit, OnDestroy {
 
+  @ViewChild('paymentModal') paymentModal!: ElementRef;
+  
   public cardHeader: string = "Rezervasyon";
   public clientIp: string = "";
   public currencyDtos: CurrencyDto[] = [];
@@ -153,14 +155,14 @@ export class ReservationComponent implements OnInit, OnDestroy {
 
   cancel(): void {
     this.router.navigate(['/public/home']);
-    window.scroll(0,0);
+    this.scrollToTop();
   }
 
   openIframe(iframeToken: string): void {
     const dangerousIframeUrl = `https://www.paytr.com/odeme/guvenli/${iframeToken}`;
     this.iframeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(dangerousIframeUrl);
     this.iframeOpen = true;
-    window.scroll(0,0);
+    this.scrollToTop();
   }
 
   dateDifferenceInDays(startDate: Date, endDate: Date): number {
@@ -228,8 +230,10 @@ export class ReservationComponent implements OnInit, OnDestroy {
     this.selectedPayTrIframeDto.paymentAmount = this.selectedInvoiceExtDto.totalPrice;
     this.selectedPayTrIframeDto.userBasket = this.selectedInvoiceExtDto.invoiceDetailDtos;
     this.selectedPayTrIframeDto.merchantOid = invoiceId.toString();
-    this.selectedPayTrIframeDto.merchantOkUrl = "https://localhost:4200/public/reservation-success";
-    this.selectedPayTrIframeDto.merchantFailUrl = "https://localhost:4200/public/reservation-fail";
+    this.selectedPayTrIframeDto.merchantOkUrl = "https://kolibryhotelspa.com/public/reservation-success";
+    this.selectedPayTrIframeDto.merchantFailUrl = "https://kolibryhotelspa.com/public/reservation-fail";
+    //this.selectedPayTrIframeDto.merchantOkUrl = "https://localhost:4200/public/reservation-success";
+    //this.selectedPayTrIframeDto.merchantFailUrl = "https://localhost:4200/public/reservation-fail";
     this.selectedPayTrIframeDto.userIp = this.selectedInvoiceExtDto.buyerIp;
 
     const filteredCurrencyDto: CurrencyDto = this.currencyDtos.filter(c => c.currencyId == this.selectedInvoiceExtDto.currencyId)[0];
@@ -284,6 +288,10 @@ export class ReservationComponent implements OnInit, OnDestroy {
 
   resetSuite(): void {
     this.selectedInvoiceDetailDto.suiteId = 0;
+  }
+
+  scrollToTop(): void {
+    window.scroll(0,0);
   }
 
   selectCurrency(currencyId: number): void {
