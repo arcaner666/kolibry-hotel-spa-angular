@@ -149,8 +149,8 @@ export class ReservationComponent implements OnInit, OnDestroy {
     // Bu modelde KDV olmaması gerekiyor çünkü faturanın her bir satırının KDV oranı farklı olabilir. Fatura bazında KDV diye birşey yok. 
     // Yine de modelin çalışması için gerekiyor.
     this.selectedInvoiceExtDto.vat = vat;
-    this.selectedInvoiceExtDto.totalVat = totalVat2;
-    this.selectedInvoiceExtDto.totalPrice = totalPrice2;
+    this.selectedInvoiceExtDto.totalVat = Math.round((totalVat2 + Number.EPSILON) * 100) / 100;
+    this.selectedInvoiceExtDto.totalPrice = Math.round((totalPrice2 + Number.EPSILON) * 100) / 100;
   }
 
   cancel(): void {
@@ -239,13 +239,14 @@ export class ReservationComponent implements OnInit, OnDestroy {
     const filteredCurrencyDto: CurrencyDto = this.currencyDtos.filter(c => c.currencyId == this.selectedInvoiceExtDto.currencyId)[0];
     if (filteredCurrencyDto.title = "Türk Lirası") {
       this.selectedPayTrIframeDto.currency = "TL";
+      this.selectedPayTrIframeDto.language = "tr";
     } else if (filteredCurrencyDto.title = "Dollar") {
       this.selectedPayTrIframeDto.currency = "USD";
+      this.selectedPayTrIframeDto.language = "en";
     } else if (filteredCurrencyDto.title = "Euro") {
       this.selectedPayTrIframeDto.currency = "EUR";
+      this.selectedPayTrIframeDto.language = "en";
     }
-
-    this.selectedPayTrIframeDto.language = "tr";
 
     this.payTrIframeDto$ = this.payTrService.getIframeToken(this.selectedPayTrIframeDto);
     return this.payTrIframeDto$;

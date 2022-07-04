@@ -24,6 +24,13 @@ export class InvoiceListComponent {
     //console.log("InvoiceListComponent constructor çalıştı.");
   }
 
+  convertBoolean(bool: boolean): string {
+    if (bool) {
+      return "Evet";
+    }
+    return "Hayır";
+  }
+  
   // Paginator'daki değişiklikleri tabloya uygular.
   onPageChange(currentPage: number): void {
     this.pageSize = this.itemsPerPage * (currentPage - 1);

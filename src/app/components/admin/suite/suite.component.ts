@@ -103,7 +103,6 @@ export class SuiteComponent implements OnInit, OnDestroy {
       })
     ).subscribe({
       next: (response) => {
-        this.toastService.success(response.message);
         this.loading = false;
       }, error: (error) => {
         console.log(error);

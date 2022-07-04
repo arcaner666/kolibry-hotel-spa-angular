@@ -160,13 +160,10 @@ import { CustomDateParserFormatter } from 'src/app/services/custom-date-parser-f
           return personExtDto?.accessToken;
         },
         allowedDomains: [
-          // Production
-          "https://www.kolibryhotelspa.com",
-          "https://www.kolibryhotelspa.com",
-
-          // Development
-          // "localhost:5001",
-          // "localhost:5000",
+          "www.kolibryhotelspa.com",
+          "kolibryhotelspa.com",
+          "localhost:5001",
+          "localhost:5000",
         ]
       },
     }),

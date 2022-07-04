@@ -31,6 +31,7 @@
                                 <th>Çıkış Tarihi</th>
                                 <th>Başlık</th>
                                 <th>Toplam Fiyat</th>
+                                <th>Ödendi</th>
                                 <th>İptal Edildi</th>
                                 <th>Oluşturulma Tarihi</th>
                                 <th>İşlemler</th>
@@ -38,16 +39,17 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let invoiceExtDto of invoiceExtDtos | slice: pageSize | slice: 0 : itemsPerPage; let i = index">
-                                <td>{{ elementIndex + i + 1 }}</td>
-                                <td>{{ invoiceExtDto.buyerNameSurname }}</td>
-                                <td>{{ invoiceExtDto.buyerEmail }}</td>
-                                <td>{{ invoiceExtDto.buyerPhone }}</td>
-                                <td>{{ invoiceExtDto.reservationStartDate | date: "dd/MM/yyyy" }}</td>
-                                <td>{{ invoiceExtDto.reservationEndDate | date: "dd/MM/yyyy" }}</td>
-                                <td>{{ invoiceExtDto.title }}</td>
-                                <td>{{ invoiceExtDto.totalPrice }}</td>
-                                <td>{{ invoiceExtDto.canceled }}</td>
-                                <td>{{ invoiceExtDto.createdAt | date: "dd/MM/yyyy HH:mm:ss" }}</td>
+                                <td>{{elementIndex + i + 1}}</td>
+                                <td>{{invoiceExtDto.buyerNameSurname}}</td>
+                                <td>{{invoiceExtDto.buyerEmail}}</td>
+                                <td>{{invoiceExtDto.buyerPhone}}</td>
+                                <td>{{invoiceExtDto.reservationStartDate | date: "dd/MM/yyyy"}}</td>
+                                <td>{{invoiceExtDto.reservationEndDate | date: "dd/MM/yyyy"}}</td>
+                                <td>{{invoiceExtDto.title}}</td>
+                                <td>{{invoiceExtDto.totalPrice}}</td>
+                                <td>{{convertBoolean(invoiceExtDto.paid)}}</td>
+                                <td>{{convertBoolean(invoiceExtDto.canceled)}}</td>
+                                <td>{{invoiceExtDto.createdAt | date: "dd/MM/yyyy HH:mm:ss"}}</td>
                                 <td class="overflow-hidden">
                                     <div ngbDropdown container="body">
                                         <button type="button" class="btn btn-sm hide-arrow" ngbDropdownToggle data-toggle="dropdown">

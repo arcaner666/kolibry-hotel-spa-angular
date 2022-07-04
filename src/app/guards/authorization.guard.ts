@@ -39,7 +39,14 @@ export class AuthorizationGuard implements CanActivate {
           return of(false);
         }
 
-        if (this.jwtHelperService.isTokenExpired(personExtDto.accessToken)) {
+
+        var decodedToken = this.jwtHelperService.decodeToken(personExtDto.accessToken);
+        console.log(decodedToken);
+        console.log("refreshTokenExpiryTime :" + personExtDto.refreshTokenExpiryTime);
+        console.log("token expiration date :" + (this.jwtHelperService.getTokenExpirationDate(personExtDto.accessToken)));
+        console.log("is token expired: " + this.jwtHelperService.isTokenExpired(personExtDto.accessToken));
+        console.log("is token expired -offsetseconds :" + this.jwtHelperService.isTokenExpired(personExtDto.accessToken, -10800));
+        if (this.jwtHelperService.isTokenExpired(personExtDto.accessToken, -10800)) {
           console.log("AccessToken'ın süresi bitmiş, yenilemeye çalışılıyor...");
           return this.personService.refreshAccessToken(personExtDto)
           .pipe(
