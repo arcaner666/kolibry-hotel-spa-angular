@@ -236,16 +236,14 @@ export class ReservationComponent implements OnInit, OnDestroy {
     //this.selectedPayTrIframeDto.merchantFailUrl = "https://localhost:4200/public/reservation-fail";
     this.selectedPayTrIframeDto.userIp = this.selectedInvoiceExtDto.buyerIp;
 
-    // Şuan PayTR'de sadece TL ödeme açık olduğu için sadece TL göndereceğiz. Açınca alttaki kodları aç.
-    this.selectedPayTrIframeDto.currency = "TL";
-    // const filteredCurrencyDto: CurrencyDto = this.currencyDtos.filter(c => c.currencyId == this.selectedInvoiceExtDto.currencyId)[0];
-    // if (filteredCurrencyDto.title = "Türk Lirası") {
-    //   this.selectedPayTrIframeDto.currency = "TL";
-    // } else if (filteredCurrencyDto.title = "Dollar") {
-    //   this.selectedPayTrIframeDto.currency = "USD";
-    // } else if (filteredCurrencyDto.title = "Euro") {
-    //   this.selectedPayTrIframeDto.currency = "EUR";
-    // }
+    const filteredCurrencyDto: CurrencyDto = this.currencyDtos.filter(c => c.currencyId == this.selectedInvoiceExtDto.currencyId)[0];
+    if (filteredCurrencyDto.title = "Türk Lirası") {
+      this.selectedPayTrIframeDto.currency = "TL";
+    } else if (filteredCurrencyDto.title = "Dollar") {
+      this.selectedPayTrIframeDto.currency = "USD";
+    } else if (filteredCurrencyDto.title = "Euro") {
+      this.selectedPayTrIframeDto.currency = "EUR";
+    }
 
     this.selectedPayTrIframeDto.language = "tr";
 
