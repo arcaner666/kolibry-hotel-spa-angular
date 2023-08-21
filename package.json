@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4200",
+    "start": "ng serve --port 4201",
     "build": "node ./node_modules/@angular/cli/bin/ng build",
     "build-stats": "node ./node_modules/@angular/cli/bin/ng build --stats-json",
     "build:prod": "node ./node_modules/@angular/cli/bin/ng build --configuration production",
